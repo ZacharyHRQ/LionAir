@@ -1,0 +1,38 @@
+﻿@page
+@{
+    Layout = "/Views/Shared/_StaffLayout.cshtml";
+    ViewData["Title"] = "DisplayAircraft";
+}
+<div class="container">
+    <h1>Update Aircraft Status</h1>
+    <div class="aircraft-details mx-auto">
+        <h3>
+            Aircraft : 1</h6>
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <th scope="row">Model Name</th>
+                        <td>Airbus 380</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Last date of maintenance</th>
+                        <td>01-01-18</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Flight Assigned</th>
+                        <td>BA99</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Status</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Operational</option>
+                        <option>Under Maintance</option>
+                    </select>
+                </div>
+            </form>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<WEB2020Apr_P01_T4.Models.FlightPersonnel>
+
+@{
+    Layout = "/Views/Shared/_LayoutForStaffMain.cshtml";
+    ViewData["Title"] = "index";
+}
+
+<h1 class="PageTitle">View Staff</h1>
+<!-- Add a partial view to display a list of staff records in a tabular format. -->
+<partial name="~/FlightPersonnel/_ViewFlightPersonnel.cshtml" model="@Model" />

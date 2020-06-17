@@ -1,0 +1,24 @@
+﻿html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: url("../images/customerMain.jpg");
+    background-color: #cccccc;
+    /* Used if the image is unavailable */
+    height: 500px;
+    /* You must set a specified height */
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
+    background-size: cover;
+    /* Resize the background image to cover the entire container */
+    color: rgba(0, 0, 0, 0.6);
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    line-height: 1.6em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

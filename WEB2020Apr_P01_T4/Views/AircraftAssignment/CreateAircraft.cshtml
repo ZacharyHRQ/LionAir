@@ -1,0 +1,39 @@
+﻿
+@{
+    Layout = "/Views/Shared/_StaffLayout.cshtml";
+    ViewData["Title"] = "DisplayAircraft";
+}
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <h1>Create Aircraft</h1>
+            </div>
+            <div class="col-8">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Model Name</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Number of business seats  </label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Number of economy seats </label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="form-group">
+                        <label for="maintenanceDate">Date of last maintenance</label>
+                        <input type="date" id="maintenanceDate" name="maintenanceDate">
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
