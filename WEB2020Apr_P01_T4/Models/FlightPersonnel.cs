@@ -29,6 +29,8 @@ namespace WEB2020Apr_P01_T4.Models
 
         [Display(Name = "Email Address")]
         [StringLength(50, ErrorMessage = "Email cannot exceed 50 character!")]
+        // Custom Validation Attribute for checking email address exists
+        [ValidateEmailExists]
         public string EmailAddr { get; set; }
 
         [Display(Name = "Password")]

@@ -65,5 +65,76 @@ namespace WEB2020Apr_P01_T4.DAL
 
             return staffList;
         }
+
+        public int Add(FlightPersonnel flightPersonnel)
+        {    
+            //Create a SqlCommand object from connection object    
+            SqlCommand cmd = conn.CreateCommand(); 
+
+            //Specify an INSERT SQL statement which will    
+            //return the auto-generated StaffID after insertion   
+            cmd.CommandText = @"INSERT INTO Staff (StaffName, Gender, DateEmployed, Vocation, EmailAddr) 
+                                OUTPUT INSERTED.StaffID VALUES(@StaffName, @Gender, @DateEmployed, @Vocation, @EmailAddr)";  
+            
+            //Define the parameters used in SQL statement, value for each parameter  
+            //is retrieved from respective class's property.    
+            cmd.Parameters.AddWithValue("@StaffName", flightPersonnel.StaffName);  
+            cmd.Parameters.AddWithValue("@Gender", flightPersonnel.Gender);  
+            cmd.Parameters.AddWithValue("@DateEmployed", flightPersonnel.DateEmployed); 
+            cmd.Parameters.AddWithValue("@Vocation", flightPersonnel.Vocation); 
+            cmd.Parameters.AddWithValue("@EmailAddr", flightPersonnel.EmailAddr);     
+            
+            //A connection to database must be opened before any operations made. 
+            conn.Open();      
+            
+            //ExecuteScalar is used to retrieve the auto-generated 
+            //StaffID after executing the INSERT SQL statement   
+            flightPersonnel.StaffID = (int)cmd.ExecuteScalar();  
+            
+            //A connection should be closed after operations. 
+            conn.Close();     
+
+            //Return id when no error occurs.
+            return flightPersonnel.StaffID;
+        }
+
+        public bool IsEmailExist(string Email, int StaffID)
+        {
+            bool EmailFound = false;
+
+            //Create a SqlCommand object and specify the SQL statement 
+            //to get a staff record with the email address to be validated
+            SqlCommand cmd = conn.CreateCommand(); 
+            cmd.CommandText = @"SELECT StaffID from Staff WHERE EmailAddr = @selectedEmail;";   
+            cmd.Parameters.AddWithValue("@selectedEmail", Email); 
+
+            //Open a database connection and excute the SQL statement  
+            conn.Open();   
+            SqlDataReader reader = cmd.ExecuteReader(); 
+
+            if (reader.HasRows)
+            { 
+                //Records found  
+                while (reader.Read())
+                {      
+                    if (reader.GetInt32(0) != StaffID)       
+                        //The email address is used by another staff   
+                        EmailFound = true;      
+                }  
+            }   
+            else 
+            { 
+                //No record     
+                EmailFound = false;
+                // The email address given does not exist 
+            }   
+
+            reader.Close();  
+            conn.Close();  
+            return EmailFound;
+        }
+
+          
     }
+    
 }
