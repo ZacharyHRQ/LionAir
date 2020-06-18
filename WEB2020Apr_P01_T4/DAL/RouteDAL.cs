@@ -1,6 +1,4 @@
 ﻿using System;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using WEB2020Apr_P01_T4.Models;
@@ -10,17 +8,15 @@ namespace WEB2020Apr_P01_T4.DAL
     public class RouteDAL : BaseDAL
     {
   
-
-
         private static int RouteID = 0;
         private static int DepartureCity = 1;
         private static int DepartureCountry = 2;
         private static int ArrivalCity = 3;
         private static int ArrivalCountry = 4;
         private static int FlightDuration = 5;
-
-        
        
+
+        public RouteDAL(){}
 
         public List<Route> getAllRoutes()
         {
