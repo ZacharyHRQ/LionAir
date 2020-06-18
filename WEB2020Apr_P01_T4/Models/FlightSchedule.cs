@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace WEB2020Apr_P01_T4.DAL
+namespace WEB2020Apr_P01_T4.Models
 {
     public class FlightSchedule
     {
@@ -12,7 +12,7 @@ namespace WEB2020Apr_P01_T4.DAL
         [StringLength(20)]
         [Required]
         public String FlightNumber { get; set; }
-        
+
         [Required]
         public int RouteID { get; set; }
 
@@ -29,12 +29,12 @@ namespace WEB2020Apr_P01_T4.DAL
         [Display(Name = "Economy Class Price")]
         [DataType(DataType.Currency)]
         [Required]
-        public float EconomyClassPrice { get; set; }
+        public Decimal EconomyClassPrice { get; set; }
 
         [Display(Name = "Business Class Price")]
         [DataType(DataType.Currency)]
         [Required]
-        public float BusinessClassPrice { get; set; }
+        public Decimal BusinessClassPrice { get; set; }
 
         [Display(Name = "Status")]
         [StringLength(20)]

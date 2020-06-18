@@ -46,8 +46,8 @@ namespace WEB2020Apr_P01_T4.DAL
                         AircraftID = sqlDataReader.GetInt32(AircraftID),
                         DepartureDateTime = sqlDataReader.GetDateTime(DepartureDateTime),
                         ArrivalDateTime = sqlDataReader.GetDateTime(ArrivalDateTime),
-                        EconomyClassPrice = sqlDataReader.GetFloat(EconomyClassPrice),
-                        BusinessClassPrice = sqlDataReader.GetFloat(BusinessClassPrice),
+                        EconomyClassPrice = sqlDataReader.GetDecimal(EconomyClassPrice),
+                        BusinessClassPrice = sqlDataReader.GetDecimal(BusinessClassPrice),
                         Status = sqlDataReader.GetString(Status),
 
 
