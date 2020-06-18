@@ -61,7 +61,7 @@ namespace WEB2020Apr_P01_T4
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Login}/{action=index}/{id?}");
+                    pattern: "{controller=AircraftAssignment}/{action=DisplayAircraft}/{id?}");
             });
         }
     }
