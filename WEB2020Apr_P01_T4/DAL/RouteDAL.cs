@@ -7,10 +7,9 @@ using WEB2020Apr_P01_T4.Models;
 
 namespace WEB2020Apr_P01_T4.DAL
 {
-    public class RouteDAL
+    public class RouteDAL : BaseDAL
     {
-        private IConfiguration Configuration { get; }
-        private SqlConnection con = null;
+  
 
 
         private static int RouteID = 0;
@@ -21,23 +20,7 @@ namespace WEB2020Apr_P01_T4.DAL
         private static int FlightDuration = 5;
 
         
-        
-
-
-
-        public RouteDAL()
-        {
-
-            //Read ConnectionString from appsettings.json file
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json");
-
-            Configuration = builder.Build();
-
-            //Creating the connection
-            con = new SqlConnection(Configuration.GetConnectionString("LionAirConnectionString"));
-        }
+       
 
         public List<Route> getAllRoutes()
         {
