@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WEB2020Apr_P01_T4.Models;
 using WEB2020Apr_P01_T4.DAL;
+using Microsoft.AspNetCore.Mvc.Rendering;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WEB2020Apr_P01_T4.Controllers
@@ -22,16 +23,32 @@ namespace WEB2020Apr_P01_T4.Controllers
         }
 
         // GET: /<controller>/Display
-        public IActionResult AssignAircraft()
+        public IActionResult CreateAircraft()
         {
+            ViewData["ModelList"] = GetModel();
             return View();
         }
 
-        // GET: /<controller>/Display
-        public IActionResult CreateAircraft()
+        [HttpPost]
+        public IActionResult CreateAircraft(Aircraft aircraft)
         {
-            return View();
+            ViewData["ModelList"] = GetModel();
+            if(ModelState.IsValid)
+            {
+                //Add staff record to database
+                aircraft.AircraftID = aircraftContext.Add(aircraft);
+                //Redirect user to Staff/Index view
+                return RedirectToAction("DisplayAircraft");
+            }
+            else
+            {
+                //Input validation fails, return to the Create view
+                //to display error message
+                return View(aircraft);
+            }
+        
         }
+
 
         // GET: /<controller>/Display
         public IActionResult UpdateAircraft()
@@ -39,13 +56,48 @@ namespace WEB2020Apr_P01_T4.Controllers
             return View();
         }
 
-
-
+        // GET: /<controller>/Display
+        public IActionResult AssignAircraft()
+        {
+            return View();
+        }
 
         // GET: /<controller>/
         public IActionResult Index()
         {
             return View();
+        }
+
+
+        private List<SelectListItem> GetModel()
+        {
+            List<SelectListItem> models = new List<SelectListItem>();
+            models.Add(new SelectListItem
+            {
+                Value = "Boeing 747",
+                Text = "Boeing 747"
+            });
+            models.Add(new SelectListItem
+            {
+                Value = "Airbus A321",
+                Text = "Airbus A321"
+            });
+            models.Add(new SelectListItem
+            {
+                Value = "Boeing 757",
+                Text = "Boeing 757"
+            });
+            models.Add(new SelectListItem
+            {
+                Value = "Boeing 777",
+                Text = "Boeing 777"
+            });
+            models.Add(new SelectListItem
+            {
+                Value = "Airbus A380",
+                Text = "Airbus A380"
+            });
+            return models;
         }
 
 
