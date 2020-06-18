@@ -4,8 +4,9 @@
 
 
 
-@Html.Partial("_Route.cshtml", Model.RouteList)
 
-    <partial name="_Route.cshtml"
+<partial name="_Route.cshtml"
              model=Model.RouteList>
 
+ <partial name="_Schedules.cshtml"
+             model=Model.FlightScheduleList>
