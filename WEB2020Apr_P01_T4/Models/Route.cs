@@ -30,7 +30,7 @@ namespace WEB2020Apr_P01_T4.Models
 
         [Range(1,24)]
         [Display(Name = "Flight Duration")]
-        public int FlightDuration { get; set; }
+        public int? FlightDuration { get; set; }
 
     }
 }
