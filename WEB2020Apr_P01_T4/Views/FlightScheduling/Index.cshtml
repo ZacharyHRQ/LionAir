@@ -7,13 +7,16 @@
 </head>
 
 <partial name="_addRoute.cshtml"
-          model=@Model.CreateRoute>
+    model=@Model.CreateRoute>
+
+<partial name="_addFlightSchedule.cshtml"
+    model=@Model.CreateSchedule>
 
 <partial name="_Route.cshtml"
-        model=@Model.RouteList>
+    model=@Model.RouteList>
 
 <partial name="_Schedules.cshtml"
-        model=@Model.FlightScheduleList>
+     model=@Model.FlightScheduleList>
 
 
 
