@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WEB2020Apr_P01_T4.DAL;
 using WEB2020Apr_P01_T4.ViewModel;
+using WEB2020Apr_P01_T4.Models;
+
 
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,26 +17,28 @@ namespace WEB2020Apr_P01_T4.Controllers
     {
 
 
-        RouteDAL routeDAL = new RouteDAL();
-        FlightScheduleDAL flightScheduleDAL = new FlightScheduleDAL();
+        private static RouteDAL routeDAL = new RouteDAL();
+        private static FlightScheduleDAL flightScheduleDAL = new FlightScheduleDAL();
 
+       static ScheduleRouteViewModel scheduleRouteViewModel = new ScheduleRouteViewModel
+        {
+            FlightScheduleList = flightScheduleDAL.getAllFlightSchedule(),
+            RouteList = routeDAL.getAllRoutes()
+        };
 
         // GET: /<controller>/
         public IActionResult Index()
         {
-
-            ScheduleRouteViewModel scheduleRouteViewModel = new ScheduleRouteViewModel
-            {
-                FlightScheduleList = flightScheduleDAL.getAllFlightSchedule(),
-                RouteList = routeDAL.getAllRoutes()
-            };
             
             return View(scheduleRouteViewModel);
         }
 
-        public IActionResult Route()
+        
+        public IActionResult Route(Route route)
         {
-            return View();
+
+            scheduleRouteViewModel.RouteList.Add(route);
+            return View("Index",scheduleRouteViewModel);
         }
 
 

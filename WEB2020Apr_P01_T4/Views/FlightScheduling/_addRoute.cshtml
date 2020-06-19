@@ -6,8 +6,8 @@
     <div class="modal-contents">
 
         <div class="close">+</div>
-
-        @using (@Html.BeginForm("Create", "FlightScheduling"))
+        <h1>Create Flight Route</h1>
+        @using (@Html.BeginForm("Route", "FlightScheduling"))
         {
             <div class="form-group">
                 @Html.LabelFor(m => m.DepartureCountry)
@@ -30,9 +30,11 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(m => m.DepartureCity)
-                @Html.TextBoxFor(m => m.DepartureCity, new { @class = "form-control" })
+                @Html.LabelFor(m => m.FlightDuration)
+                @Html.TextBoxFor(m => m.FlightDuration, new { @class = "form-control" })
             </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
         }
 
     </div>
