@@ -2,11 +2,18 @@
 @{
 }
 
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/FlightSchedule.css">
+</head>
 
-
+<partial name="_addRoute.cshtml"
+          model=@Model.RouteList[0]>
 
 <partial name="_Route.cshtml"
-             model=Model.RouteList>
+        model=Model.RouteList>
 
- <partial name="_Schedules.cshtml"
-             model=Model.FlightScheduleList>
+<partial name="_Schedules.cshtml"
+        model=Model.FlightScheduleList>
+
+
+

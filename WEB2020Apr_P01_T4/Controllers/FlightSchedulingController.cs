@@ -17,6 +17,8 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         RouteDAL routeDAL = new RouteDAL();
         FlightScheduleDAL flightScheduleDAL = new FlightScheduleDAL();
+
+
         // GET: /<controller>/
         public IActionResult Index()
         {
@@ -29,5 +31,12 @@ namespace WEB2020Apr_P01_T4.Controllers
             
             return View(scheduleRouteViewModel);
         }
+
+        public IActionResult Route()
+        {
+            return View();
+        }
+
+
     }
 }
