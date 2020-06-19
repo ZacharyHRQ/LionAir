@@ -27,10 +27,13 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             ScheduleRouteViewModel scheduleRouteViewModel = new ScheduleRouteViewModel
             {
-                FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(),
+                ScheduleViewModel = new ScheduleViewModel{
+                   FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(),
+                   CreateSchedule = new FlightSchedule()
+                },
                 RouteList = routeDAL.getAllRoutes(),
                 CreateRoute = new Route(),
-                CreateSchedule = new FlightSchedule()
+                
                 
             };
             return View(scheduleRouteViewModel);
