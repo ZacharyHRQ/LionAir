@@ -43,8 +43,8 @@
                         <td>@item.DateLastMaintenance</td>
 
                         <td>
-                            <button type="button" class="btn btn-primary">Assign</button>
-                            <button type="button" class="btn btn-light">Update</button>
+                            <button sp-action="AssignAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID" type="button" class="btn btn-primary">Assign</button>
+                            <button sp-action="UpdateAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID" type="button" class="btn btn-light">Update</button>
 
                         </td>
                     </tr>
