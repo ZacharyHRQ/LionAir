@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WEB2020Apr_P01_T4.Models.Aircraft>
+﻿@model IEnumerable<WEB2020Apr_P01_T4.ViewModel.AircraftScheduleViewModel>
 @{
     Layout = "/Views/Shared/_StaffLayout.cshtml";
     ViewData["Title"] = "DisplayAircraft";
@@ -8,13 +8,17 @@
     Aircraft
 </h1>
 <div class="float-right pr-5">
-    <a href="" class="pr-5">Maintain <img src="~/icons/baseline_flight_black_18dp.png"
-     width="20"
-     height="20"
-     style="vertical-align:middle;" /></a> <a href="~/AircraftAssignment/CreateAircraft">Add <img src="~/icons/baseline_flight_black_18dp.png"
-     width="20"
-     height="20"
-     style="vertical-align:middle;" /></a>
+    <a href="" class="pr-5">
+        Maintain <img src="~/icons/baseline_flight_black_18dp.png"
+                      width="20"
+                      height="20"
+                      style="vertical-align:middle;" />
+    </a> <a href="~/AircraftAssignment/CreateAircraft">
+        Add <img src="~/icons/baseline_flight_black_18dp.png"
+                 width="20"
+                 height="20"
+                 style="vertical-align:middle;" />
+    </a>
 </div>
 
 @if (Model.ToList().Count > 0)
@@ -29,25 +33,27 @@
                     <th>economy class seats</th>
                     <th>date of last maintenance</th>
                     <th>Flight assigned</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.AircraftID</td>
-                        <td>@item.AircraftModel</td>
+                <tr>
+                    <td>@item.AircraftID</td>
+                    <td>@item.AircraftModel</td>
 
-                        <td>@item.NumBusinessSeat</td>
-                        <td>@item.NumEconomySeat</td>
-                        <td>@item.DateLastMaintenance</td>
+                    <td>@item.NumBusinessSeat</td>
+                    <td>@item.NumEconomySeat</td>
+                    <td>@item.DateLastMaintenance</td>
+                    <td>@item.FlightSchedule</td>
 
-                        <td>
-                            <button sp-action="AssignAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID" type="button" class="btn btn-primary">Assign</button>
-                            <button sp-action="UpdateAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID" type="button" class="btn btn-light">Update</button>
+                    <td>
+                        <button sp-action="AssignAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID" type="button" class="btn btn-primary">Assign</button>
+                        <button sp-action="UpdateAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID" type="button" class="btn btn-light">Update</button>
 
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

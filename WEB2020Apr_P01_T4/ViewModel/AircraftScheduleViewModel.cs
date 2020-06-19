@@ -1,15 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-
-namespace WEB2020Apr_P01_T4.Models
+namespace WEB2020Apr_P01_T4.ViewModel
 {
-    public class Aircraft
+    public class AircraftScheduleViewModel
     {
-        
         public int AircraftID { get; set; }
-
-        public String AircraftModel { get; set; }
         
+        public String AircraftModel { get; set; }
+
         public int NumEconomySeat { get; set; }
 
         public int NumBusinessSeat { get; set; }
@@ -17,10 +15,11 @@ namespace WEB2020Apr_P01_T4.Models
         [DataType(DataType.Date)]
         public DateTime? DateLastMaintenance { get; set; }
 
+        public String FlightSchedule { get; set; }
+
         public String Status { get; set; }
 
-
-        public Aircraft()
+        public AircraftScheduleViewModel()
         {
         }
     }
