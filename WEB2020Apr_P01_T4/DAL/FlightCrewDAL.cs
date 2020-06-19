@@ -60,17 +60,17 @@ namespace WEB2020Apr_P01_T4.DAL
             return crewList;
         }
 
-        public List<FlightCrew> GetFlightCrew(int branchNo)
+        public List<FlightCrew> GetFlightCrew(int staffid)
         {  
             //Create a SqlCommand object from connection object  
             SqlCommand cmd = conn.CreateCommand(); 
 
             //Specify the SQL statement that select all branches 
-            cmd.CommandText = @"SELECT * FROM Staff WHERE BranchNo = @selectedBranch"; 
+            cmd.CommandText = @"SELECT * FROM FlightCrew WHERE StaffID = @selectedID"; 
 
             //Define the parameter used in SQL statement, value for the
             //parameter is retrieved from the method parameter “branchNo”.  
-            cmd.Parameters.AddWithValue("@selectedBranch", branchNo);      
+            cmd.Parameters.AddWithValue("@selectedID", staffid);      
             //Open a database connection    
             conn.Open(); 
 

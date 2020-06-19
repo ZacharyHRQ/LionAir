@@ -7,11 +7,11 @@
                 <tr>
                     <th>Staff ID</th>
                     <th>Staff Name</th>
-                    @*<th>Staff Gender</th>
+                    <th>Staff Gender</th>
                     <th>Staff Vocation</th>
                     <th>Date Employed</th>
                     <th>Staff Email</th>
-                    <th>Status</th>*@
+                    <th>Status</th>
                     <th></th>
                 </tr>
             </thead>
@@ -21,11 +21,11 @@
                 <tr>
                     <td>@item.StaffID.ToString()</td>
                     <td>@item.StaffName</td>
-                    @*<td>@item.Gender</td>
+                    <td>@item.Gender</td>
                     <td>@item.DateEmployed</td>
                     <td>@item.Vocation</td>
                     <td>@item.EmailAddr</td>
-                    <td>@item.Status</td>*@
+                    <td>@item.Status</td>
                     <td>
                         <a asp-action="Details" asp-controller="FlightPersonnel" asp-route-id="@item.StaffID">Details</a>
                     </td>
