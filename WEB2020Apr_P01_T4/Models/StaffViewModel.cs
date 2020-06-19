@@ -43,5 +43,11 @@ namespace WEB2020Apr_P01_T4.Models
 
         [Display(Name = "Role")]
         public string Role { get; set; }
+
+        [Display(Name = "FlightNumber")]
+        public string FlightNumber { get; set; }
+
+        [Display(Name = "AircraftID")]
+        public int AircraftID { get; set; }
     }
 }

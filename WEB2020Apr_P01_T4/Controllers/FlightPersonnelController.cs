@@ -40,44 +40,91 @@ namespace WEB2020Apr_P01_T4.Controllers
                 return RedirectToAction("Index", "Home");   
             }  
             FlightPersonnel flightPersonnel = staffContext.GetDetails(id);   
-            StaffViewModel staffVM = MapToStaffVM(flightPersonnel);    
+            List <StaffViewModel> staffVM = MapToStaffVM(flightPersonnel);    
             return View(staffVM);
         }
 
-        public StaffViewModel MapToStaffVM(FlightPersonnel flightPersonnel)
+        public List <StaffViewModel> MapToStaffVM(FlightPersonnel flightPersonnel)
         {
-            int scheduleID = 0;
-            String role = "";
+            //string flightno = "";
+            //int routeid = 0;
+            //int aircraftid = 0;
+            //string status = "";
+            List<StaffViewModel> staffvmList = new List<StaffViewModel>();
+            //List<FlightSchedule> fsList = FlightScheduleContext.GetAllFlightSchedule();
             if (flightPersonnel.StaffID != null)
             {
                 List<FlightCrew> crewList = crewContext.GetAllCrew();
                 foreach (FlightCrew crew in crewList)
                 {
-                    if (crew.StaffID == flightPersonnel.StaffID)
+                    //foreach (FlightSchedule fs in fsList)
+                    //{
+                    //    if (crew.ScheduleID = fs.ScheduleID)
+                    //    {
+                    //        flightno = fs.FlightNumber;
+                    //        routeid = fs.RouteID;
+                    //        aircraftid = fs.AircraftID;
+                    //        status = fs.Status;
+                    //    }
+                    staffvmList.Add(new StaffViewModel
                     {
-                        scheduleID = crew.ScheduleID;
-                        role = crew.Role;
-                        //Exit the foreach loop once the name is found     
-                        break;
-                    }
+                        StaffID = flightPersonnel.StaffID,
+                        StaffName = flightPersonnel.StaffName,
+                        ScheduleID = crew.ScheduleID,
+                        Role = crew.Role
+                        //FlightNumber = flightno
+                        //AircraftID = aircraftid
+                        //RouteID = routeid
+                        //Status = status
+                    });
+                    //}
+
+
+                    //scheduleID = crew.ScheduleID;
+                    //role = crew.Role;
+                    //Exit the foreach loop once the name is found     
+                    //break;
+
                 }
             }
 
-            StaffViewModel staffVM = new StaffViewModel
-            {
-                StaffID = flightPersonnel.StaffID,
-                StaffName = flightPersonnel.StaffName,
-                Gender = flightPersonnel.Gender,
-                DateEmployed = flightPersonnel.DateEmployed,
-                Vocation = flightPersonnel.Vocation,
-                EmailAddr = flightPersonnel.EmailAddr,
-                Status = flightPersonnel.Status,
-                ScheduleID = scheduleID,
-                Role = role,
-            };     
-            return staffVM;
-        } 
-        
+            return staffvmList;
+
+
+            //int scheduleID = 0;
+            //String role = "";
+            //int scheduleID = 0;
+            //String role = "";
+            //if (flightPersonnel.StaffID != null)
+            //{
+            //    List<FlightCrew> crewList = crewContext.GetAllCrew();
+            //    foreach (FlightCrew crew in crewList)
+            //    {
+            //        if (crew.StaffID == flightPersonnel.StaffID)
+            //        {
+            //            scheduleID = crew.ScheduleID;
+            //            role = crew.Role;
+            //            //Exit the foreach loop once the name is found     
+            //            break;
+            //        }
+            //    }
+            //}
+
+            //StaffViewModel staffVM = new StaffViewModel
+            //{
+            //    StaffID = flightPersonnel.StaffID,
+            //    StaffName = flightPersonnel.StaffName,
+            //    Gender = flightPersonnel.Gender,
+            //    DateEmployed = flightPersonnel.DateEmployed,
+            //    Vocation = flightPersonnel.Vocation,
+            //    EmailAddr = flightPersonnel.EmailAddr,
+            //    Status = flightPersonnel.Status,
+            //    ScheduleID = scheduleID,
+            //    Role = role,
+            //};     
+            //return staffVM;
+        }
+
         // GET: FlightPersonnel/Create
         public ActionResult Create()
         {
