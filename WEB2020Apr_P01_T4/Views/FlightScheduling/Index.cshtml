@@ -6,17 +6,10 @@
     <link rel="stylesheet" type="text/css" href="~/css/FlightSchedule.css">
 </head>
 
-<partial name="_addRoute.cshtml"
-    model=@Model.CreateRoute>
-
-<partial name="_addFlightSchedule.cshtml"
-    model=@Model.CreateSchedule>
-
-<partial name="_Route.cshtml"
-    model=@Model.RouteList>
-
-<partial name="_Schedules.cshtml"
-     model=@Model.FlightScheduleList>
-
-
+@{
+//@await Html.PartialAsync("_addRoute.cshtml", Model.CreateRoute
+}
+@await Html.PartialAsync("_addFlightSchedule.cshtml", Model.CreateSchedule)
+@await Html.PartialAsync("_Route.cshtml", Model.RouteList)
+@await Html.PartialAsync("_Schedules.cshtml", Model.FlightScheduleList)
 
