@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WEB2020Apr_P01_T4.Models
 {
     public class FlightSchedule
     {
+
+        private List<String> StatusOption = new List<String>() {"Full", "Delayed", "Cancelled" };
+
         [Required]
         public int ScheduleID { get; set; }
 
@@ -40,5 +44,13 @@ namespace WEB2020Apr_P01_T4.Models
         [StringLength(20)]
         [Required]
         public String Status { get; set; }
+
+
+        public List<String> getStatusOption()
+        {
+            return StatusOption;
+        }
+
+
     }
 }
