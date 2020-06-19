@@ -134,7 +134,52 @@ namespace WEB2020Apr_P01_T4.DAL
             return EmailFound;
         }
 
-          
+        public FlightPersonnel GetDetails(int staffId)
+        {
+            FlightPersonnel flightPersonnel = new FlightPersonnel();
+
+            //Create a SqlCommand object from connection object   
+            SqlCommand cmd = conn.CreateCommand();
+
+            //Specify the SELECT SQL statement that   
+            //retrieves all attributes of a staff record.  
+            cmd.CommandText = @"SELECT * FROM Staff WHERE StaffID = @selectedStaffID";
+
+            //Define the parameter used in SQL statement, value for the 
+            //parameter is retrieved from the method parameter “staffId”.  
+            cmd.Parameters.AddWithValue("@selectedStaffID", staffId);
+
+            //Open a database connection    
+            conn.Open();
+
+            //Execute SELCT SQL through a DataReader  
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                //Read the record from database     
+                while (reader.Read())
+                {
+                    flightPersonnel.StaffID = reader.GetInt32(0); 
+                    flightPersonnel.StaffName = reader.GetString(1);
+                    flightPersonnel.Gender = reader.GetString(2)[0];
+                    flightPersonnel.DateEmployed = reader.GetDateTime(3);
+                    //Gender = !reader.IsDBNull(2) ? reader.GetChar(2) : (char?) null,             
+                    //DateEmployed = !reader.IsDBNull(3) ? reader.GetDateTime(3) : (DateTime?)null,
+                    flightPersonnel.Vocation = reader.GetString(4);
+                    //Vocation = !reader.IsDBNull(4) ? reader.GetString(4) : (string?)null,                  
+                    flightPersonnel.EmailAddr = reader.GetString(5);
+                    flightPersonnel.Status = reader.GetString(7);
+                }
+            }
+            //Close data reader  
+            reader.Close();
+
+            //Close database connection  
+            conn.Close();
+
+            return flightPersonnel;
+        }
+
     }
     
 }

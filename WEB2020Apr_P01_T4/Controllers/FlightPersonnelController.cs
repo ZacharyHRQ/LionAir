@@ -7,15 +7,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using WEB2020Apr_P01_T4.DAL;
 using WEB2020Apr_P01_T4.Models;
+using WEB2020Apr_P01_T4.Views.FlightPersonnel;
 
 namespace WEB2020Apr_P01_T4.Controllers
 {
     public class FlightPersonnelController : Controller
     {
         private FlightPersonnelDAL staffContext = new FlightPersonnelDAL();
+        private FlightCrewDAL crewContext = new FlightCrewDAL();
 
-        // GET: FliightPersonnel
-        public ActionResult Index()
+            // GET: FliightPersonnel
+            public ActionResult Index()
         {
             // Stop accessing the action if not logged in      
             // or account not in the "Staff" role         
@@ -31,9 +33,51 @@ namespace WEB2020Apr_P01_T4.Controllers
         // GET: FlightPersonnel/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            // Stop accessing the action if not logged in   
+            // or account not in the "Staff" role
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))    
+            {     
+                return RedirectToAction("Index", "Home");   
+            }  
+            FlightPersonnel flightPersonnel = staffContext.GetDetails(id);   
+            StaffViewModel staffVM = MapToStaffVM(flightPersonnel);    
+            return View(staffVM);
         }
 
+        public StaffViewModel MapToStaffVM(FlightPersonnel flightPersonnel)
+        {
+            int scheduleID = 0;
+            String role = "";
+            if (flightPersonnel.StaffID != null)
+            {
+                List<FlightCrew> crewList = crewContext.GetAllCrew();
+                foreach (FlightCrew crew in crewList)
+                {
+                    if (crew.StaffID == flightPersonnel.StaffID)
+                    {
+                        scheduleID = crew.ScheduleID;
+                        role = crew.Role;
+                        //Exit the foreach loop once the name is found     
+                        break;
+                    }
+                }
+            }
+
+            StaffViewModel staffVM = new StaffViewModel
+            {
+                StaffID = flightPersonnel.StaffID,
+                StaffName = flightPersonnel.StaffName,
+                Gender = flightPersonnel.Gender,
+                DateEmployed = flightPersonnel.DateEmployed,
+                Vocation = flightPersonnel.Vocation,
+                EmailAddr = flightPersonnel.EmailAddr,
+                Status = flightPersonnel.Status,
+                ScheduleID = scheduleID,
+                Role = role,
+            };     
+            return staffVM;
+        } 
+        
         // GET: FlightPersonnel/Create
         public ActionResult Create()
         {
