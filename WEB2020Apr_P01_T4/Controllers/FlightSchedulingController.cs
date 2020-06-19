@@ -27,9 +27,11 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             ScheduleRouteViewModel scheduleRouteViewModel = new ScheduleRouteViewModel
             {
-                FlightScheduleList = flightScheduleDAL.getAllFlightSchedule(),
+                FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(),
                 RouteList = routeDAL.getAllRoutes(),
-                CreateRoute = new Route()
+                CreateRoute = new Route(),
+                CreateSchedule = new FlightSchedule()
+                
             };
             return View(scheduleRouteViewModel);
         }
@@ -46,6 +48,17 @@ namespace WEB2020Apr_P01_T4.Controllers
             return RedirectToAction("Index");
         }
 
+
+
+        [HttpPost]
+        public IActionResult SaveSchedule(FlightSchedule flightSchedule)
+        {
+
+            //Insert the data
+            flightScheduleDAL.InsertData(flightSchedule);
+
+            return RedirectToAction("Index");
+        }
 
     }
 }
