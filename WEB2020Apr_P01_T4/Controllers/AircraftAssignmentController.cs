@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WEB2020Apr_P01_T4.Models;
 using WEB2020Apr_P01_T4.DAL;
+using WEB2020Apr_P01_T4.ViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,15 +15,17 @@ namespace WEB2020Apr_P01_T4.Controllers
     {
 
         private AircraftDAL aircraftContext = new AircraftDAL();
+        FlightScheduleDAL flightScheduleDAL = new FlightScheduleDAL();
 
         // GET: /<controller>/Display
         public IActionResult DisplayAircraft()
         {
-            List<Aircraft> aircraftList = aircraftContext.GetAllAircraft();
-            return View(aircraftList);
+            List<AircraftScheduleViewModel> viewModels = MapToAircraftVM();
+           
+            return View(viewModels);
         }
 
-        // GET: /<controller>/Display
+        // GET: /<controller>/Create
         public IActionResult CreateAircraft()
         {
             ViewData["ModelList"] = GetModel();
@@ -48,27 +51,20 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
         
         }
-
-
-        // GET: /<controller>/Display
-        public IActionResult UpdateAircraft()
+        
+        // GET: /<controller>/Update
+        public IActionResult UpdateAircraft(int aircrafID)
         {
             return View();
         }
 
-        // GET: /<controller>/Display
-        public IActionResult AssignAircraft()
+        // GET: /<controller>/Assign
+        public IActionResult AssignAircraft(int aircrafID)
         {
             return View();
         }
 
-        // GET: /<controller>/
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
+        // Aircraft Models 
         private List<SelectListItem> GetModel()
         {
             List<SelectListItem> models = new List<SelectListItem>();
@@ -100,6 +96,42 @@ namespace WEB2020Apr_P01_T4.Controllers
             return models;
         }
 
+        // Transfer data from aircraft and flight schedule to AircraftScheduleViewModel
+        public List<AircraftScheduleViewModel> MapToAircraftVM()
+        {
+            List<AircraftScheduleViewModel> aircraftScheduleViewModels = new List<AircraftScheduleViewModel>();
+            List<Aircraft> aircraftList = aircraftContext.GetAllAircraft();
+            List<FlightSchedule> flightSchedules = flightScheduleDAL.getAllFlightSchedule();
+            foreach (Aircraft aircraft in aircraftList)
+            {
+                // finds the flight schedules that matches aircraft ID
+                FlightSchedule flight = flightSchedules.Find(delegate (FlightSchedule flight)
+                {
+                    return flight.AircraftID == aircraft.AircraftID;
+                });
+
+                string scheduleID = "";
+                if (flight != null)
+                {
+                     scheduleID = flight.FlightNumber;
+                }
+                
+                aircraftScheduleViewModels.Add(new AircraftScheduleViewModel
+                {
+                    AircraftID = aircraft.AircraftID,
+                    AircraftModel = aircraft.AircraftModel,
+                    NumBusinessSeat = aircraft.NumBusinessSeat,
+                    NumEconomySeat = aircraft.NumEconomySeat,
+                    DateLastMaintenance = aircraft.DateLastMaintenance,
+                    FlightSchedule = scheduleID,
+                    Status = aircraft.Status
+                });
+            }
+           
+            return aircraftScheduleViewModels;
+        }
+
+        //check dates if < today 
 
     }
 }
