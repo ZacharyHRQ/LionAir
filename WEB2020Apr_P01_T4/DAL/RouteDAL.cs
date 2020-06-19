@@ -64,5 +64,38 @@ namespace WEB2020Apr_P01_T4.DAL
             }
         }
 
+        public void insertData(Route route)
+        {
+            try
+            {
+              
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("INSERT INTO FlightRoute " +
+                    "(DepartureCity, DepartureCountry, ArrivalCity, ArrivalCountry, FlightDuration)values('{0}', '{1}', '{2}', '{3}', {4})"
+                    , route.DepartureCity,
+                    route.DepartureCountry,
+                    route.ArrivalCity,
+                    route.ArrivalCountry,
+                    route.FlightDuration
+                    ), con);
+
+
+                // Opening Connection  
+                con.Open();
+                // Executing the SQL query  
+                cm.ExecuteNonQuery();
+                
+            }
+            catch (Exception e)
+            {
+                
+            }
+            // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+        }
+
     }
 }

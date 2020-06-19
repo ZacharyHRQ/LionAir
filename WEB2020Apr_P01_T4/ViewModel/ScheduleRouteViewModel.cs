@@ -8,5 +8,7 @@ namespace WEB2020Apr_P01_T4.ViewModel
     {
         public List<FlightSchedule> FlightScheduleList { get; set; }
         public List<Route> RouteList { get; set; }
+        public Route CreateRoute { get; set; }
+        
     }
 }

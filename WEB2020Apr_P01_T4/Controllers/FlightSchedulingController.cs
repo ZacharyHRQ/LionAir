@@ -17,28 +17,44 @@ namespace WEB2020Apr_P01_T4.Controllers
     {
 
 
-        private static RouteDAL routeDAL = new RouteDAL();
-        private static FlightScheduleDAL flightScheduleDAL = new FlightScheduleDAL();
+        RouteDAL routeDAL = new RouteDAL();
+        FlightScheduleDAL flightScheduleDAL = new FlightScheduleDAL();
 
-       static ScheduleRouteViewModel scheduleRouteViewModel = new ScheduleRouteViewModel
-        {
-            FlightScheduleList = flightScheduleDAL.getAllFlightSchedule(),
-            RouteList = routeDAL.getAllRoutes()
-        };
+      
 
         // GET: /<controller>/
         public IActionResult Index()
         {
-            
+            ScheduleRouteViewModel scheduleRouteViewModel = new ScheduleRouteViewModel
+            {
+                FlightScheduleList = flightScheduleDAL.getAllFlightSchedule(),
+                RouteList = routeDAL.getAllRoutes(),
+                CreateRoute = new Route()
+            };
             return View(scheduleRouteViewModel);
         }
 
         
-        public IActionResult Route(Route route)
-        {
+        //public IActionResult Route(Route route)
+        //{
 
+        //    scheduleRouteViewModel.RouteList.Add(route);
+        //    return View("Index",scheduleRouteViewModel);
+        //}
+
+        [HttpPost]
+        public IActionResult SaveRoute(Route route)
+        {
+            ScheduleRouteViewModel scheduleRouteViewModel = new ScheduleRouteViewModel
+            {
+                FlightScheduleList = flightScheduleDAL.getAllFlightSchedule(),
+                RouteList = routeDAL.getAllRoutes(),
+                CreateRoute = new Route()
+            };
+
+            routeDAL.insertData(route);
             scheduleRouteViewModel.RouteList.Add(route);
-            return View("Index",scheduleRouteViewModel);
+            return View("Index", scheduleRouteViewModel);
         }
 
 
