@@ -42,11 +42,11 @@ namespace WEB2020Apr_P01_T4.Controllers
         
 
         [HttpPost]
-        public IActionResult SaveRoute(Route route)
+        public IActionResult SaveRoute(ScheduleRouteViewModel scheduleRouteViewModel)
         {
          
             //Insert the data
-            routeDAL.insertData(route);
+            routeDAL.insertData(scheduleRouteViewModel.CreateRoute);
          
             return RedirectToAction("Index");
         }
@@ -54,11 +54,20 @@ namespace WEB2020Apr_P01_T4.Controllers
 
 
         [HttpPost]
-        public IActionResult SaveSchedule(FlightSchedule flightSchedule)
+        public IActionResult SaveSchedule(ScheduleViewModel scheduleViewModel)
         {
 
+            scheduleViewModel.RouteList = routeDAL.getAllRoutes();
+            scheduleViewModel.Route = (Route)scheduleViewModel.RouteList.Where(r => r.RouteID == scheduleViewModel.CreateSchedule.RouteID).First();
+            var r = scheduleViewModel.RouteList.Where(r => r.RouteID == scheduleViewModel.CreateSchedule.RouteID);
+
+
+            //Calculate
+            scheduleViewModel.CalculateArrival();
+            
+
             //Insert the data
-            flightScheduleDAL.InsertData(flightSchedule);
+            flightScheduleDAL.InsertData(scheduleViewModel.CreateSchedule);
 
             return RedirectToAction("Index");
         }
