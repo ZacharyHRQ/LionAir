@@ -21,23 +21,29 @@ namespace WEB2020Apr_P01_T4.Controllers
         FlightScheduleDAL flightScheduleDAL = new FlightScheduleDAL();
         BookingDAL bookingDAL = new BookingDAL();
 
+        ScheduleRouteViewModel scheduleRouteViewModel = new ScheduleRouteViewModel
+        {
 
+
+            ScheduleViewModel = new ScheduleViewModel
+            {
+                FlightScheduleList = new FlightScheduleDAL().GetAllFlightSchedule(),
+                RouteList = new RouteDAL().getAllRoutes(),
+                CreateSchedule = new FlightSchedule(),
+                ShowAddPop = false,
+                ShowEditPop = false
+
+            },
+            CreateRoute = new Route(),
+
+
+        };
 
 
         // GET: /<controller>/
         public IActionResult Index()
         {
-            ScheduleRouteViewModel scheduleRouteViewModel = new ScheduleRouteViewModel
-            {
-                FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(),
-                ScheduleViewModel = new ScheduleViewModel{
-                    RouteList = routeDAL.getAllRoutes(),
-                    CreateSchedule = new FlightSchedule()
-                },
-                CreateRoute = new Route(),
-                
-                
-            };
+          
             return View(scheduleRouteViewModel);
         }
 
@@ -65,23 +71,43 @@ namespace WEB2020Apr_P01_T4.Controllers
             return RedirectToAction("Index");
         }
 
+        
+        public IActionResult EditSchedule(int id)
+        {
+
+            var schdule = flightScheduleDAL.GetAllFlightSchedule();
+
+            scheduleRouteViewModel.ScheduleViewModel.ShowEditPop = true;
+            scheduleRouteViewModel.ScheduleViewModel.CreateSchedule = schdule.First(s => s.ScheduleID == id);
+
+            return View("Index", scheduleRouteViewModel);
+        }
+
+        public IActionResult AddSchedule(int id)
+        {
+
+            scheduleRouteViewModel.ScheduleViewModel.ShowAddPop = true;
+            scheduleRouteViewModel.ScheduleViewModel.CreateSchedule.RouteID = id;
+
+            return View("Index", scheduleRouteViewModel);
+        }
 
 
         [HttpPost]
-        public IActionResult SaveSchedule(ScheduleViewModel scheduleViewModel)
+        public IActionResult SaveSchedule(FlightSchedule flightSchedule)
         {
 
-            scheduleViewModel.RouteList = routeDAL.getAllRoutes();
-            scheduleViewModel.Route = (Route)scheduleViewModel.RouteList.Where(r => r.RouteID == scheduleViewModel.CreateSchedule.RouteID).First();
-            var r = scheduleViewModel.RouteList.Where(r => r.RouteID == scheduleViewModel.CreateSchedule.RouteID);
+            scheduleRouteViewModel.ScheduleViewModel.CreateSchedule = flightSchedule;
+            int RouteID = scheduleRouteViewModel.ScheduleViewModel.CreateSchedule.RouteID;
 
+            scheduleRouteViewModel.ScheduleViewModel.Route = scheduleRouteViewModel.ScheduleViewModel.RouteList.First(r => r.RouteID == RouteID);
 
             //Calculate
-            scheduleViewModel.CalculateArrival();
+            scheduleRouteViewModel.ScheduleViewModel.CalculateArrival();
             
 
             //Insert the data
-            flightScheduleDAL.InsertData(scheduleViewModel.CreateSchedule);
+            flightScheduleDAL.InsertData(scheduleRouteViewModel.ScheduleViewModel.CreateSchedule);
 
             return RedirectToAction("Index");
         }

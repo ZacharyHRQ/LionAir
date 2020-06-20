@@ -1,0 +1,52 @@
+﻿@model WEB2020Apr_P01_T4.Models.FlightSchedule
+<div class="bg-Flight-modal">
+    <div class="modal-contents">
+
+        
+        @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class="close close-Flight"} )
+        
+        
+        <h1>Create New Flight Schedule</h1>
+        @using (@Html.BeginForm("SaveSchedule", "FlightScheduling", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.FlightNumber)
+                @Html.TextBoxFor(m => m.FlightNumber, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.DepartureDateTime)
+                @Html.TextBoxFor(m => m.DepartureDateTime, new { @class = "form-control", @type = "datetime-local" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.EconomyClassPrice)
+                @Html.TextBoxFor(m => m.EconomyClassPrice, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.BusinessClassPrice)
+                @Html.TextBoxFor(m => m.BusinessClassPrice, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.RouteID)
+                @Html.TextBoxFor(m => m.RouteID, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Status)
+                @Html.DropDownListFor(m => m.Status, new SelectList(Model.getStatusOption()), new { @class = "form-control" })
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        }
+
+    </div>
+</div>
+
+
+
+
