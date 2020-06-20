@@ -11,8 +11,7 @@
             <th scope="col">Economy Price</th>
             <th scope="col">Business Price</th>
             <th scope="col">Status</th>
-            
-
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -27,8 +26,10 @@
                 <td>@schedule.EconomyClassPrice</td>
                 <td>@schedule.BusinessClassPrice</td>
                 <td>@schedule.Status</td>
-                
-
+                <td>
+                    @Html.ActionLink("Edit", "FlightBooking", "FlightScheduling", new { @id=schedule.ScheduleID}, new { @class = "btn btn-primary" })                 
+                    <button class="btn btn-primary">View</button>
+                </td>
             </tr>
 
         }

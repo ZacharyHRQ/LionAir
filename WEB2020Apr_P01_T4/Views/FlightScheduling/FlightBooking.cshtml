@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WEB2020Apr_P01_T4.Models.Booking>
+@{
+
+}
+
+@if (Model.Count() == 0)
+{
+    <p>No value</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(m => m.First().PassengerName)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.First().PassportNumber)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.First().Nationality)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.First().SeatClass)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.First().AmtPayable)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.First().Remarks)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.First().DateTimeCreated)</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var booking in Model)
+            {
+                <tr>
+                    <th scope="row">@booking.PassengerName</th>
+                    <td>@booking.PassportNumber</td>
+                    <td>@booking.Nationality</td>
+                    <td>@booking.SeatClass</td>
+                    <td>@booking.AmtPayable</td>
+                    <td>@booking.Remarks</td>
+                    <td>@booking.DateTimeCreated</td>
+
+         
+                </tr>
+
+            }
+
+
+        </tbody>
+    </table>
+}
