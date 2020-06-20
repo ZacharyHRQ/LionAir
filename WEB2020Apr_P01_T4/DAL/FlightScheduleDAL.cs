@@ -105,5 +105,34 @@ namespace WEB2020Apr_P01_T4.DAL
             }
         }
 
+        public void Update(FlightSchedule flightSchedule)
+        {
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("Update FlightSchedule " +
+                    "SET Status='{0}' WHERE ScheduleID={1}",
+                        flightSchedule.Status,
+                        flightSchedule.ScheduleID
+                    ), con);
+
+
+                // Opening Connection  
+                con.Open();
+                // Executing the SQL query  
+                cm.ExecuteNonQuery();
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+        }
     }
 }
