@@ -17,7 +17,7 @@
     height: 100%;
     position: absolute;
     top: 0;
-    display: none;
+    display: flex;
     -webkit-box-pack: center;
     justify-content: center;
     -webkit-box-align: center;

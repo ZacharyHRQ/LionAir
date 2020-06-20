@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WEB2020Apr_P01_T4.Models.FlightSchedule>
+﻿@model WEB2020Apr_P01_T4.ViewModel.ScheduleViewModel
 
 <table class="table">
     <thead>
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var schedule in Model)
+        @foreach (var schedule in Model.FlightScheduleList)
         {
             <tr>
                 <th scope="row">@schedule.FlightNumber</th>
@@ -26,9 +26,10 @@
                 <td>@schedule.EconomyClassPrice</td>
                 <td>@schedule.BusinessClassPrice</td>
                 <td>@schedule.Status</td>
+
                 <td>
-                    @Html.ActionLink("Edit", "FlightBooking", "FlightScheduling", new { @id=schedule.ScheduleID}, new { @class = "btn btn-primary" })                 
-                    <button class="btn btn-primary">View</button>
+                    @Html.ActionLink("Edit", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "btn btn-primary " })
+                    @Html.ActionLink("View", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "btn btn-primary " })
                 </td>
             </tr>
 
@@ -37,6 +38,11 @@
 
     </tbody>
 </table>
+
+@if (Model.ShowEditPop)
+{
+    @await Html.PartialAsync("_ScheduleForm.cshtml", Model.CreateSchedule)
+}
 
 
 
