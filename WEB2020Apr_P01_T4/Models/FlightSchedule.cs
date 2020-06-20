@@ -24,6 +24,8 @@ namespace WEB2020Apr_P01_T4.Models
 
         [DataType(DataType.Date)]
         [Display(Name = "Departure Date Time")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [ADayBeforeDepature]
         public DateTime? DepartureDateTime { get; set; }
 
         [DataType(DataType.Date)]

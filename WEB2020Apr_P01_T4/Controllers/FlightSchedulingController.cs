@@ -94,22 +94,34 @@ namespace WEB2020Apr_P01_T4.Controllers
 
 
         [HttpPost]
-        public IActionResult SaveSchedule(FlightSchedule flightSchedule)
+        public IActionResult SaveSchedule(FlightSchedule flightSchedule, int id)
         {
-
-            scheduleRouteViewModel.ScheduleViewModel.CreateSchedule = flightSchedule;
-            int RouteID = scheduleRouteViewModel.ScheduleViewModel.CreateSchedule.RouteID;
-
-            scheduleRouteViewModel.ScheduleViewModel.Route = scheduleRouteViewModel.ScheduleViewModel.RouteList.First(r => r.RouteID == RouteID);
-
-            //Calculate
-            scheduleRouteViewModel.ScheduleViewModel.CalculateArrival();
+            int RouteID = id;
             
 
-            //Insert the data
-            flightScheduleDAL.InsertData(scheduleRouteViewModel.ScheduleViewModel.CreateSchedule);
+            if (ModelState.IsValid)
+            {
+                scheduleRouteViewModel.ScheduleViewModel.CreateSchedule = flightSchedule;
+                scheduleRouteViewModel.ScheduleViewModel.CreateSchedule.RouteID = RouteID;
 
-            return RedirectToAction("Index");
+                scheduleRouteViewModel.ScheduleViewModel.Route = scheduleRouteViewModel.ScheduleViewModel.RouteList.First(r => r.RouteID == RouteID);
+
+                //Calculate
+                scheduleRouteViewModel.ScheduleViewModel.CalculateArrival();
+
+
+                //Insert the data
+                flightScheduleDAL.InsertData(scheduleRouteViewModel.ScheduleViewModel.CreateSchedule);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                scheduleRouteViewModel.ScheduleViewModel.CreateSchedule.RouteID = RouteID;
+                scheduleRouteViewModel.ScheduleViewModel.ShowAddPop = true;
+                return View("Index", scheduleRouteViewModel);
+            }
+
+            
         }
 
         [HttpPost]

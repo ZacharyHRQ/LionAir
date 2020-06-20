@@ -12,6 +12,7 @@
 
         @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class = "close close-Flight" })
 
+        
 
         @if (disable)
         {
@@ -58,31 +59,36 @@
         else
         {
             <h1>Create New Flight Schedule</h1>
-            @using (@Html.BeginForm("SaveSchedule", "FlightScheduling", FormMethod.Post))
+            @using (@Html.BeginForm("SaveSchedule", "FlightScheduling", new { @id=Model.RouteID}, FormMethod.Post))
             {
                 <div class="form-group">
                     @Html.LabelFor(m => m.FlightNumber)
                     @Html.TextBoxFor(m => m.FlightNumber, new { @class = "form-control", })
+                    @Html.ValidationMessageFor(m => m.FlightNumber)
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(m => m.DepartureDateTime)
                     @Html.TextBoxFor(m => m.DepartureDateTime, new { @class = "form-control", @type = "datetime-local" })
+                    @Html.ValidationMessageFor(m => m.DepartureDateTime)
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(m => m.EconomyClassPrice)
                     @Html.TextBoxFor(m => m.EconomyClassPrice, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EconomyClassPrice)
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(m => m.BusinessClassPrice)
                     @Html.TextBoxFor(m => m.BusinessClassPrice, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.BusinessClassPrice)
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(m => m.RouteID)
-                    @Html.TextBoxFor(m => m.RouteID, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.RouteID, new { @class = "form-control", disabled = "disabled" })
+                    @Html.ValidationMessageFor(m => m.RouteID)
                 </div>
 
                 <div class="form-group">
@@ -103,3 +109,6 @@
 
 
 
+
+<script src="~/wwwroot/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
