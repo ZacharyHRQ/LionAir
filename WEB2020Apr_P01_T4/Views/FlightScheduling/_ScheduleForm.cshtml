@@ -48,6 +48,8 @@
                     @Html.DropDownListFor(m => m.Status, new SelectList(Model.getStatusOption()), new { @class = "form-control" })
                 </div>
 
+                @Html.HiddenFor(m => m.ArrivalDateTime)
+                @Html.HiddenFor(m => m.ScheduleID)
 
 
                 <button type="submit" class="btn btn-primary">Update</button>

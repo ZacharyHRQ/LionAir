@@ -112,5 +112,15 @@ namespace WEB2020Apr_P01_T4.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public IActionResult UpdateSchedule(FlightSchedule flightSchedule)
+        {
+
+            //Insert the data
+            flightScheduleDAL.Update(flightSchedule);
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
