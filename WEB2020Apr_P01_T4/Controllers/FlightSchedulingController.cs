@@ -19,8 +19,10 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         RouteDAL routeDAL = new RouteDAL();
         FlightScheduleDAL flightScheduleDAL = new FlightScheduleDAL();
+        BookingDAL bookingDAL = new BookingDAL();
 
-      
+
+
 
         // GET: /<controller>/
         public IActionResult Index()
@@ -37,6 +39,18 @@ namespace WEB2020Apr_P01_T4.Controllers
                 
             };
             return View(scheduleRouteViewModel);
+        }
+
+
+        public IActionResult FlightBooking(int id)
+        {
+
+
+            //Get Booking
+            var bookingList = bookingDAL.GetAllBooking().Where(booking => booking.ScheduleID == id);
+
+
+            return View(bookingList);
         }
 
         
