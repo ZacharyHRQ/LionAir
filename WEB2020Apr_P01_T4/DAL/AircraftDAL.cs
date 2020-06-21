@@ -27,6 +27,8 @@ namespace WEB2020Apr_P01_T4.DAL
             conn = new SqlConnection(strConn);
         }
 
+
+
         public List<Aircraft> GetAllAircraft()
         {
             //Create a SqlCommand object from connection object
@@ -61,6 +63,46 @@ namespace WEB2020Apr_P01_T4.DAL
             return aircraftList;
         }
 
+
+        public List<FlightSchedule> GetSchedules(int aircraftID)
+        {
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify the SELECT SQL statement
+            cmd.CommandText = @"SELECT * FROM FlightSchedule WHERE (AircraftID = @aircraftid AND DepartureDateTime >= (GETDATE()))";
+            cmd.Parameters.AddWithValue("@aircraftid", aircraftID);
+            //Open a database connection
+            conn.Open();
+            //Execute the SELECT SQL through a DataReader
+            SqlDataReader reader = cmd.ExecuteReader();
+            //Read all records until the end, save data into a staff list
+            List<FlightSchedule> flightSchedules = new List<FlightSchedule>();
+            while (reader.Read())
+            {
+                flightSchedules.Add(
+                new FlightSchedule
+                {
+                    ScheduleID = reader.GetInt32(0),
+                    FlightNumber = reader.GetString(1),
+                    RouteID = reader.GetInt32(2),
+                    AircraftID = reader.GetInt32(3),
+                    DepartureDateTime = reader.GetDateTime(4),
+                    ArrivalDateTime = reader.GetDateTime(5),
+                    EconomyClassPrice = reader.GetDecimal(6),
+                    BusinessClassPrice = reader.GetDecimal(7),
+                    Status = reader.GetString(8)
+
+                }
+                );
+            }
+            //Close DataReader
+            reader.Close();
+            //Close the database connection
+            conn.Close();
+            return flightSchedules;
+        }
+
+
         public int Add(Aircraft aircraft)
         {
             //Create a SqlCommand object from connection object
@@ -89,6 +131,159 @@ namespace WEB2020Apr_P01_T4.DAL
             return aircraft.AircraftID;
         }
 
-       
+        //find aircraft
+        public Aircraft FindAircraft(int aircraftid)
+        {
+            Aircraft aircraft = new Aircraft();
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify the SELECT SQL statement that
+            //retrieves all attributes of a staff record.
+            cmd.CommandText = @"SELECT * FROM Aircraft
+ WHERE AircraftID = @selectedAircraftID";
+            //Define the parameter used in SQL statement, value for the
+            //parameter is retrieved from the method parameter “staffId”.
+            cmd.Parameters.AddWithValue("@selectedAircraftID", aircraftid);
+            //Open a database connection
+            conn.Open();
+            //Execute SELCT SQL through a DataReader
+            SqlDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
+            {
+                //Read the record from database
+                while (reader.Read())
+                {
+                    // Fill staff object with values from the data reader
+                    aircraft.AircraftID = aircraftid;
+                    aircraft.AircraftModel = !reader.IsDBNull(1) ? reader.GetString(1) : null;
+                    // (char) 0 - ASCII Code 0 - null value
+                    aircraft.NumBusinessSeat = !reader.IsDBNull(2) ?
+                    reader.GetInt32(2) : 0;
+                    aircraft.NumEconomySeat = !reader.IsDBNull(3) ?
+                    reader.GetInt32(3) : 0;
+                    aircraft.DateLastMaintenance = !reader.IsDBNull(4) ?
+                    reader.GetDateTime(4) : (DateTime?)null;
+                    aircraft.Status = !reader.IsDBNull(5) ?
+                    reader.GetString(5) : null;
+                }
+            }
+            //Close data reader
+            reader.Close();
+            //Close database connection
+            conn.Close();
+            return aircraft;
+        }
+
+        
+        public List<FlightSchedule> GetAvailableFlights()
+        {
+            List<FlightSchedule> flightSchedules = new List<FlightSchedule>();
+           
+            SqlCommand cmd = conn.CreateCommand();
+            
+            cmd.CommandText = @"SELECT * FROM FlightSchedule WHERE (AircraftID IS NULL AND DepartureDateTime >= GETDATE())";
+            
+            conn.Open();
+            
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                flightSchedules.Add(
+                new FlightSchedule
+                {
+                    ScheduleID = reader.GetInt32(0),
+                    FlightNumber = reader.GetString(1),
+                    RouteID = reader.GetInt32(2),
+                    AircraftID = reader.GetInt32(3),
+                    DepartureDateTime = reader.GetDateTime(4),
+                    ArrivalDateTime = reader.GetDateTime(5),
+                    EconomyClassPrice = reader.GetDecimal(6),
+                    BusinessClassPrice = reader.GetDecimal(7),
+                    Status = reader.GetString(8)
+
+                }
+                );
+            }
+            conn.Close();
+            return flightSchedules;
+
+        }
+
+        //public bool CheckFlight()
+        //{
+        //    SqlCommand cmd = conn.CreateCommand();
+
+        //    cmd.CommandText = @"SELECT AircraftID FROM FlightSchedule WHERE DepartureDateTime BETWEEN ";
+
+        //    conn.Open();
+
+        //    SqlDataReader reader = cmd.ExecuteReader();
+        //    while (reader.Read())
+        //    {
+                
+        //    }
+        //    conn.Close();
+            
+
+        //}
+
+        //update aircraft flight
+        //public int Assign(Aircraft aircraft)
+        //{
+        //    //Create a SqlCommand object from connection object
+        //    SqlCommand cmd = conn.CreateCommand();
+        //    //Specify an UPDATE SQL statement
+        //    cmd.CommandText = @"UPDATE Staff SET Salary=@salary,
+        //Status=@status, BranchNo = @branchNo
+        //WHERE StaffID = @selectedStaffID";
+        //    //Define the parameters used in SQL statement, value for each parameter
+        //    //is retrieved from respective class's property.
+        //    cmd.Parameters.AddWithValue("@salary", aircraft.Salary);
+        //    cmd.Parameters.AddWithValue("@status", aircraft.IsFullTime);
+        //    if (aircraft.BranchNo != null && aircraft.BranchNo != 0)
+        //        // A branch is assigned
+        //        cmd.Parameters.AddWithValue("@branchNo", staff.BranchNo.Value);
+        //    else // No branch is assigned
+        //        cmd.Parameters.AddWithValue("@branchNo", DBNull.Value);
+        //    cmd.Parameters.AddWithValue("@selectedStaffID", staff.StaffId);
+        //    //Open a database connection
+        //    conn.Open();
+        //    //ExecuteNonQuery is used for UPDATE and DELETE
+        //    int count = cmd.ExecuteNonQuery();
+        //    //Close the database connection
+        //    conn.Close();
+        //    return count;
+
+        //}
+
+
+        //        //update aircraft status 
+        //        public int Update(Aircraft aircraft)
+        //        {
+        //            //Create a SqlCommand object from connection object
+        //            SqlCommand cmd = conn.CreateCommand();
+        //            //Specify an UPDATE SQL statement
+        //            cmd.CommandText = @"UPDATE Staff SET Salary=@salary,
+        // Status=@status, BranchNo = @branchNo
+        //WHERE StaffID = @selectedStaffID";
+        //            //Define the parameters used in SQL statement, value for each parameter
+        //            //is retrieved from respective class's property.
+        //            cmd.Parameters.AddWithValue("@salary", staff.Salary);
+        //            cmd.Parameters.AddWithValue("@status", staff.IsFullTime);
+        //            if (staff.BranchNo != null && staff.BranchNo != 0)
+        //                // A branch is assigned
+        //                cmd.Parameters.AddWithValue("@branchNo", staff.BranchNo.Value);
+        //            else // No branch is assigned
+        //                cmd.Parameters.AddWithValue("@branchNo", DBNull.Value);
+        //            cmd.Parameters.AddWithValue("@selectedStaffID", staff.StaffId);
+        //            //Open a database connection
+        //            conn.Open();
+        //            //ExecuteNonQuery is used for UPDATE and DELETE
+        //            int count = cmd.ExecuteNonQuery();
+        //            //Close the database connection
+        //            conn.Close();
+        //            return count;
+
+        //        }
     } 
 }
