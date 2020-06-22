@@ -196,16 +196,16 @@ input {
     padding: 10px;
 }
 
-    .table-switch button {
+    .table-switch a {
         margin: 5px 10px 5px 10px;
     }
 
-        .table-switch button:first-child {
+        .table-switch a:first-child {
             background: #80A4ED;
             border-color: #80A4ED;
         }
 
-        .table-switch button:last-child {
+        .table-switch a:last-child {
             background: #8095B3;
             border-color: #8095B3;
         }

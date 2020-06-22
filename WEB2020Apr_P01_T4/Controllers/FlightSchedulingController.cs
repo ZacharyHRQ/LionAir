@@ -31,21 +31,26 @@ namespace WEB2020Apr_P01_T4.Controllers
                 RouteList = new RouteDAL().getAllRoutes(),
                 CreateSchedule = new FlightSchedule(),
                 ShowAddPop = false,
-                ShowEditPop = false
+                ShowEditPop = false,
+                
                 
 
             },
             TicketSize = new BookingDAL().GetAllBooking().Count(),
             CreateRoute = new Route(),
-
+            SearchOption = new List<String>() { "Route ID", "Departure City", "Departure Country", "Arrival City", "Arrival Country", "Flight Duration" },
+            isFlightSchedule = false
 
         };
 
 
         // GET: /<controller>/
-        public IActionResult Index()
+        [Route("/FlightScheduling/{isFlightSchedule}")]
+        [Route("/FlightScheduling/")]
+        public IActionResult Index(bool? isFlightSchedule)
         {
-          
+            if(isFlightSchedule != null)
+                this.scheduleRouteViewModel.isFlightSchedule = (bool)isFlightSchedule;
             return View(scheduleRouteViewModel);
         }
 

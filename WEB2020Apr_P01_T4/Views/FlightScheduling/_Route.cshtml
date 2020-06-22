@@ -1,14 +1,14 @@
 ﻿@model WEB2020Apr_P01_T4.ViewModel.ScheduleViewModel
 
-<table class="table ">
+<table id="myTable" class="table ">
     <thead>
         <tr>
-            <th scope="col">Route ID</th>
-            <th scope="col">Departure City</th>
-            <th scope="col">Departure ountry</th>
-            <th scope="col">Arrival City</th>
-            <th scope="col">Arrival Country</th>
-            <th scope="col">Flight Duration</th>
+            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().RouteID)</th>
+            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().DepartureCity)</th>
+            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().DepartureCountry)</th>
+            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().ArrivalCity)</th>
+            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().ArrivalCountry)</th>
+            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().FlightDuration)</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -16,7 +16,7 @@
         @foreach (var route in Model.RouteList)
         {
             <tr>
-                <th scope="row">@route.RouteID</th>
+                <td >@route.RouteID</td>
                 <td>@route.DepartureCity</td>
                 <td>@route.DepartureCountry</td>
                 <td>@route.ArrivalCity</td>

@@ -27,19 +27,21 @@
         <div class="col col-sm search-col">
             <p id="view-title">Flight Route View</p>
 
-            <select id="options" name="cars">
-                <option value="1">Volvo</option>
-                <option value="2">Saab</option>
-                <option value="3">Fiat</option>
-                <option value="4">Audi</option>
+            <select id="options" name="searchOption">
+                @for (int i = 0; i < Model.SearchOption.Count(); i++)
+                {
+                    <option value="@i">@Model.SearchOption[i]</option>
+                }
+
             </select>
 
             <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
         </div>
 
         <div class="col-sm table-switch right">
-            <button class="btn btn-primary">Flight Route</button>
-            <button class="btn btn-primary">Flight Scheduling</button>
+            @Html.ActionLink("Flight Route", "Index", "FlightScheduling", new { @isFlightSchedule = false }, new { @class = "btn btn-primary " })
+            @Html.ActionLink("Flight Scheduling", "Index", "FlightScheduling", new { @isFlightSchedule = true }, new { @class = "btn btn-primary " })
+
         </div>
     </div>
 
@@ -53,8 +55,16 @@
     </div>
     <div class="row">
         <div class="col col-sm">
-            @await Html.PartialAsync("_Route.cshtml", Model.ScheduleViewModel)
-            @await Html.PartialAsync("_Schedules.cshtml", Model.ScheduleViewModel)
+            @if (Model.isFlightSchedule)
+            {
+                @await Html.PartialAsync("_Schedules.cshtml", Model.ScheduleViewModel)
+            }
+            else
+            {
+                @await Html.PartialAsync("_Route.cshtml", Model.ScheduleViewModel)
+            }
+
+
         </div>
     </div>
 </div>
@@ -99,18 +109,10 @@
 </div>
 
 
-<script>document.getElementById('button').addEventListener("click", function () {
-        document.querySelector('.bg-modal').style.display = "flex";
-    });
-
-    document.querySelector('.close').addEventListener("click", function () {
-        document.querySelector('.bg-modal').style.display = "none";
-    });
-</script>
 
 
 
 
 
 
-
+<script src="~/js/FlightSchedule.js" asp-append-version="true"></script>
