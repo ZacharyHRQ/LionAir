@@ -1,5 +1,6 @@
 ﻿@model WEB2020Apr_P01_T4.ViewModel.ScheduleRouteViewModel
 @{
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
 <head>
@@ -7,8 +8,34 @@
 </head>
 
 
+<div class="container-fluid top-page con">
+    <div class="row">
+        <div class="col col-sm ">
+            <p class="title">Flight Scheduling</p>
+        </div>
+        <div class="col col-sm">
+            <p class="right"><button id="button" class="btn btn-primary create">Create Flight Route</button></p>
+        </div>
+    </div>
+</div>
 
-<button id="button" class="btn btn-primary">Add Flight Route</button>
+<div class="container-fluid dash">
+    <div class="row">
+        <div class="col col-sm">
+            <p class="dash-info green"><span class="dash-header"> Lorem,</span> <br>Tickets Brought</p>
+        </div>
+        <div class="col-sm">
+            <p class="dash-info red"><span class="dash-header"> Lorem,</span> <br>Flights</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-sm">
+            @await Html.PartialAsync("_Route.cshtml", Model.ScheduleViewModel)
+            @await Html.PartialAsync("_Schedules.cshtml", Model.ScheduleViewModel)
+        </div>
+    </div>
+</div>
+
 
 <div class="bg-modal">
     <div class="modal-contents">
@@ -55,12 +82,12 @@
 
     document.querySelector('.close').addEventListener("click", function () {
         document.querySelector('.bg-modal').style.display = "none";
-    });</script>
+    });
+</script>
 
 
 
 
 
 
-@await Html.PartialAsync("_Route.cshtml", Model.ScheduleViewModel)
-@await Html.PartialAsync("_Schedules.cshtml", Model.ScheduleViewModel)
+
