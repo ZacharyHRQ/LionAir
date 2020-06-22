@@ -15,28 +15,35 @@
     <tbody>
         @foreach (var route in Model.RouteList)
         {
-        <tr>
-            <th scope="row">@route.RouteID</th>
-            <td>@route.DepartureCity</td>
-            <td>@route.DepartureCountry</td>
-            <td>@route.ArrivalCity</td>
-            <td>@route.ArrivalCountry</td>
-            @if (@route.FlightDuration != null)
-            {
-                <td>@route.FlightDuration</td>
-            }
-            else
-            {
-                <td>UNKNOWN</td>
-            }
-        <td>@Html.ActionLink("Add", "AddSchedule", "FlightScheduling", new { @id = route.RouteID }, new { @class = "btn btn-primary " })</td>
+            <tr>
+                <th scope="row">@route.RouteID</th>
+                <td>@route.DepartureCity</td>
+                <td>@route.DepartureCountry</td>
+                <td>@route.ArrivalCity</td>
+                <td>@route.ArrivalCountry</td>
+                @if (@route.FlightDuration != null)
+                {
+                    <td>@route.FlightDuration</td>
+                }
+                else
+                {
+                    <td>UNKNOWN</td>
+                }
+                <td>@Html.ActionLink("Add", "AddSchedule", "FlightScheduling", new { @id = route.RouteID }, new { @class = "btn btn-primary " })</td>
 
-            
 
-        </tr>
+
+            </tr>
 
         }
 
 
     </tbody>
 </table>
+
+@if (Model.ShowAddPop)
+{
+    @await Html.PartialAsync("_ScheduleForm.cshtml", Model.CreateSchedule)
+}
+
+
