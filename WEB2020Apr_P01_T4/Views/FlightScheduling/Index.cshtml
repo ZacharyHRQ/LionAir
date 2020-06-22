@@ -20,12 +20,35 @@
 </div>
 
 <div class="container-fluid dash">
+
+
+    <div class="row dash-search">
+
+        <div class="col col-sm search-col">
+            <p id="view-title">Flight Route View</p>
+
+            <select id="options" name="cars">
+                <option value="1">Volvo</option>
+                <option value="2">Saab</option>
+                <option value="3">Fiat</option>
+                <option value="4">Audi</option>
+            </select>
+
+            <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+        </div>
+
+        <div class="col-sm table-switch right">
+            <button class="btn btn-primary">Flight Route</button>
+            <button class="btn btn-primary">Flight Scheduling</button>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col col-sm">
-            <p class="dash-info green"><span class="dash-header"> Lorem,</span> <br>Tickets Brought</p>
+            <p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Tickets Brought</p>
         </div>
         <div class="col-sm">
-            <p class="dash-info red"><span class="dash-header"> Lorem,</span> <br>Flights</p>
+            <p class="dash-info red"><span class="dash-header"> @Model.ScheduleViewModel.RouteList.Count()</span> <br>Routes</p>
         </div>
     </div>
     <div class="row">

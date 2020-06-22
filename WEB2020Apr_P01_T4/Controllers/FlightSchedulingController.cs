@@ -32,8 +32,10 @@ namespace WEB2020Apr_P01_T4.Controllers
                 CreateSchedule = new FlightSchedule(),
                 ShowAddPop = false,
                 ShowEditPop = false
+                
 
             },
+            TicketSize = new BookingDAL().GetAllBooking().Count(),
             CreateRoute = new Route(),
 
 
