@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WEB2020Apr_P01_T4.Models
@@ -31,6 +32,11 @@ namespace WEB2020Apr_P01_T4.Models
         [Range(1,24)]
         [Display(Name = "Flight Duration")]
         public int? FlightDuration { get; set; }
+
+        public static List<String> GetTableList()
+        {
+            return new List<String>() { "Route ID", "Departure City", "Departure Country", "Arrival City", "Arrival Country", "Flight Duration" };
+        }
 
     }
 }

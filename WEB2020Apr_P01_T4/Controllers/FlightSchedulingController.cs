@@ -38,7 +38,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             },
             TicketSize = new BookingDAL().GetAllBooking().Count(),
             CreateRoute = new Route(),
-            SearchOption = new List<String>() { "Route ID", "Departure City", "Departure Country", "Arrival City", "Arrival Country", "Flight Duration" },
             isFlightSchedule = false
 
         };
@@ -50,7 +49,16 @@ namespace WEB2020Apr_P01_T4.Controllers
         public IActionResult Index(bool? isFlightSchedule)
         {
             if(isFlightSchedule != null)
+            {
                 this.scheduleRouteViewModel.isFlightSchedule = (bool)isFlightSchedule;
+                scheduleRouteViewModel.SearchOption = FlightSchedule.GetTableList();
+            }
+            else
+            {
+                scheduleRouteViewModel.SearchOption = Route.GetTableList();
+            }
+                
+
             return View(scheduleRouteViewModel);
         }
 
