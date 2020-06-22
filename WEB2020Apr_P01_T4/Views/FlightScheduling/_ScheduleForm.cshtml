@@ -1,8 +1,9 @@
-﻿@model WEB2020Apr_P01_T4.ViewModel.ScheduleForm
+﻿@model WEB2020Apr_P01_T4.Models.FlightSchedule
 
 @{
 
-    bool disable = Model.CreateSchedule.ScheduleID != 0;
+    bool disable = Model.ScheduleID != 0;
+    bool isEdit = false;
 }
 
 
@@ -10,54 +11,55 @@
     <div class="modal-contents">
 
 
-        @if (Model.isFlightSchedule)
+        @if (Model.DepartureDateTime != null)
         {
-            @Html.ActionLink("+", "Index", "FlightScheduling", new { @isFlightSchedule = true }, new { @class = "close close-Flight" })
+            @Html.ActionLink("+", "Index", "FlightScheduling", new {  }, new { @class = "close close-Flight" })
+            isEdit = true;
         }
         else
         {
-            @Html.ActionLink("+", "Index", "FlightScheduling", new { @isFlightSchedule = false }, new { @class = "close close-Flight" })
+            @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class = "close close-Flight" }) 
         }
 
 
 
         @if (disable)
         {
-            <h1>Update Flight Schedule</h1>
+        <h1>Update FSchedulelight Schedule</h1>
             @using (@Html.BeginForm("UpdateSchedule", "FlightScheduling", FormMethod.Post))
             {
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.FlightNumber)
-                    @Html.TextBoxFor(m => m.CreateSchedule.FlightNumber, new { @class = "form-control", disabled = "disabled" })
+                    @Html.LabelFor(m => m.FlightNumber)
+                    @Html.TextBoxFor(m => m.FlightNumber, new { @class = "form-control", disabled = "disabled" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.DepartureDateTime)
-                    @Html.TextBoxFor(m => m.CreateSchedule.DepartureDateTime, new { @class = "form-control", @type = "datetime-local", disabled = "disabled" })
+                    @Html.LabelFor(m => m.DepartureDateTime)
+                    @Html.TextBoxFor(m => m.DepartureDateTime, new { @class = "form-control", @type = "datetime-local", disabled = "disabled" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.EconomyClassPrice)
-                    @Html.TextBoxFor(m => m.CreateSchedule.EconomyClassPrice, new { @class = "form-control", disabled = "disabled" })
+                    @Html.LabelFor(m => m.EconomyClassPrice)
+                    @Html.TextBoxFor(m => m.EconomyClassPrice, new { @class = "form-control", disabled = "disabled" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.BusinessClassPrice)
-                    @Html.TextBoxFor(m => m.CreateSchedule.BusinessClassPrice, new { @class = "form-control", disabled = "disabled" })
+                    @Html.LabelFor(m => m.BusinessClassPrice)
+                    @Html.TextBoxFor(m => m.BusinessClassPrice, new { @class = "form-control", disabled = "disabled" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.RouteID)
-                    @Html.TextBoxFor(m => m.CreateSchedule.RouteID, new { @class = "form-control", disabled = "disabled" })
+                    @Html.LabelFor(m => m.RouteID)
+                    @Html.TextBoxFor(m => m.RouteID, new { @class = "form-control", disabled = "disabled" })
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.Status)
-                    @Html.DropDownListFor(m => m.CreateSchedule.Status, new SelectList(Model.CreateSchedule.GetStatusOption()), new { @class = "form-control" })
+                    @Html.LabelFor(m => m.Status)
+                    @Html.DropDownListFor(m => m.Status, new SelectList(Model.GetStatusOption()), new { @class = "form-control" })
                 </div>
 
-                @Html.HiddenFor(m => m.CreateSchedule.ArrivalDateTime)
-                @Html.HiddenFor(m => m.CreateSchedule.ScheduleID)
+                @Html.HiddenFor(m => m.ArrivalDateTime)
+                @Html.HiddenFor(m => m.ScheduleID)
 
 
                 <button type="submit" class="btn btn-primary">Update</button>
@@ -66,41 +68,41 @@
         else
         {
             <h1>Create New Flight Schedule</h1>
-            @using (@Html.BeginForm("SaveSchedule", "FlightScheduling", new { @id = Model.CreateSchedule.RouteID }, FormMethod.Post))
+            @using (@Html.BeginForm("SaveSchedule", "FlightScheduling", new { @id = Model.RouteID, @isEdit=isEdit }, FormMethod.Post))
             {
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.FlightNumber)
-                    @Html.TextBoxFor(m => m.CreateSchedule.FlightNumber, new { @class = "form-control", })
-                    @Html.ValidationMessageFor(m => m.CreateSchedule.FlightNumber)
+                    @Html.LabelFor(m => m.FlightNumber)
+                    @Html.TextBoxFor(m => m.FlightNumber, new { @class = "form-control", })
+                    @Html.ValidationMessageFor(m => m.FlightNumber)
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.DepartureDateTime)
-                    @Html.TextBoxFor(m => m.CreateSchedule.DepartureDateTime, new { @class = "form-control", @type = "datetime-local" })
-                    @Html.ValidationMessageFor(m => m.CreateSchedule.DepartureDateTime)
+                    @Html.LabelFor(m => m.DepartureDateTime)
+                    @Html.TextBoxFor(m => m.DepartureDateTime, new { @class = "form-control", @type = "datetime-local" })
+                    @Html.ValidationMessageFor(m => m.DepartureDateTime)
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.EconomyClassPrice)
-                    @Html.TextBoxFor(m => m.CreateSchedule.EconomyClassPrice, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.CreateSchedule.EconomyClassPrice)
+                    @Html.LabelFor(m => m.EconomyClassPrice)
+                    @Html.TextBoxFor(m => m.EconomyClassPrice, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.EconomyClassPrice)
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.BusinessClassPrice)
-                    @Html.TextBoxFor(m => m.CreateSchedule.BusinessClassPrice, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.CreateSchedule.BusinessClassPrice)
+                    @Html.LabelFor(m => m.BusinessClassPrice)
+                    @Html.TextBoxFor(m => m.BusinessClassPrice, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.BusinessClassPrice)
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.RouteID)
-                    @Html.TextBoxFor(m => m.CreateSchedule.RouteID, new { @class = "form-control", disabled = "disabled" })
-                    @Html.ValidationMessageFor(m => m.CreateSchedule.RouteID)
+                    @Html.LabelFor(m => m.RouteID)
+                    @Html.TextBoxFor(m => m.RouteID, new { @class = "form-control", disabled = "disabled" })
+                    @Html.ValidationMessageFor(m => m.RouteID)
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.CreateSchedule.Status)
-                    @Html.DropDownListFor(m => m.CreateSchedule.Status, new SelectList(Model.CreateSchedule.GetStatusOption()), new { @class = "form-control" })
+                    @Html.LabelFor(m => m.Status)
+                    @Html.DropDownListFor(m => m.Status, new SelectList(Model.GetStatusOption()), new { @class = "form-control" })
                 </div>
 
 
