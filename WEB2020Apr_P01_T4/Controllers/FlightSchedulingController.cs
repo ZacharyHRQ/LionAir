@@ -29,16 +29,17 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 FlightScheduleList = new FlightScheduleDAL().GetAllFlightSchedule(),
                 RouteList = new RouteDAL().getAllRoutes(),
-                CreateSchedule = new FlightSchedule(),
+                ScheduleForm = new ScheduleForm
+                {
+                    CreateSchedule = new FlightSchedule(),
+                    isFlightSchedule = false
+                },
                 ShowAddPop = false,
                 ShowEditPop = false,
-                
-                
-
             },
             TicketSize = new BookingDAL().GetAllBooking().Count(),
             CreateRoute = new Route(),
-            isFlightSchedule = false
+          
 
         };
 
@@ -48,9 +49,18 @@ namespace WEB2020Apr_P01_T4.Controllers
         [Route("/FlightScheduling/")]
         public IActionResult Index(bool? isFlightSchedule)
         {
-            if(isFlightSchedule != null)
+
+            
+            if (isFlightSchedule != null)
             {
-                this.scheduleRouteViewModel.isFlightSchedule = (bool)isFlightSchedule;
+                this.scheduleRouteViewModel.ScheduleViewModel.ScheduleForm.isFlightSchedule = (bool)isFlightSchedule;
+                
+            }
+
+            bool isSchedule = this.scheduleRouteViewModel.ScheduleViewModel.ScheduleForm.isFlightSchedule;
+
+            if (isSchedule)
+            {
                 scheduleRouteViewModel.SearchOption = FlightSchedule.GetTableList();
             }
             else
@@ -92,8 +102,11 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             var schdule = flightScheduleDAL.GetAllFlightSchedule();
 
+            scheduleRouteViewModel.SearchOption = FlightSchedule.GetTableList();
+            scheduleRouteViewModel.ScheduleViewModel.ScheduleForm.isFlightSchedule = true;
+
             scheduleRouteViewModel.ScheduleViewModel.ShowEditPop = true;
-            scheduleRouteViewModel.ScheduleViewModel.CreateSchedule = schdule.First(s => s.ScheduleID == id);
+            scheduleRouteViewModel.ScheduleViewModel.ScheduleForm.CreateSchedule = schdule.First(s => s.ScheduleID == id);
 
             return View("Index", scheduleRouteViewModel);
         }
@@ -101,8 +114,12 @@ namespace WEB2020Apr_P01_T4.Controllers
         public IActionResult AddSchedule(int id)
         {
 
+            scheduleRouteViewModel.SearchOption = Route.GetTableList();
+
             scheduleRouteViewModel.ScheduleViewModel.ShowAddPop = true;
-            scheduleRouteViewModel.ScheduleViewModel.CreateSchedule.RouteID = id;
+            scheduleRouteViewModel.ScheduleViewModel.ScheduleForm.CreateSchedule.RouteID = id;
+
+            scheduleRouteViewModel.ScheduleViewModel.ScheduleForm.isFlightSchedule = false;
 
             return View("Index", scheduleRouteViewModel);
         }
@@ -116,8 +133,8 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             if (ModelState.IsValid)
             {
-                scheduleRouteViewModel.ScheduleViewModel.CreateSchedule = flightSchedule;
-                scheduleRouteViewModel.ScheduleViewModel.CreateSchedule.RouteID = RouteID;
+                scheduleRouteViewModel.ScheduleViewModel.ScheduleForm.CreateSchedule = flightSchedule;
+                scheduleRouteViewModel.ScheduleViewModel.ScheduleForm.CreateSchedule.RouteID = RouteID;
 
                 scheduleRouteViewModel.ScheduleViewModel.Route = scheduleRouteViewModel.ScheduleViewModel.RouteList.First(r => r.RouteID == RouteID);
 
@@ -126,12 +143,12 @@ namespace WEB2020Apr_P01_T4.Controllers
 
 
                 //Insert the data
-                flightScheduleDAL.InsertData(scheduleRouteViewModel.ScheduleViewModel.CreateSchedule);
+                flightScheduleDAL.InsertData(scheduleRouteViewModel.ScheduleViewModel.ScheduleForm.CreateSchedule);
                 return RedirectToAction("Index");
             }
             else
             {
-                scheduleRouteViewModel.ScheduleViewModel.CreateSchedule.RouteID = RouteID;
+                scheduleRouteViewModel.ScheduleViewModel.ScheduleForm.CreateSchedule.RouteID = RouteID;
                 scheduleRouteViewModel.ScheduleViewModel.ShowAddPop = true;
                 return View("Index", scheduleRouteViewModel);
             }

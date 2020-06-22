@@ -8,16 +8,16 @@ namespace WEB2020Apr_P01_T4.ViewModel
     {
         public Route Route{ get; set; }
         public List<Route> RouteList { get; set; }
-        public FlightSchedule CreateSchedule { get; set; }
         public List<FlightSchedule> FlightScheduleList { get; set; }
         public bool ShowAddPop { get; set; }
         public bool ShowEditPop { get; set; }
-        
+        public ScheduleForm ScheduleForm { get; set; }
+
 
 
         public void CalculateArrival()
         {
-           CreateSchedule.ArrivalDateTime = ((DateTime)CreateSchedule.DepartureDateTime).AddHours((double)Route.FlightDuration);
+           ScheduleForm.CreateSchedule.ArrivalDateTime = ((DateTime)ScheduleForm.CreateSchedule.DepartureDateTime).AddHours((double)Route.FlightDuration);
         }
 
     }
