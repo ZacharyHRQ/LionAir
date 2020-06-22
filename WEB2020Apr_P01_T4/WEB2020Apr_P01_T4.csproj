@@ -15,12 +15,9 @@
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Content Remove="wwwroot\images\stafftestimonial.jpg" />
     <Content Remove="Views\FlightScheduling\_addRoute.cshtml" />
     <Content Remove="wwwroot\css\FlightSchedule.css" />
-=======
->>>>>>> Change from Partial view to normal html code
     <Content Remove="Views\FlightScheduling\_addRoute.cshtml" />
   </ItemGroup>
 </Project>
