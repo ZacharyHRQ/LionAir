@@ -55,7 +55,7 @@
     </div>
     <div class="row">
         <div class="col col-sm">
-            @if (Model.isFlightSchedule)
+            @if (Model.ScheduleViewModel.ScheduleForm.isFlightSchedule)
             {
                 @await Html.PartialAsync("_Schedules.cshtml", Model.ScheduleViewModel)
             }
