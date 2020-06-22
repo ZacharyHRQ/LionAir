@@ -46,7 +46,7 @@
 
                 <div class="form-group">
                     @Html.LabelFor(m => m.Status)
-                    @Html.DropDownListFor(m => m.Status, new SelectList(Model.getStatusOption()), new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Status, new SelectList(Model.GetStatusOption()), new { @class = "form-control" })
                 </div>
 
                 @Html.HiddenFor(m => m.ArrivalDateTime)
@@ -93,7 +93,7 @@
 
                 <div class="form-group">
                     @Html.LabelFor(m => m.Status)
-                    @Html.DropDownListFor(m => m.Status, new SelectList(Model.getStatusOption()), new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Status, new SelectList(Model.GetStatusOption()), new { @class = "form-control" })
                 </div>
 
 

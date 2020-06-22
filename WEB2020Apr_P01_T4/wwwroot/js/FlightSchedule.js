@@ -13,8 +13,6 @@
 
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[dropdown];
-        console.log(td)
-        console.log(dropdown)
 
         if (td) {
             txtValue = td.textContent || td.innerText;

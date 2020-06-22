@@ -48,11 +48,25 @@ namespace WEB2020Apr_P01_T4.Models
         public String Status { get; set; }
 
 
-        public List<String> getStatusOption()
+        public List<String> GetStatusOption()
         {
             return StatusOption;
+        }
+
+        public static List<String> GetTableList()
+        {
+            return new List<String>() { "Flight Number",
+                "Route ID",
+                "Aircraft ID",
+                "Departure Date and Time",
+                "Arrival Date and Time",
+                "Economy Price",
+                "Business Price",
+                "Status"
+            };
         }
 
 
     }
 }
+					

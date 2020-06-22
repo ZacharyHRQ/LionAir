@@ -1,6 +1,6 @@
 ﻿@model WEB2020Apr_P01_T4.ViewModel.ScheduleViewModel
 
-<table class="table">
+<table id="myTable" class="table">
     <thead>
         <tr>
             <th scope="col">Flight Number</th>
@@ -18,7 +18,7 @@
         @foreach (var schedule in Model.FlightScheduleList)
         {
             <tr>
-                <th scope="row">@schedule.FlightNumber</th>
+                <td>@schedule.FlightNumber</td>
                 <td>@schedule.RouteID</td>
                 <td>@schedule.AircraftID</td>
                 <td>@schedule.DepartureDateTime</td>
