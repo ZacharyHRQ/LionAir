@@ -93,6 +93,7 @@ input {
 
 .col {
     padding: 0px;
+    margin: 0px;
 }
 
 .dash-info {
@@ -149,4 +150,72 @@ input {
     line-height: 17px;
     /* identical to box height */
     color: #FFFFFF;
+}
+
+
+/* Search */
+
+.dash-search {
+    border-bottom: 1px solid #000000;
+}
+
+#view-title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+    color: #000000;
+}
+
+.search-col {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+#options {
+    margin-block-start: 18px;
+    width: 20%;
+    text-align: center;
+    vertical-align: middle;
+    margin: 5px 10px 5px 0;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+
+#search {
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.table-switch {
+    padding: 10px;
+}
+
+    .table-switch button {
+        margin: 5px 10px 5px 10px;
+    }
+
+        .table-switch button:first-child {
+            background: #80A4ED;
+            border-color: #80A4ED;
+        }
+
+        .table-switch button:last-child {
+            background: #8095B3;
+            border-color: #8095B3;
+        }
+
+.dash-search #search,
+.dash-search #options,
+.dash-search #view-title {
+    margin: 5px 10px 5px 10px;
+}
+
+.dash-search .col .container-fluid .row .col-sm:first-child {
+    padding: 0px;
 }
