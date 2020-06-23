@@ -20,6 +20,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
+<<<<<<< HEAD:WEB2020Apr_P01_T4/Views/Shared/_FlightSchedulingNav.cshtml
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link lionair-navlink" href="~/Home/index">About Us</a>
@@ -54,6 +55,42 @@
             <li class="nav-item">
                 <a class="nav-link lionair-navlink" href="#">Log Out</a>
             </li>
+=======
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link lionair-navlink" href="~/Home/index">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link lionair-navlink" href="~/AirportCodes/Index">Airport Codes</a>
+            </li>
+            <li cla
+            <li class="nav-item">
+                <a class="nav-link lionair-navlink" asp-controller="FlightScheduling" asp-action="Index" >Flight Scheduling</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle lionair-navlink"
+                   href="#"
+                   id="navbarDropdownMenuLink"
+                   data-toggle="dropdown"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                    Flight Personnel
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    @*<a asp-controller="Flight_Personnel" asp-action="Index">View Flight Personnel</a>*@
+                    <a class="dropdown-item" href="~/FlightPersonnel/index">View Flight Personnel</a>
+                    <a class="dropdown-item" href="#">Create Flight Personnel</a>
+                    <a class="dropdown-item" href="#">Assign Personnel to Flight</a>
+                    <a class="dropdown-item" href="#">Update Flight Personnel Status</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link lionair-navlink" href="~/AircraftAssignment/DisplayAircraft">Aircraft Assignment</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link lionair-navlink" href="#">Log Out</a>
+            </li>
+>>>>>>> Added link to FlightScheduling:WEB2020Apr_P01_T4/Views/Shared/_StaffNav.cshtml
         </ul>
     </div>
 </nav>
