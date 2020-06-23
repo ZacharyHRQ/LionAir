@@ -42,7 +42,7 @@ namespace WEB2020Apr_P01_T4.DAL
                         DepartureCountry = sqlDataReader.GetString(DepartureCountry),
                         ArrivalCity = sqlDataReader.GetString(ArrivalCity),
                         ArrivalCountry = sqlDataReader.GetString(ArrivalCountry),
-                        FlightDuration = sqlDataReader.GetInt32(FlightDuration),
+                        FlightDuration = sqlDataReader.IsDBNull(FlightDuration) ? 0 : sqlDataReader.GetInt32(FlightDuration),
 
 
 
@@ -68,16 +68,31 @@ namespace WEB2020Apr_P01_T4.DAL
         {
             try
             {
-              
-                // writing sql query  
-                SqlCommand cm = new SqlCommand(String.Format("INSERT INTO FlightRoute " +
-                    "(DepartureCity, DepartureCountry, ArrivalCity, ArrivalCountry, FlightDuration)values('{0}', '{1}', '{2}', '{3}', {4})"
-                    , route.DepartureCity,
-                    route.DepartureCountry,
-                    route.ArrivalCity,
-                    route.ArrivalCountry,
-                    route.FlightDuration
-                    ), con);
+                SqlCommand cm;
+                if (route.FlightDuration != null)
+                {
+                    // writing sql query  
+                     cm = new SqlCommand(String.Format("INSERT INTO FlightRoute " +
+                        "(DepartureCity, DepartureCountry, ArrivalCity, ArrivalCountry, FlightDuration)values('{0}', '{1}', '{2}', '{3}', {4})"
+                        , route.DepartureCity,
+                        route.DepartureCountry,
+                        route.ArrivalCity,
+                        route.ArrivalCountry,
+                        route.FlightDuration
+                        ), con);
+                }
+                else
+                {
+                    // writing sql query  
+                    cm = new SqlCommand(String.Format("INSERT INTO FlightRoute " +
+                        "(DepartureCity, DepartureCountry, ArrivalCity, ArrivalCountry)values('{0}', '{1}', '{2}', '{3}')"
+                        , route.DepartureCity,
+                        route.DepartureCountry,
+                        route.ArrivalCity,
+                        route.ArrivalCountry
+                        ), con);
+                }
+     
 
 
                 // Opening Connection  
