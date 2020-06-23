@@ -15,4 +15,7 @@
     <Folder Include="Views\FlightScheduling\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\images\stafftestimonial.jpg" />
+  </ItemGroup>
 </Project>

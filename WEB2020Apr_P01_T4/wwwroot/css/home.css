@@ -1,9 +1,7 @@
-﻿body {
-    font-family: 'Raleway', sans-serif;
+﻿/* Title */
+.body {
+    font-family: 'Montserrat', sans-serif;
 }
-
-
-/* Title */
 
 #title {
     margin: 0px;
@@ -43,26 +41,20 @@
 }
 
 .stafftest {
-    background: linear-gradient(180deg, rgba(15, 15, 15, 0.2) 99.99%, rgba(255, 255, 255, 0) 100%), url("../images/stafftestimonial.jpg");
+    background: no-repeat url("../images/stafftestimonial.jpg");
     background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: flex-end;
     justify-content: center;
-    background-attachment: fixed;
     z-index: 1;
 }
 
 .customertest {
-    background: linear-gradient(180deg, rgba(15, 15, 15, 0.2) 99.99%, rgba(255, 255, 255, 0) 100%), url("../images/customers.jpg");
+    background: no-repeat url("../images/customerTestimoniaol.jpeg");
     background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: flex-end;
     justify-content: center;
-    background-attachment: fixed;
+    object-fit: cover;
     z-index: 1;
 }
+
 h1 {
     text-align: center;
     font-size: 50px;
@@ -109,11 +101,45 @@ h1 {
     padding: 20px;
 }
 
-.stafftest p {
-    text-align: center;
-    color: #FFFFFF;
-    font-size: 20px;
-    font-weight: 600;
+.red {
+    background-color: #E84855;
+}
+
+.blue {
+    background: #72ACFD;
+}
+
+.tm-background {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    margin: 70px;
+    display: inline-block;
+}
+
+.p-testimonials {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0.1em;
+    color: #000000;
     padding: 20px;
 }
-               
+
+.p-heading {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 59px;
+    /* identical to box height */
+    text-align: center;
+    color: #000000;
+    padding: 20px;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
