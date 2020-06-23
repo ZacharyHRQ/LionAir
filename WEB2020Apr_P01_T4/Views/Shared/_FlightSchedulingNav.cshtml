@@ -22,7 +22,14 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link lionair-navlink" href="~/FlightScheduling/Index">Flight Scheduling</a>
+                <a class="nav-link lionair-navlink" href="~/Home/index">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link lionair-navlink" href="~/AirportCodes/Index">Airport Codes</a>
+            </li>
+            <li cla
+            <li class="nav-item">
+                <a class="nav-link lionair-navlink" href="#">Flight Scheduling</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle lionair-navlink"
@@ -31,11 +38,12 @@
                    data-toggle="dropdown"
                    aria-haspopup="true"
                    aria-expanded="false">
-                    Flight Personnel 
+                    Flight Personnel
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="~/FlightPersonnel/Index">View Flight Personnel</a>
-                    <a class="dropdown-item" href="~/FlightPersonnel/Create">Create Flight Personnel</a>
+                    @*<a asp-controller="Flight_Personnel" asp-action="Index">View Flight Personnel</a>*@
+                    <a class="dropdown-item" href="~/FlightPersonnel/index">View Flight Personnel</a>
+                    <a class="dropdown-item" href="#">Create Flight Personnel</a>
                     <a class="dropdown-item" href="#">Assign Personnel to Flight</a>
                     <a class="dropdown-item" href="#">Update Flight Personnel Status</a>
                 </div>
