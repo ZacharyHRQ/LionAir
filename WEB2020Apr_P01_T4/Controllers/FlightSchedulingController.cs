@@ -62,11 +62,19 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
 
 
-            //Get Booking
-            var bookingList = bookingDAL.GetAllBooking().Where(booking => booking.ScheduleID == id);
+
+            
+            BookingViewModel bookingViewModel = new BookingViewModel
+            {
+                BookingList = bookingDAL.GetAllBooking().Where(booking => booking.ScheduleID == id),
+                CreateRoute = new Route(),
+                SearchOption = Booking.GetTableList(),
+                FlightSchedule = flightScheduleDAL.GetFlightSchedule(id)
+
+            };
 
 
-            return View(bookingList);
+            return View(bookingViewModel);
         }
 
         
