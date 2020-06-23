@@ -29,7 +29,6 @@ namespace WEB2020Apr_P01_T4.Models
         [Display(Name = "Arrival Country")]
         public String ArrivalCountry { get; set; }
 
-        [Range(1,24)]
         [Display(Name = "Flight Duration")]
         public int? FlightDuration { get; set; }
 
