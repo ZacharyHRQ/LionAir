@@ -51,7 +51,7 @@
             <p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Tickets Brought</p>
         </div>
         <div class="col-sm">
-            <p class="dash-info red"><span class="dash-header">Count</span> <br>Schedules</p>
+            <p class="dash-info red"><span class="dash-header">@count</span> <br>Schedules</p>
         </div>
     </div>
     <div class="row">
@@ -113,50 +113,6 @@
 }
 
 
-
-<div class="bg-modal">
-    <div class="modal-contents">
-
-        <div class="close">+</div>
-        <h1>Create Flight Route</h1>
-        @using (@Html.BeginForm("SaveRoute", "FlightScheduling"))
-        {
-            <div class="form-group">
-                @Html.LabelFor(m => m.CreateRoute.DepartureCountry)
-                @Html.TextBoxFor(m => m.CreateRoute.DepartureCountry, new { @class = "form-control" })
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.CreateRoute.DepartureCity)
-                @Html.TextBoxFor(m => m.CreateRoute.DepartureCity, new { @class = "form-control" })
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.CreateRoute.ArrivalCountry)
-                @Html.TextBoxFor(m => m.CreateRoute.ArrivalCountry, new { @class = "form-control" })
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.CreateRoute.ArrivalCity)
-                @Html.TextBoxFor(m => m.CreateRoute.ArrivalCity, new { @class = "form-control" })
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.CreateRoute.FlightDuration)
-                @Html.TextBoxFor(m => m.CreateRoute.FlightDuration, new { @class = "form-control" })
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-        }
-
-    </div>
-</div>
-
-
-
-
-
-
-
+@await Html.PartialAsync("_RouteForm.cshtml", Model.CreateRoute)
 
 <script src="~/js/FlightSchedule.js" asp-append-version="true"></script>

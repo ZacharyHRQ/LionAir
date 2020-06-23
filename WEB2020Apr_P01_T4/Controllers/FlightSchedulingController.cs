@@ -80,11 +80,11 @@ namespace WEB2020Apr_P01_T4.Controllers
         
 
         [HttpPost]
-        public IActionResult SaveRoute(RouteViewModel routeViewModel)
+        public IActionResult SaveRoute(Route route)
         {
          
             //Insert the data
-            routeDAL.insertData(routeViewModel.CreateRoute);
+            routeDAL.insertData(route);
          
             return RedirectToAction("Index");
         }
