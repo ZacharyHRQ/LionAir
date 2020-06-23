@@ -219,3 +219,12 @@ input {
 .dash-search .col .container-fluid .row .col-sm:first-child {
     padding: 0px;
 }
+
+.noValueError {
+    text-align: center;
+    font-style: normal;
+    font-size: 40px;
+    line-height: 29px;
+    color: #000000;
+    margin: 30px 30px 50px;
+}

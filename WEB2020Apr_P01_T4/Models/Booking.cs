@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WEB2020Apr_P01_T4.Models
@@ -29,5 +30,10 @@ namespace WEB2020Apr_P01_T4.Models
 
         [Display(Name = "Date Time Created")]
         public DateTime DateTimeCreated { get; set; }
+
+        public static List<String> GetTableList()
+        {
+            return new List<String>() { "Name", "Passport Number", "Nationality", "Seat Class", "Amount Paid", "Remarks" };
+        }
     }
 }
