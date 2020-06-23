@@ -83,13 +83,13 @@
                                 <td>@route.DepartureCountry</td>
                                 <td>@route.ArrivalCity</td>
                                 <td>@route.ArrivalCountry</td>
-                                @if (@route.FlightDuration != null)
+                                @if (@route.FlightDuration != 0)
                                 {
                                     <td>@route.FlightDuration</td>
                                 }
                                 else
                                 {
-                                    <td>UNKNOWN</td>
+                                    <td>Null</td>
                                 }
                                 <td>@Html.ActionLink("Add", "AddSchedule", "FlightScheduling", new { @id = route.RouteID }, new { @class = "btn btn-primary " })</td>
 
