@@ -33,7 +33,8 @@ namespace WEB2020Apr_P01_T4.Controllers
                 TicketSize = bookingDAL.GetAllBooking().Count(),
                 FlightSchedule = new FlightSchedule(),
                 CreateRoute = new Route(),
-                ShowAddPop = false
+                ShowAddPop = false,
+                ShowRoutePop = false
             };
 
             return View(routeViewModel);
@@ -82,11 +83,33 @@ namespace WEB2020Apr_P01_T4.Controllers
         [HttpPost]
         public IActionResult SaveRoute(Route route)
         {
-         
-            //Insert the data
-            routeDAL.insertData(route);
-         
-            return RedirectToAction("Index");
+
+            if (ModelState.IsValid)
+            {
+
+                //Insert the data
+                routeDAL.insertData(route);
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                RouteViewModel routeViewModel = new RouteViewModel
+                {
+                    RouteList = routeDAL.getAllRoutes(),
+                    SearchOption = Route.GetTableList(),
+                    TicketSize = bookingDAL.GetAllBooking().Count(),
+                    FlightSchedule = new FlightSchedule(),
+                    CreateRoute = new Route(),
+                    ShowAddPop = false,
+                    ShowRoutePop = true
+                };
+
+                return View("Index", routeViewModel);
+
+            }
+
+ 
         }
 
         
@@ -109,6 +132,8 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         public IActionResult AddSchedule(int id)
         {
+
+
 
             RouteViewModel routeViewModel = new RouteViewModel
             {

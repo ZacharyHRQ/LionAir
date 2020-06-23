@@ -12,5 +12,6 @@ namespace WEB2020Apr_P01_T4.ViewModel
         public int TicketSize { get; set; }
         public Route CreateRoute { get; set; }
         public bool ShowAddPop { get; set; }
+        public bool ShowRoutePop { get; set; }
     }
 }

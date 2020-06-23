@@ -112,8 +112,18 @@
 }
 
 
+@if (Model.ShowRoutePop)
+{
+    @await Html.PartialAsync("_RouteForm.cshtml", Model.CreateRoute)
+    <script>document.querySelector('.bg-modal').style.display = "flex";</script>
+}
+else
+{
+    @await Html.PartialAsync("_RouteForm.cshtml", Model.CreateRoute)
+}
 
 
-@await Html.PartialAsync("_RouteForm.cshtml", Model.CreateRoute)
+
+
 
 <script src="~/js/FlightSchedule.js" asp-append-version="true"></script>
