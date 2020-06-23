@@ -29,8 +29,8 @@
 }
 
 .modal-contents {
-    height: 900px;
-    width: 500px;
+    height: auto;
+    width: auto;
     background-color: white;
     text-align: center;
     padding: 20px;
