@@ -1,6 +1,8 @@
 ﻿@model WEB2020Apr_P01_T4.ViewModel.RouteViewModel
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
+
+    int count = Model.RouteList == null ? 0 : @Model.RouteList.Count();
 }
 
 <head>
@@ -49,49 +51,56 @@
             <p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Tickets Brought</p>
         </div>
         <div class="col-sm">
-            <p class="dash-info red"><span class="dash-header"> @Model.RouteList.Count()</span> <br>Routes</p>
+            <p class="dash-info red"><span class="dash-header"> @count </span> <br>Routes</p>
         </div>
     </div>
     <div class="row">
         <div class="col col-sm">
-            <table id="myTable" class="table ">
-                <thead>
-                    <tr>
-                        <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().RouteID)</th>
-                        <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().DepartureCity)</th>
-                        <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().DepartureCountry)</th>
-                        <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().ArrivalCity)</th>
-                        <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().ArrivalCountry)</th>
-                        <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().FlightDuration)</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var route in Model.RouteList)
-                    {
+            @if (count == 0 )
+            {
+                <p class="noValueError">No value</p>
+            }
+            else
+            {
+                <table id="myTable" class="table ">
+                    <thead>
                         <tr>
-                            <td>@route.RouteID</td>
-                            <td>@route.DepartureCity</td>
-                            <td>@route.DepartureCountry</td>
-                            <td>@route.ArrivalCity</td>
-                            <td>@route.ArrivalCountry</td>
-                            @if (@route.FlightDuration != null)
-                            {
-                                <td>@route.FlightDuration</td>
-                            }
-                            else
-                            {
-                                <td>UNKNOWN</td>
-                            }
-                            <td>@Html.ActionLink("Add", "AddSchedule", "FlightScheduling", new { @id = route.RouteID }, new { @class = "btn btn-primary " })</td>
-
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().RouteID)</th>
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().DepartureCity)</th>
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().DepartureCountry)</th>
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().ArrivalCity)</th>
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().ArrivalCountry)</th>
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().FlightDuration)</th>
+                            <th scope="col"></th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var route in Model.RouteList)
+                        {
+                            <tr>
+                                <td>@route.RouteID</td>
+                                <td>@route.DepartureCity</td>
+                                <td>@route.DepartureCountry</td>
+                                <td>@route.ArrivalCity</td>
+                                <td>@route.ArrivalCountry</td>
+                                @if (@route.FlightDuration != null)
+                                {
+                                    <td>@route.FlightDuration</td>
+                                }
+                                else
+                                {
+                                    <td>UNKNOWN</td>
+                                }
+                                <td>@Html.ActionLink("Add", "AddSchedule", "FlightScheduling", new { @id = route.RouteID }, new { @class = "btn btn-primary " })</td>
 
-                    }
+                            </tr>
+
+                        }
 
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            }
 
         </div>
     </div>
