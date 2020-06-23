@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using WEB2020Apr_P01_T4.DAL;
 using WEB2020Apr_P01_T4.ViewModel;
 using WEB2020Apr_P01_T4.Models;
+using Microsoft.AspNetCore.Http;
 
 
 
@@ -36,6 +37,14 @@ namespace WEB2020Apr_P01_T4.Controllers
                 ShowAddPop = false,
                 ShowRoutePop = false
             };
+
+           if ((HttpContext.Session.GetString("Role") == null) ||(HttpContext.Session.GetString("Role") != "Staff"))
+            {
+
+                return RedirectToAction("Index", "Home");
+
+            }
+
 
             return View(routeViewModel);
         }
