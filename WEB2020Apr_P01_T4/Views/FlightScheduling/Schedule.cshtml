@@ -1,6 +1,8 @@
 ﻿@model WEB2020Apr_P01_T4.ViewModel.ScheduleViewModel
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
+
+    int count = Model.FlightScheduleList == null ? 0 : @Model.FlightScheduleList.Count();
 }
 
 <head>
@@ -49,49 +51,57 @@
             <p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Tickets Brought</p>
         </div>
         <div class="col-sm">
-            <p class="dash-info red"><span class="dash-header"> @Model.FlightScheduleList.Count()</span> <br>Schedules</p>
+            <p class="dash-info red"><span class="dash-header">Count</span> <br>Schedules</p>
         </div>
     </div>
     <div class="row">
         <div class="col col-sm">
-            <table id="myTable" class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Flight Number</th>
-                        <th scope="col">RouteID</th>
-                        <th scope="col">AircraftID</th>
-                        <th scope="col">Departure Date and Time</th>
-                        <th scope="col">Arrival Date and Time</th>
-                        <th scope="col">Economy Price</th>
-                        <th scope="col">Business Price</th>
-                        <th scope="col">Status</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var schedule in Model.FlightScheduleList)
-                    {
+            @if (count == 0)
+            {
+                <p class="noValueError">No value</p>
+            }
+            else
+            {
+                <table id="myTable" class="table">
+                    <thead>
                         <tr>
-                            <td>@schedule.FlightNumber</td>
-                            <td>@schedule.RouteID</td>
-                            <td>@schedule.AircraftID</td>
-                            <td>@schedule.DepartureDateTime</td>
-                            <td>@schedule.ArrivalDateTime</td>
-                            <td>@schedule.EconomyClassPrice</td>
-                            <td>@schedule.BusinessClassPrice</td>
-                            <td>@schedule.Status</td>
-
-                            <td>
-                                @Html.ActionLink("Edit", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "btn btn-primary " })
-                                @Html.ActionLink("View", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "btn btn-primary " })
-                            </td>
+                            <th scope="col">Flight Number</th>
+                            <th scope="col">RouteID</th>
+                            <th scope="col">AircraftID</th>
+                            <th scope="col">Departure Date and Time</th>
+                            <th scope="col">Arrival Date and Time</th>
+                            <th scope="col">Economy Price</th>
+                            <th scope="col">Business Price</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var schedule in Model.FlightScheduleList)
+                        {
+                            <tr>
+                                <td>@schedule.FlightNumber</td>
+                                <td>@schedule.RouteID</td>
+                                <td>@schedule.AircraftID</td>
+                                <td>@schedule.DepartureDateTime</td>
+                                <td>@schedule.ArrivalDateTime</td>
+                                <td>@schedule.EconomyClassPrice</td>
+                                <td>@schedule.BusinessClassPrice</td>
+                                <td>@schedule.Status</td>
 
-                    }
+                                <td>
+                                    @Html.ActionLink("Edit", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "btn btn-primary " })
+                                    @Html.ActionLink("View", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "btn btn-primary " })
+                                </td>
+                            </tr>
+
+                        }
 
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+
+            }
 
         </div>
     </div>
