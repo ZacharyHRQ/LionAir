@@ -1,11 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-<<<<<<< HEAD
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB2020Apr_P01_T4", "WEB2020Apr_P01_T4.csproj", "{1E925588-EB8A-40AB-9893-1E742FD77B6A}"
-=======
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB2020Apr_P01_T4", "WEB2020Apr_P01_T4.csproj", "{616CCF01-95D1-4002-BC1B-365C2A673138}"
->>>>>>> Change ther table design
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WEB2020Apr_P01_T4", "WEB2020Apr_P01_T4.csproj", "{499C3644-84E8-421E-B81C-360919601592}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,16 +9,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-<<<<<<< HEAD
-		{1E925588-EB8A-40AB-9893-1E742FD77B6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E925588-EB8A-40AB-9893-1E742FD77B6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E925588-EB8A-40AB-9893-1E742FD77B6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E925588-EB8A-40AB-9893-1E742FD77B6A}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
-		{616CCF01-95D1-4002-BC1B-365C2A673138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{616CCF01-95D1-4002-BC1B-365C2A673138}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{616CCF01-95D1-4002-BC1B-365C2A673138}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{616CCF01-95D1-4002-BC1B-365C2A673138}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> Change ther table design
+		{499C3644-84E8-421E-B81C-360919601592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{499C3644-84E8-421E-B81C-360919601592}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{499C3644-84E8-421E-B81C-360919601592}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{499C3644-84E8-421E-B81C-360919601592}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
