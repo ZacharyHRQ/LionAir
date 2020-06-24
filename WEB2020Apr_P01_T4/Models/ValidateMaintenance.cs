@@ -18,10 +18,10 @@ namespace WEB2020Apr_P01_T4.Models
             Aircraft aircraft = (Aircraft)validationContext.ObjectInstance;
             String status = aircraft.Status;
             int aircraftid = aircraft.AircraftID;
-            if (status == "Under Maintance")
-            {
-                return ValidationResult.Success;
-            }
+            //if (status == "Under Maintance")
+            //{
+            //    return ValidationResult.Success;
+            //}
             if (aircraftContext.CheckMaintenance(aircraftid))
             {
                 return new ValidationResult("Aircraft has flight schedules");
