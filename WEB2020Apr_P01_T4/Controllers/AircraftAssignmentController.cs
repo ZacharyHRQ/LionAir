@@ -67,21 +67,76 @@ namespace WEB2020Apr_P01_T4.Controllers
         
         }
         
-        // GET: /<controller>/Update
-        public IActionResult UpdateAircraft(int? aircrafID)
-        {
-            return View();
-        }
-
-
-
         // GET: /<controller>/Assign
-        public IActionResult AssignAircraft(int? aircrafID)
+        public IActionResult AssignAircraft(int? id)
         {
-            return View();
+            if (id != null)
+            {
+                ViewData["flightList"] = GetFlights();
+                Aircraft aircraft = aircraftContext.FindAircraft(id.Value);
+                AircraftAssignViewModel aircraftAssignViewModel = new AircraftAssignViewModel
+                {
+                    AircraftID = aircraft.AircraftID,
+                    AircraftModel = aircraft.AircraftModel,
+                    NumBusinessSeat = aircraft.NumBusinessSeat,
+                    NumEconomySeat = aircraft.NumEconomySeat
+                };
+                return View(aircraftAssignViewModel);
+            }
+            else
+            {
+                return RedirectToAction("DisplayAircraft");
+            }
         }
 
+        [HttpPost]
+        public IActionResult AssignAircraft(AircraftAssignViewModel aircraft)
+        {
+            ViewData["flightList"] = GetFlights();
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("DisplayAircraft");
+            }
+            else
+            {
+                //Input validation fails, return to the Create view
+                //to display error message
+                return View(aircraft);
+            }
+            
+        }
 
+        // GET: /<controller>/Update
+        public IActionResult UpdateAircraft(int? id)
+        {
+            ViewData["statusList"] = GetStatus();
+            if (id != null)
+            {
+                Aircraft aircraft = aircraftContext.FindAircraft(id.Value);
+                return View(aircraft);
+            }
+            else
+            {
+                return RedirectToAction("DisplayAircraft");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult UpdateAircraft(Aircraft aircraft)
+        {
+            ViewData["statusList"] = GetStatus();
+            if (ModelState.IsValid)
+            {
+                aircraftContext.Update(aircraft);
+                return RedirectToAction("DisplayAircraft");
+            }
+            else
+            {
+                return View(aircraft);
+            }
+            
+
+        }
 
         // Aircraft Models 
         private List<SelectListItem> GetModel()
@@ -122,6 +177,40 @@ namespace WEB2020Apr_P01_T4.Controllers
             return models;
         }
 
+        private List<SelectListItem> GetFlights()
+        {
+            List<SelectListItem> flights = new List<SelectListItem>();
+            List<FlightSchedule> flightSchedules = aircraftContext.GetAvailableFlights();
+            foreach (FlightSchedule schedule in flightSchedules)
+            {
+                flights.Add(new SelectListItem
+                {
+                    Value = schedule.FlightNumber,
+                    Text = schedule.FlightNumber
+                });
+            }
+            
+            return flights;
+        }
+
+
+        private List<SelectListItem> GetStatus()
+        {
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem
+            {
+                Value = "Operational",
+                Text = "Operational"
+            });
+            status.Add(new SelectListItem
+            {
+                Value = "Under Maintenance",
+                Text = "Under Maintenance"
+            });
+            return status;
+
+        }
+
         // Transfer data from aircraft and flight schedule to AircraftScheduleViewModel
         //public List<AircraftScheduleViewModel> MapToAircraftVM()
         //{
@@ -141,7 +230,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         //        {
         //             scheduleID = flight.FlightNumber;
         //        }
-                
+
         //        aircraftScheduleViewModels.Add(new AircraftScheduleViewModel
         //        {
         //            AircraftID = aircraft.AircraftID,
@@ -153,11 +242,11 @@ namespace WEB2020Apr_P01_T4.Controllers
         //            Status = aircraft.Status
         //        });
         //    }
-           
+
         //    return aircraftScheduleViewModels;
         //}
 
-        
-        
+
+
     }
 }

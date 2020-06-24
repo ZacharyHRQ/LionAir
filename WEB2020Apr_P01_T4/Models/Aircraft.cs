@@ -17,8 +17,8 @@ namespace WEB2020Apr_P01_T4.Models
         [DataType(DataType.Date)]
         public DateTime? DateLastMaintenance { get; set; }
 
+        //[ValidateMaintenance]
         public String Status { get; set; }
-
 
         public Aircraft()
         {

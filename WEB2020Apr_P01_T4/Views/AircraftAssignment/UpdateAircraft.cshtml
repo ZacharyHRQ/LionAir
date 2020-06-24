@@ -1,4 +1,5 @@
-﻿
+﻿@model WEB2020Apr_P01_T4.Models.Aircraft
+
 @{
     Layout = "/Views/Shared/_StaffLayout.cshtml";
     ViewData["Title"] = "Update Aircraft";
@@ -6,32 +7,52 @@
 <div class="container">
     <h1>Update Aircraft Status</h1>
     <div class="aircraft-details mx-auto">
-        <h3> Aircraft : 1</h3>
-            <table class="table table-borderless">
-                <tbody>
-                    <tr>
-                        <th scope="row">Model Name</th>
-                        <td>Airbus 380</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Last date of maintenance</th>
-                        <td>01-01-18</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Flight Assigned</th>
-                        <td>BA99</td>
-                    </tr>
-                </tbody>
-            </table>
+        <h3> Aircraft : @Model.AircraftID</h3>
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <th scope="row">Model Name</th>
+                    <td> @Model.AircraftModel</td>
+                </tr>
+                <tr>
+                    <th scope="row">Last date of maintenance</th>
+                    <td> @Model.DateLastMaintenance</td>
+                </tr>
+            </tbody>
+        </table>
 
-            <form>
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Status</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
-                        <option>Operational</option>
-                        <option>Under Maintance</option>
-                    </select>
+        <form asp-action="UpdateAircraft">
+            <div class="form-group row">
+                <label asp-for="AircraftID"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="AircraftID" readonly
+                           class="form-control-plaintext" />
                 </div>
-            </form>
+            </div>
+            <div class="form-group row">
+                <label asp-for="AircraftModel"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="AircraftModel" readonly
+                           class="form-control-plaintext" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="DateLastMaintenance"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="DateLastMaintenance" readonly
+                           class="form-control-plaintext" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Status">Status</label>
+                <select class="form-control" asp-for="Status" asp-items="@ViewData["statusList"] as List<SelectListItem>">
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+        </form>
     </div>
 </div>

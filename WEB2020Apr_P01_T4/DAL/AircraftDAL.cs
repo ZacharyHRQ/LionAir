@@ -209,81 +209,90 @@ namespace WEB2020Apr_P01_T4.DAL
 
         }
 
-        //public bool CheckFlight()
-        //{
-        //    SqlCommand cmd = conn.CreateCommand();
+        public bool CheckFlight(int aircraftid)
+        {
+            SqlCommand cmd = conn.CreateCommand();
 
-        //    cmd.CommandText = @"SELECT AircraftID FROM FlightSchedule WHERE DepartureDateTime BETWEEN ";
+            cmd.CommandText = @"SELECT AircraftID FROM FlightSchedule WHERE @DepartureDateTime BETWEEN DepartureDateTime AND ArrivalDateTime";
+            //cmd.Parameters.AddWithValue("@DepartureDateTime", departuretime);
 
-        //    conn.Open();
+            conn.Open();
 
-        //    SqlDataReader reader = cmd.ExecuteReader();
-        //    while (reader.Read())
-        //    {
-                
-        //    }
-        //    conn.Close();
-            
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                int id = reader.GetInt32(0);
+                if (id == aircraftid)
+                {
+                    conn.Close();
+                    return false;
+                }
+            }
+            conn.Close();
+            return true;
 
-        //}
+        }
 
         //update aircraft flight
-        //public int Assign(Aircraft aircraft)
-        //{
-        //    //Create a SqlCommand object from connection object
-        //    SqlCommand cmd = conn.CreateCommand();
-        //    //Specify an UPDATE SQL statement
-        //    cmd.CommandText = @"UPDATE Staff SET Salary=@salary,
-        //Status=@status, BranchNo = @branchNo
-        //WHERE StaffID = @selectedStaffID";
-        //    //Define the parameters used in SQL statement, value for each parameter
-        //    //is retrieved from respective class's property.
-        //    cmd.Parameters.AddWithValue("@salary", aircraft.Salary);
-        //    cmd.Parameters.AddWithValue("@status", aircraft.IsFullTime);
-        //    if (aircraft.BranchNo != null && aircraft.BranchNo != 0)
-        //        // A branch is assigned
-        //        cmd.Parameters.AddWithValue("@branchNo", staff.BranchNo.Value);
-        //    else // No branch is assigned
-        //        cmd.Parameters.AddWithValue("@branchNo", DBNull.Value);
-        //    cmd.Parameters.AddWithValue("@selectedStaffID", staff.StaffId);
-        //    //Open a database connection
-        //    conn.Open();
-        //    //ExecuteNonQuery is used for UPDATE and DELETE
-        //    int count = cmd.ExecuteNonQuery();
-        //    //Close the database connection
-        //    conn.Close();
-        //    return count;
+        public int Assign(Aircraft aircraft , int scheduleid)
+        {
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify an UPDATE SQL statement
+            cmd.CommandText = @"UPDATE FlightSchedule SET AircraftID=@aircraftid WHERE ScheduleID = @scheduleid";
+            //Define the parameters used in SQL statement, value for each parameter
+            //is retrieved from respective class's property.
+            cmd.Parameters.AddWithValue("@aircraftid", aircraft.AircraftID);
+            cmd.Parameters.AddWithValue("@scheduleid", scheduleid);
+            //Open a database connection
+            conn.Open();
+            //ExecuteNonQuery is used for UPDATE and DELETE
+            int count = cmd.ExecuteNonQuery();
+            //Close the database connection
+            conn.Close();
+            return count;
 
-        //}
+        }
 
 
-        //        //update aircraft status 
-        //        public int Update(Aircraft aircraft)
-        //        {
-        //            //Create a SqlCommand object from connection object
-        //            SqlCommand cmd = conn.CreateCommand();
-        //            //Specify an UPDATE SQL statement
-        //            cmd.CommandText = @"UPDATE Staff SET Salary=@salary,
-        // Status=@status, BranchNo = @branchNo
-        //WHERE StaffID = @selectedStaffID";
-        //            //Define the parameters used in SQL statement, value for each parameter
-        //            //is retrieved from respective class's property.
-        //            cmd.Parameters.AddWithValue("@salary", staff.Salary);
-        //            cmd.Parameters.AddWithValue("@status", staff.IsFullTime);
-        //            if (staff.BranchNo != null && staff.BranchNo != 0)
-        //                // A branch is assigned
-        //                cmd.Parameters.AddWithValue("@branchNo", staff.BranchNo.Value);
-        //            else // No branch is assigned
-        //                cmd.Parameters.AddWithValue("@branchNo", DBNull.Value);
-        //            cmd.Parameters.AddWithValue("@selectedStaffID", staff.StaffId);
-        //            //Open a database connection
-        //            conn.Open();
-        //            //ExecuteNonQuery is used for UPDATE and DELETE
-        //            int count = cmd.ExecuteNonQuery();
-        //            //Close the database connection
-        //            conn.Close();
-        //            return count;
+        public bool CheckMaintenance(int aircraftid)
+        {
+            SqlCommand cmd = conn.CreateCommand();
 
-        //        }
+            cmd.CommandText = @"SELECT * FROM FlightSchedule WHERE (AircraftID = @aircraftid AND DepartureDateTime >= GETDATE()) ";
+            cmd.Parameters.AddWithValue("@aircraftid", aircraftid);
+
+            conn.Open();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            bool has = reader.HasRows;
+            conn.Close();
+
+            return has;
+
+        }
+
+
+
+        //update aircraft status 
+        public int Update(Aircraft aircraft)
+        {
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify an UPDATE SQL statement
+            cmd.CommandText = @"UPDATE Aircraft SET Status = @status WHERE AircraftID = @aircraftid";
+            
+            cmd.Parameters.AddWithValue("@aircraftid", aircraft.AircraftID);
+            cmd.Parameters.AddWithValue("@status", aircraft.Status);
+            
+            
+            conn.Open();
+            
+            int count = cmd.ExecuteNonQuery();
+            
+            conn.Close();
+            return count;
+
+        }
     } 
 }
