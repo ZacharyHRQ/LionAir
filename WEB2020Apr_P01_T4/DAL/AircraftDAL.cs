@@ -265,9 +265,8 @@ namespace WEB2020Apr_P01_T4.DAL
             conn.Open();
 
             SqlDataReader reader = cmd.ExecuteReader();
-            bool has = reader.HasRows;
+            bool has = reader.Read();
             conn.Close();
-
             return has;
 
         }
