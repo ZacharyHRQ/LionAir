@@ -4,9 +4,9 @@
     ViewData["Title"] = "DisplayAircraft";
 }
 
-    <h1 class="pl-5">
-        Aircraft
-    </h1>
+<h1 class="pl-5">
+    Aircraft
+</h1>
 <div class="float-right pr-5">
     <a href="" class="pr-5">
         Maintain <img src="~/icons/baseline_flight_black_18dp.png"
@@ -25,7 +25,7 @@
 {
     <div class="table-responsive">
         <table id="viewAircraft" class="table">
-            <thead class="thead-dark">
+            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Model Name</th>
@@ -38,6 +38,11 @@
             <tbody>
                 @foreach (var item in Model.aircraftList)
                 {
+                    string selectedRow = "";
+                    if(ViewData["selectedAircraft"].ToString() == item.AircraftID.ToString())
+                    {
+                        selectedRow = "class='table-primary'";
+                    }
                     <tr>
                         <td>@item.AircraftID</td>
                         <td>@item.AircraftModel</td>
@@ -48,10 +53,9 @@
 
 
                         <td>
-                            <a asp-action="DisplayAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">View Schedule</a>
-                            <a asp-action="AssignAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID" type="button" class="btn btn-primary">Assign</a>
-                            <a asp-action="UpdateAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID" type="button" class="btn btn-light">Update</a>
-
+                            <a asp-action="DisplayAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">View Schedule</a> |
+                            <a asp-action="AssignAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">Assign</a> |
+                            <a asp-action="UpdateAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">Update</a>
                         </td>
                     </tr>
                 }
@@ -94,11 +98,12 @@
                 </table>
             </div>
         }
+        else
+        {
+            <h5>No flight schedules for selected Aircraft!  </h5>
+        }
     }
-    else
-    {
-        <h5>No flight schedules for selected Aircraft!  </h5>
-    }
+
 
 }
 else

@@ -1,36 +1,37 @@
-﻿
-@{
+﻿@model WEB2020Apr_P01_T4.ViewModel.AircraftAssignViewModel
+@{ 
     Layout = "/Views/Shared/_StaffLayout.cshtml";
     ViewData["Title"] = "Assign Aircraft";
 }
-    <div class="container">
-        <h1>Aircraft Assignment</h1>
-        <div class="aircraft-details mx-auto">
-            <h3> Aircraft : 1</h3>
-                <table class="table table-borderless">
-                    <tbody>
-                        <tr>
-                            <th scope="row">Model Name</th>
-                            <td>Airbus 380</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Business class seats</th>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Economy class seats</th>
-                            <td>200</td>
-                        </tr>
-                    </tbody>
-                </table>
+<div class="container">
+    <h1>Aircraft Assignment</h1>
+    <div class="aircraft-details mx-auto">
+        <h3> Aircraft : @Model.AircraftID</h3>
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <th scope="row">Model Name</th>
+                    <td>@Model.AircraftModel </td>
+                </tr>
+                <tr>
+                    <th scope="row">Business class seats</th>
+                    <td>@Model.NumBusinessSeat</td>
+                </tr>
+                <tr>
+                    <th scope="row">Economy class seats</th>
+                    <td>@Model.NumEconomySeat</td>
+                </tr>
+            </tbody>
+        </table>
 
-                <form>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Flight schedule</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <!-- autofill -->
-                        </select>
-                    </div>
-                </form>
-        </div>
+        <form>
+            <div class="form-group row">
+                <label asp-for="FlightSchedule">Flight schedule</label>
+                <select class="form-control" asp-for="FlightSchedule" asp-items="@ViewData["flightList"] as List<SelectListItem>">
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+        </form>
     </div>
+</div>

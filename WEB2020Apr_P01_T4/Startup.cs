@@ -52,6 +52,7 @@ namespace WEB2020Apr_P01_T4
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WEB2020Apr_P01_T4.Models.FlightSchedule>
+
+    <div class="table-responsive">
+        <table id="viewAircraft" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Flight Number</th>
+                    <th scope="col">RouteID</th>
+                    <th scope="col">Arrival DateTimee</th>
+                    <th scope="col">Departure Date</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.FlightNumber</td>
+                    <td>@item.RouteID</td>
+
+                    <td>@item.ArrivalDateTime</td>
+                    <td>@item.DepartureDateTime</td>
+                    <td>@item.Status</td>
+                   
+                    <td>
+                        
+               
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
