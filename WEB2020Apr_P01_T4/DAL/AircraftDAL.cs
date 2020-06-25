@@ -293,5 +293,35 @@ namespace WEB2020Apr_P01_T4.DAL
             return count;
 
         }
+
+        public List<Aircraft> GetMaintenanceAircraft()
+        {
+            List<Aircraft> aircraftList = new List<Aircraft>();
+
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandText = @"SELECT * FROM Aircraft WHERE DateLastMaintenance < DATEADD(DAY, -30, GETDATE());";
+
+            conn.Open();
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                aircraftList.Add(
+                new Aircraft
+                {
+                    AircraftID = reader.GetInt32(0), //0: 1st column
+                    AircraftModel = reader.GetString(1), //1: 2nd column
+                    NumEconomySeat = reader.GetInt32(2), //2: 3rd column
+                    NumBusinessSeat = reader.GetInt32(3), //3: 4th column
+                    DateLastMaintenance = !reader.IsDBNull(4) ? reader.GetDateTime(4) : (DateTime?)null,
+                    Status = reader.GetString(5)
+                });
+            }
+            conn.Close();
+            return aircraftList;
+
+        }
+
     } 
 }

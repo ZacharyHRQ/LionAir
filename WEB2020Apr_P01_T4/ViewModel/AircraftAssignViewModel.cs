@@ -12,7 +12,7 @@ namespace WEB2020Apr_P01_T4.ViewModel
         public int NumBusinessSeat { get; set; }
 
         public String FlightSchedule { get; set; }
-
+             
         public AircraftAssignViewModel()
         {
         }

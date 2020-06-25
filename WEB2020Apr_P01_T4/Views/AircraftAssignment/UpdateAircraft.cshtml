@@ -33,12 +33,15 @@
                            class="form-control-plaintext" />
                 </div>
             </div>
+   
             <div class="form-group row">
-                <label asp-for="Status">Status</label>
+                <label asp-for="Status">Set Status : </label>
                 <select class="form-control" asp-for="Status" asp-items="@ViewData["statusList"] as List<SelectListItem>">
                 </select>
+                <span asp-validation-for="Status"
+                      class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Update</button>
 
         </form>
     </div>
