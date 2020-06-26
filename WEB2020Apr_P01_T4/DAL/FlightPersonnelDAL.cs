@@ -180,6 +180,47 @@ namespace WEB2020Apr_P01_T4.DAL
             return flightPersonnel;
         }
 
+        public bool VaildStaff(String email, String password, out int staffID)
+        {
+
+            staffID = 0;
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("SELECT StaffID FROM Staff WHERE UPPER(EmailAddr) = UPPER('{0}') AND Password = '{1}'",
+                    email.ToUpper(),
+                    password
+                    ), conn);
+
+
+                // Opening Connection  
+                conn.Open();
+                // Executing the SQL query  
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+                if (sqlDataReader.Read())
+                {
+                    staffID = sqlDataReader.GetInt32(0);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            // Closing the connection  
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
     
 }
