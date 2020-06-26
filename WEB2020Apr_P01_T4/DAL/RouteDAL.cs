@@ -64,8 +64,13 @@ namespace WEB2020Apr_P01_T4.DAL
             }
         }
 
-        public void insertData(Route route)
+        public bool InsertData(Route route)
         {
+
+            if (CheckExistingRoute(route)){
+                return false;
+            }
+
             try
             {
                 SqlCommand cm;
@@ -99,13 +104,52 @@ namespace WEB2020Apr_P01_T4.DAL
                 con.Open();
                 // Executing the SQL query  
                 cm.ExecuteNonQuery();
+
+                return true;
                 
             }
             catch (Exception e)
             {
-                
+                return false;
             }
             // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+        }
+
+
+
+        private bool CheckExistingRoute(Route route)
+        {
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("SELECT * FROM FlightRoute WHERE " +
+                    "DepartureCity='{0}' AND DepartureCountry='{1}' AND ArrivalCity='{2}' AND ArrivalCountry='{3}';",
+                    route.DepartureCity,
+                    route.DepartureCountry,
+                    route.ArrivalCity,
+                    route.ArrivalCountry
+                    ), con);
+
+                //Open the connection
+                con.Open();
+
+                //Excuting the query
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+
+                return sqlDataReader.Read();
+
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
             finally
             {
                 con.Close();
