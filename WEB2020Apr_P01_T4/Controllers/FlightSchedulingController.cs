@@ -192,39 +192,23 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             else
             {
-                if (isEdit)
+           
+
+                RouteViewModel routeViewModel = new RouteViewModel
                 {
-                    ScheduleViewModel scheduleViewModel = new ScheduleViewModel
-                    {
-                        FlightSchedule = new FlightSchedule(),
-                        CreateRoute = new Route(),
-                        SearchOption = FlightSchedule.GetTableList(),
-                        FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(),
-                        ShowEditPop = true,
-                        TicketSize = bookingDAL.GetAllBooking().Count(),
+                    RouteList = routeDAL.getAllRoutes(),
+                    SearchOption = Route.GetTableList(),
+                    TicketSize = bookingDAL.GetAllBooking().Count(),
+                    FlightSchedule = new FlightSchedule(),
+                    CreateRoute = new Route(),
+                    ShowAddPop = true
+                };
 
-                    };
+                //Set the route ID again
+                routeViewModel.FlightSchedule.RouteID = RouteID;
 
-                    return View("Schedule", scheduleViewModel);
-                }
-                else
-                {
-
-                    RouteViewModel routeViewModel = new RouteViewModel
-                    {
-                        RouteList = routeDAL.getAllRoutes(),
-                        SearchOption = Route.GetTableList(),
-                        TicketSize = bookingDAL.GetAllBooking().Count(),
-                        FlightSchedule = new FlightSchedule(),
-                        CreateRoute = new Route(),
-                        ShowAddPop = true
-                    };
-
-                    //Set the route ID again
-                    routeViewModel.FlightSchedule.RouteID = RouteID;
-
-                    return View("Index", routeViewModel);
-                }
+                return View("Index", routeViewModel);
+                
 
     
             }
