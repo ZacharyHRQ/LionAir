@@ -142,7 +142,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
 
                 //Insert the data
-                routeDAL.insertData(route);
+                routeDAL.InsertData(route);
 
                 return RedirectToAction("Index");
             }
