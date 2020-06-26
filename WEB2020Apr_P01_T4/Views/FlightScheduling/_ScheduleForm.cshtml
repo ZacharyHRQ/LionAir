@@ -13,7 +13,7 @@
 
         @if (Model.DepartureDateTime != null)
         {
-            @Html.ActionLink("+", "Index", "FlightScheduling", new {  }, new { @class = "close close-Flight" })
+            @Html.ActionLink("+", "Schedule", "FlightScheduling", new {  }, new { @class = "close close-Flight" })
             isEdit = true;
         }
         else
