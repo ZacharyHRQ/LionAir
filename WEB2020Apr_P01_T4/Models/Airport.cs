@@ -8,7 +8,7 @@ namespace WEB2020Apr_P01_T4.Models
         [Display(Name = "id")]
         public long Id { get; set; }
 
-        [Display(Name = "iata")]
+        [Display(Name = "Code")]
         public string Iata { get; set; }
 
         [Display(Name = "icao")]
