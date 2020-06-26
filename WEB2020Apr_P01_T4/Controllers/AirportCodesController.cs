@@ -14,31 +14,44 @@ namespace WEB2020Apr_P01_T4.Controllers
     public class AirportCodesController : Controller
     {
         // GET: /<controller>/
-        public async Task<ActionResult> Index()
+        
+        public async Task<ActionResult> Index(Airport? airport)
         {
-            HttpClient client = new HttpClient();
-            
-            var request = new HttpRequestMessage()
-            {
-                RequestUri = new Uri("https://airport-info.p.rapidapi.com/airport?iata=TIR"),
-                Method = HttpMethod.Get,
-            };
-            request.Headers.Add("X-RapidAPI-Key", "060f515249mshd32f27de8dcac1ap12474djsnce8aec08381f");
 
-            HttpResponseMessage response = await client.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
+            if(airport.Iata != null)
             {
-                string data = await response.Content.ReadAsStringAsync();
-                
-                Airport airport = JsonConvert.DeserializeObject<Airport>(data);
-                return View(airport);
+                HttpClient client = new HttpClient();
+
+                var request = new HttpRequestMessage()
+                {
+                    RequestUri = new Uri("https://airport-info.p.rapidapi.com/airport?iata=" + airport.Iata),
+                    Method = HttpMethod.Get,
+                };
+                request.Headers.Add("X-RapidAPI-Key", "060f515249mshd32f27de8dcac1ap12474djsnce8aec08381f");
+
+                HttpResponseMessage response = await client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = await response.Content.ReadAsStringAsync();
+
+                    Airport a = JsonConvert.DeserializeObject<Airport>(data);
+                    return View(a);
+                }
+                else
+                {
+                    return View(new Airport());
+                }
             }
             else
             {
                 return View(new Airport());
             }
+      
         }
+
+        
+
     }
 }
 

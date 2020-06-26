@@ -8,7 +8,16 @@
   <div class="row">
       <div class="col-8">
           <h1>Airport Information</h1>
-          <input type="text" placeholder="Search..">
+          @using (@Html.BeginForm("Index", "AirportCodes", new { @code = Model.Iata }, FormMethod.Post))
+          {
+              <div class="form-group">
+                  @Html.LabelFor(m => m.Iata)
+                  @Html.TextBoxFor(m => m.Iata, new { @class = "form-control", placeholder = "Search..." })
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+          }
+
           <p> <strong>Name: @Model.Name</strong>  </p>
           <p> <strong>Phone: @Model.Phone</strong></p>
           <p><strong>Website:</strong> <a href="#"> @Model.Website  </a></p>
