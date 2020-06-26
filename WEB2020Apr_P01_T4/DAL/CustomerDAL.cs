@@ -22,7 +22,7 @@ namespace WEB2020Apr_P01_T4.DAL
                 .AddJsonFile("appsettings.json");
 
             Configuration = builder.Build();
-            string strConn = Configuration.GetConnectionString("MyConnection");
+            string strConn = Configuration.GetConnectionString("LionAirConnectionString");
 
             //Instantiate a SqlConnection object with Connection String read.
             conn = new SqlConnection(strConn);
@@ -121,6 +121,48 @@ namespace WEB2020Apr_P01_T4.DAL
             conn.Close();
 
             return emailFound;
+        }
+
+        public bool VaildCustomer(String email, String password, out int customerID)
+        {
+
+            customerID = 0;
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("SELECT CustomerID FROM Customer WHERE UPPER(EmailAddr) = UPPER('{0}') AND Password = '{1}'",
+                    email.ToUpper(),
+                    password
+                    ), conn);
+
+
+                // Opening Connection  
+                conn.Open();
+                // Executing the SQL query  
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+                if (sqlDataReader.Read())
+                {
+                    customerID = sqlDataReader.GetInt32(0);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            // Closing the connection  
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }
