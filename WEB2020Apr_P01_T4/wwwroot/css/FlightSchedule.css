@@ -235,3 +235,13 @@ input {
     opacity: 1;
     pointer-events: none;
 }
+
+.fa::before {
+    font-size: 40px;
+    color: black;
+    padding:10px;
+}
+
+.fa:hover {
+    text-decoration: none;
+}

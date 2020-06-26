@@ -91,13 +91,16 @@
                                 {
                                     <td>Null</td>
                                 }
-                                <td>@Html.ActionLink("Add", "AddSchedule", "FlightScheduling", new { @id = route.RouteID }, new { @class = "btn btn-primary " })</td>
+                                <td>
+                                    @Html.ActionLink("", "AddSchedule", "FlightScheduling", new { @id = route.RouteID }, new { @class = "fa fa-plus-square" })
+                                    
+                                </td>
 
                             </tr>
 
                         }
 
-
+                        
                     </tbody>
                 </table>
             }
