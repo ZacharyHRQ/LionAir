@@ -24,7 +24,8 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         private  IActionResult CheckAdmin(IActionResult view)
         {
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            //Change later (HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff")
+            if (false)
             {
 
                 return RedirectToAction("Index", "Home");
@@ -100,6 +101,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(),
                 ShowEditPop = true,
                 TicketSize = bookingDAL.GetAllBooking().Count(),
+                
 
             };
 
@@ -156,6 +158,8 @@ namespace WEB2020Apr_P01_T4.Controllers
                     ShowAddPop = false,
                     ShowRoutePop = true
                 };
+
+
 
                 return View("Index", routeViewModel);
 
@@ -215,6 +219,10 @@ namespace WEB2020Apr_P01_T4.Controllers
                         CreateRoute = new Route(),
                         ShowAddPop = true
                     };
+
+                    //Set the route ID again
+                    routeViewModel.FlightSchedule.RouteID = RouteID;
+
                     return View("Index", routeViewModel);
                 }
 
