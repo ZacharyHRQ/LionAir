@@ -228,3 +228,10 @@ input {
     color: #000000;
     margin: 30px 30px 50px;
 }
+
+
+.disabled {
+    background-color: #e9ecef;
+    opacity: 1;
+    pointer-events: none;
+}
