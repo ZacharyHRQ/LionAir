@@ -1,0 +1,50 @@
+﻿@model WEB2020Apr_P01_T4.Models.Route
+<div class="bg-modal">
+    <div class="modal-contents">
+
+        @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class = "close" })
+        
+        <h1>Create Flight Route</h1>
+        @using (@Html.BeginForm("SaveRoute", "FlightScheduling"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.DepartureCountry)
+                @Html.TextBoxFor(m => m.DepartureCountry, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.DepartureCountry)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.DepartureCity)
+                @Html.TextBoxFor(m => m.DepartureCity, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.DepartureCity)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.ArrivalCountry)
+                @Html.TextBoxFor(m => m.ArrivalCountry, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ArrivalCountry)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.ArrivalCity)
+                @Html.TextBoxFor(m => m.ArrivalCity, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ArrivalCity)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.FlightDuration)
+                @Html.TextBoxFor(m => m.FlightDuration, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FlightDuration)
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        }
+
+    </div>
+</div>
+
+
+
+
+<script src="~/wwwroot/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>

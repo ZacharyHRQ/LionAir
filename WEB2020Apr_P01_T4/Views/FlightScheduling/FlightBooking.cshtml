@@ -1,0 +1,109 @@
+﻿@model WEB2020Apr_P01_T4.ViewModel.BookingViewModel
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/FlightSchedule.css">
+</head>
+
+
+<div class="container-fluid top-page con">
+    <div class="row">
+        <div class="col col-sm ">
+            <p class="title">Flight Scheduling</p>
+        </div>
+        <div class="col col-sm">
+            
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid dash">
+
+
+    <div class="row dash-search">
+
+        <div class="col col-sm search-col">
+            <p id="view-title">Boooking View</p>
+
+            <select id="options" name="searchOption">
+                @for (int i = 0; i < Model.SearchOption.Count(); i++)
+                {
+                    <option value="@i">@Model.SearchOption[i]</option>
+                }
+
+            </select>
+
+            <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+        </div>
+
+        <div class="col-sm table-switch right">
+            @Html.ActionLink("Flight Route", "Index", "FlightScheduling", new { }, new { @class = "btn btn-primary " })
+            @Html.ActionLink("Flight Scheduling", "Schedule", "FlightScheduling", new { }, new { @class = "btn btn-primary " })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-sm">
+            <p class="dash-info green"><span class="dash-header"> @Model.FlightSchedule.FlightNumber</span> <br>Flight Number</p>
+        </div>
+        <div class="col-sm">
+            <p class="dash-info red"><span class="dash-header"> @Model.FlightSchedule.RouteID</span> <br>Route ID</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-sm">
+
+            @if (Model.BookingList.Count() == 0)
+            {
+                <p class="noValueError">No value</p>
+            }
+            else
+            {
+                <table id="myTable" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">@Html.DisplayNameFor(m => m.BookingList.First().PassengerName)</th>
+                            <th scope="col">@Html.DisplayNameFor(m => m.BookingList.First().PassportNumber)</th>
+                            <th scope="col">@Html.DisplayNameFor(m => m.BookingList.First().Nationality)</th>
+                            <th scope="col">@Html.DisplayNameFor(m => m.BookingList.First().SeatClass)</th>
+                            <th scope="col">@Html.DisplayNameFor(m => m.BookingList.First().AmtPayable)</th>
+                            <th scope="col">@Html.DisplayNameFor(m => m.BookingList.First().Remarks)</th>
+                            <th scope="col">@Html.DisplayNameFor(m => m.BookingList.First().DateTimeCreated)</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var booking in Model.BookingList)
+                        {
+                            <tr>
+                                <td>@booking.PassengerName</td>
+                                <td>@booking.PassportNumber</td>
+                                <td>@booking.Nationality</td>
+                                <td>@booking.SeatClass</td>
+                                <td>@booking.AmtPayable</td>
+                                <td>@booking.Remarks</td>
+                                <td>@booking.DateTimeCreated</td>
+
+
+                            </tr>
+
+                        }
+
+
+                    </tbody>
+                </table>
+            }
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script src="~/js/FlightSchedule.js" asp-append-version="true"></script>

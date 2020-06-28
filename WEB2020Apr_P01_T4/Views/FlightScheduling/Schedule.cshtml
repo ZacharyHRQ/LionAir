@@ -1,0 +1,116 @@
+﻿@model WEB2020Apr_P01_T4.ViewModel.ScheduleViewModel
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+
+    int count = Model.FlightScheduleList == null ? 0 : @Model.FlightScheduleList.Count();
+}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/FlightSchedule.css">
+</head>
+
+
+<div class="container-fluid top-page con">
+    <div class="row">
+        <div class="col col-sm ">
+            <p class="title">Flight Scheduling</p>
+        </div>
+        <div class="col col-sm">
+            
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid dash">
+
+
+    <div class="row dash-search">
+
+        <div class="col col-sm search-col">
+            <p id="view-title">Schedules View</p>
+
+            <select id="options" name="searchOption">
+                @for (int i = 0; i < Model.SearchOption.Count(); i++)
+                {
+                    <option value="@i">@Model.SearchOption[i]</option>
+                }
+
+            </select>
+
+            <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+        </div>
+
+        <div class="col-sm table-switch right">
+            @Html.ActionLink("Flight Route", "Index", "FlightScheduling", new { }, new { @class = "btn btn-primary " })
+            @Html.ActionLink("Flight Scheduling", "Schedule", "FlightScheduling", new { }, new { @class = "btn btn-primary " })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-sm">
+            <p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Tickets Brought</p>
+        </div>
+        <div class="col-sm">
+            <p class="dash-info red"><span class="dash-header">@count</span> <br>Schedules</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-sm">
+            @if (count == 0)
+            {
+                <p class="noValueError">No value</p>
+            }
+            else
+            {
+                <table id="myTable" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Flight Number</th>
+                            <th scope="col">RouteID</th>
+                            <th scope="col">AircraftID</th>
+                            <th scope="col">Departure Date and Time</th>
+                            <th scope="col">Arrival Date and Time</th>
+                            <th scope="col">Economy Price</th>
+                            <th scope="col">Business Price</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var schedule in Model.FlightScheduleList)
+                        {
+                            <tr>
+                                <td>@schedule.FlightNumber</td>
+                                <td>@schedule.RouteID</td>
+                                <td>@schedule.AircraftID</td>
+                                <td>@schedule.DepartureDateTime</td>
+                                <td>@schedule.ArrivalDateTime</td>
+                                <td>@schedule.EconomyClassPrice</td>
+                                <td>@schedule.BusinessClassPrice</td>
+                                <td>@schedule.Status</td>
+
+                                <td>
+                                    @Html.ActionLink("", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-edit" })
+                                    @Html.ActionLink("", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-eye" })
+                                </td>
+                            </tr>
+                            
+                        }
+
+
+                    </tbody>
+                </table>
+
+            }
+
+        </div>
+    </div>
+</div>
+
+@if (Model.ShowEditPop)
+{
+    @await Html.PartialAsync("_ScheduleForm.cshtml", Model.FlightSchedule)
+}
+
+
+<script src="~/js/FlightSchedule.js" asp-append-version="true"></script>

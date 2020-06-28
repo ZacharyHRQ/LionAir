@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WEB2020Apr_P01_T4.Models;
+using WEB2020Apr_P01_T4.DAL;
+
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -32,12 +34,15 @@ namespace WEB2020Apr_P01_T4.Controllers
             //Email address converted to lowercase
             string loginID = formData["username"].ToString().ToLower();
             string password = formData["password"].ToString();
+            int id = 0;
 
+            CustomerDAL customerDAL = new CustomerDAL();
+            FlightPersonnelDAL flightPersonnelDAL = new FlightPersonnelDAL();
 
-            if (loginID == "s1234567@ica.com" && password == "p@55Staff")
+            if (flightPersonnelDAL.VaildStaff(email: loginID, password: password, staffID: out id))
             {
                 //Store Login ID in session with the key "LoginID"
-                HttpContext.Session.SetString("LoginID", loginID);
+                HttpContext.Session.SetInt32("id", id);
 
                 //Store the user role "Staff" as a string in session with the key "Role"
                 HttpContext.Session.SetString("Role", "Staff");
@@ -45,10 +50,10 @@ namespace WEB2020Apr_P01_T4.Controllers
                 //Redirect use to the Staff Main 
                 return RedirectToAction("StaffMain");
             }
-            else if (loginID == "pg91@hotmail.com" && password == "p@55PG")
+            else if (customerDAL.VaildCustomer(email: loginID, password: password, customerID: out id))
             {
                 //Store Login ID in session with the key "LoginID"
-                HttpContext.Session.SetString("LoginID", loginID);
+                HttpContext.Session.SetInt32("id", id);
                 //Store the user role "Customer" as a string in session with the key "Role"
                 HttpContext.Session.SetString("Role", "Customer");
                 //Store login datetime in session as a string
@@ -70,7 +75,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             //Stop accessing the action if not logged in
             //or account not in the  "Staff" Role
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            if ((HttpContext.Session.GetString("Role") != null) || (HttpContext.Session.GetString("Role") == "Staff"))
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -88,7 +93,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             //Stop accessing the action if not logged in
             //or account not in the  "Staff" Role
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Customer"))
+            if ((HttpContext.Session.GetString("Role") != null) || (HttpContext.Session.GetString("Role") == "Customer"))
             {
                 return RedirectToAction("Index", "Home");
             }

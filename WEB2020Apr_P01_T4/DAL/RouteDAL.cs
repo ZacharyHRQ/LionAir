@@ -42,7 +42,7 @@ namespace WEB2020Apr_P01_T4.DAL
                         DepartureCountry = sqlDataReader.GetString(DepartureCountry),
                         ArrivalCity = sqlDataReader.GetString(ArrivalCity),
                         ArrivalCountry = sqlDataReader.GetString(ArrivalCountry),
-                        FlightDuration = sqlDataReader.GetInt32(FlightDuration),
+                        FlightDuration = sqlDataReader.IsDBNull(FlightDuration) ? 0 : sqlDataReader.GetInt32(FlightDuration),
 
 
 
@@ -61,6 +61,98 @@ namespace WEB2020Apr_P01_T4.DAL
             finally
             {
                 con.Close();       
+            }
+        }
+
+        public bool InsertData(Route route)
+        {
+
+            if (CheckExistingRoute(route)){
+                return false;
+            }
+
+            try
+            {
+                SqlCommand cm;
+                if (route.FlightDuration != null)
+                {
+                    // writing sql query  
+                     cm = new SqlCommand(String.Format("INSERT INTO FlightRoute " +
+                        "(DepartureCity, DepartureCountry, ArrivalCity, ArrivalCountry, FlightDuration)values('{0}', '{1}', '{2}', '{3}', {4})"
+                        , route.DepartureCity,
+                        route.DepartureCountry,
+                        route.ArrivalCity,
+                        route.ArrivalCountry,
+                        route.FlightDuration
+                        ), con);
+                }
+                else
+                {
+                    // writing sql query  
+                    cm = new SqlCommand(String.Format("INSERT INTO FlightRoute " +
+                        "(DepartureCity, DepartureCountry, ArrivalCity, ArrivalCountry)values('{0}', '{1}', '{2}', '{3}')"
+                        , route.DepartureCity,
+                        route.DepartureCountry,
+                        route.ArrivalCity,
+                        route.ArrivalCountry
+                        ), con);
+                }
+     
+
+
+                // Opening Connection  
+                con.Open();
+                // Executing the SQL query  
+                cm.ExecuteNonQuery();
+
+                return true;
+                
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+        }
+
+
+
+        private bool CheckExistingRoute(Route route)
+        {
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("SELECT * FROM FlightRoute WHERE " +
+                    "DepartureCity='{0}' AND DepartureCountry='{1}' AND ArrivalCity='{2}' AND ArrivalCountry='{3}';",
+                    route.DepartureCity,
+                    route.DepartureCountry,
+                    route.ArrivalCity,
+                    route.ArrivalCountry
+                    ), con);
+
+                //Open the connection
+                con.Open();
+
+                //Excuting the query
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+
+                return sqlDataReader.Read();
+
+
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            finally
+            {
+                con.Close();
             }
         }
 

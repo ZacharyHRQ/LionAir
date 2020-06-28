@@ -1,19 +1,132 @@
-﻿@model WEB2020Apr_P01_T4.ViewModel.ScheduleRouteViewModel
+﻿@model WEB2020Apr_P01_T4.ViewModel.RouteViewModel
 @{
+    Layout = "/Views/Shared/_Layout.cshtml";
+
+    int count = Model.RouteList == null ? 0 : @Model.RouteList.Count();
 }
 
 <head>
     <link rel="stylesheet" type="text/css" href="~/css/FlightSchedule.css">
 </head>
 
-<partial name="_addRoute.cshtml"
-          model=@Model.RouteList[0]>
 
-<partial name="_Route.cshtml"
-        model=Model.RouteList>
+<div class="container-fluid top-page con">
+    <div class="row">
+        <div class="col col-sm ">
+            <p class="title">Flight Scheduling</p>
+        </div>
+        <div class="col col-sm">
+            <p class="right"><button id="button" class="btn btn-primary create">Create Flight Route</button></p>
+        </div>
+    </div>
+</div>
 
-<partial name="_Schedules.cshtml"
-        model=Model.FlightScheduleList>
+<div class="container-fluid dash">
+
+
+    <div class="row dash-search">
+
+        <div class="col col-sm search-col">
+            <p id="view-title">Routes View</p>
+
+            <select id="options" name="searchOption">
+                @for (int i = 0; i < Model.SearchOption.Count(); i++)
+                {
+                    <option value="@i">@Model.SearchOption[i]</option>
+                }
+
+            </select>
+
+            <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+        </div>
+
+        <div class="col-sm table-switch right">
+            @Html.ActionLink("Flight Route", "Index", "FlightScheduling", new { }, new { @class = "btn btn-primary " })
+            @Html.ActionLink("Flight Scheduling", "Schedule", "FlightScheduling", new { }, new { @class = "btn btn-primary " })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-sm">
+            <p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Tickets Brought</p>
+        </div>
+        <div class="col-sm">
+            <p class="dash-info red"><span class="dash-header"> @count </span> <br>Routes</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-sm">
+            @if (count == 0)
+            {
+                <p class="noValueError">No value</p>
+            }
+            else
+            {
+                <table id="myTable" class="table ">
+                    <thead>
+                        <tr>
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().RouteID)</th>
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().DepartureCity)</th>
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().DepartureCountry)</th>
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().ArrivalCity)</th>
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().ArrivalCountry)</th>
+                            <th scope="col">@Html.DisplayNameFor(route => route.RouteList.First().FlightDuration)</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var route in Model.RouteList)
+                        {
+                            <tr>
+                                <td>@route.RouteID</td>
+                                <td>@route.DepartureCity</td>
+                                <td>@route.DepartureCountry</td>
+                                <td>@route.ArrivalCity</td>
+                                <td>@route.ArrivalCountry</td>
+                                @if (@route.FlightDuration != 0)
+                                {
+                                    <td>@route.FlightDuration</td>
+                                }
+                                else
+                                {
+                                    <td>Null</td>
+                                }
+                                <td>
+                                    @Html.ActionLink("", "AddSchedule", "FlightScheduling", new { @id = route.RouteID }, new { @class = "fa fa-plus-square" })
+                                    
+                                </td>
+
+                            </tr>
+
+                        }
+
+                        
+                    </tbody>
+                </table>
+            }
+
+        </div>
+    </div>
+</div>
+
+@if (Model.ShowAddPop)
+{
+    @await Html.PartialAsync("_ScheduleForm.cshtml", Model.FlightSchedule)
+}
+
+
+@if (Model.ShowRoutePop)
+{
+    @await Html.PartialAsync("_RouteForm.cshtml", Model.CreateRoute)
+    <script>document.querySelector('.bg-modal').style.display = "flex";</script>
+}
+else
+{
+    @await Html.PartialAsync("_RouteForm.cshtml", Model.CreateRoute)
+}
 
 
 
+
+
+<script src="~/js/FlightSchedule.js" asp-append-version="true"></script>

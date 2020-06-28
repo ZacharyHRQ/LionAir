@@ -20,7 +20,7 @@ namespace WEB2020Apr_P01_T4.DAL
 
         public FlightScheduleDAL(){}
 
-        public List<FlightSchedule> getAllFlightSchedule()
+        public List<FlightSchedule> GetAllFlightSchedule()
         {
             List<FlightSchedule> flightScheduleList = new List<FlightSchedule>();
             try
@@ -43,7 +43,7 @@ namespace WEB2020Apr_P01_T4.DAL
                         ScheduleID = sqlDataReader.GetInt32(ScheduleID),
                         FlightNumber = sqlDataReader.GetString(FlightNumber),
                         RouteID = sqlDataReader.GetInt32(RouteID),
-                        AircraftID = sqlDataReader.GetInt32(AircraftID),
+                        AircraftID = sqlDataReader.IsDBNull(AircraftID) ? 0 : sqlDataReader.GetInt32(AircraftID),
                         DepartureDateTime = sqlDataReader.GetDateTime(DepartureDateTime),
                         ArrivalDateTime = sqlDataReader.GetDateTime(ArrivalDateTime),
                         EconomyClassPrice = sqlDataReader.GetDecimal(EconomyClassPrice),
@@ -63,6 +63,120 @@ namespace WEB2020Apr_P01_T4.DAL
             {
                 return null;
             }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public FlightSchedule GetFlightSchedule(int id)
+        {
+            
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand("SELECT * FROM FlightSchedule WHERE ScheduleID = " + id, con);
+
+                //Open the connection
+                con.Open();
+
+                //Excuting the query
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+                if (sqlDataReader.Read())
+                {
+                    
+                        return new FlightSchedule
+                        {
+
+                            ScheduleID = sqlDataReader.GetInt32(ScheduleID),
+                            FlightNumber = sqlDataReader.GetString(FlightNumber),
+                            RouteID = sqlDataReader.GetInt32(RouteID),
+                            AircraftID = sqlDataReader.IsDBNull(AircraftID) ? 0 : sqlDataReader.GetInt32(AircraftID),
+                            DepartureDateTime = sqlDataReader.GetDateTime(DepartureDateTime),
+                            ArrivalDateTime = sqlDataReader.GetDateTime(ArrivalDateTime),
+                            EconomyClassPrice = sqlDataReader.GetDecimal(EconomyClassPrice),
+                            BusinessClassPrice = sqlDataReader.GetDecimal(BusinessClassPrice),
+                            Status = sqlDataReader.GetString(Status),
+
+
+                        };
+                    }
+                else
+                {
+                    return null;
+                } 
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public void InsertData(FlightSchedule flightSchedule)
+        {
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("INSERT INTO FlightSchedule " +
+                    "(FlightNumber, DepartureDateTime,ArrivalDateTime,  EconomyClassPrice, BusinessClassPrice, RouteID, Status)values('{0}', '{1}', '{2}',  {3}, {4}, {5}, '{6}')"
+                    , flightSchedule.FlightNumber,
+                    flightSchedule.DepartureDateTime,
+                    flightSchedule.ArrivalDateTime,
+                    flightSchedule.EconomyClassPrice,
+                    flightSchedule.BusinessClassPrice,
+                    flightSchedule.RouteID,
+                    flightSchedule.Status
+                    ), con);
+
+
+                // Opening Connection  
+                con.Open();
+                // Executing the SQL query  
+                cm.ExecuteNonQuery();
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public void Update(FlightSchedule flightSchedule)
+        {
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("Update FlightSchedule " +
+                    "SET Status='{0}' WHERE ScheduleID={1}",
+                        flightSchedule.Status,
+                        flightSchedule.ScheduleID
+                    ), con);
+
+
+                // Opening Connection  
+                con.Open();
+                // Executing the SQL query  
+                cm.ExecuteNonQuery();
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            // Closing the connection  
             finally
             {
                 con.Close();

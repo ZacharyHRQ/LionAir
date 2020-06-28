@@ -1,34 +1,59 @@
-﻿<!DOCTYPE html>
+﻿﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WEB2020Apr_P01_T4</title>
+    <title>@ViewData["Title"] - Lion Air</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/navbar_style.css" />
     <link rel="stylesheet" href="~/css/airportcodes.css" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
+@{
+    String role = HttpContextAccessor.HttpContext.Session.GetString("Role");
+}
+
 <body>
     <header>
-        @await Html.PartialAsync("_HomePageNav.cshtml")
+
+        @if (role == "Customer")
+        {
+            @await Html.PartialAsync("_CustomerNav.cshtml")
+
+        }
+        else if (role == "Staff")
+        {
+            @await Html.PartialAsync("_StaffNav.cshtml")
+        }
+        else
+        {
+            @await Html.PartialAsync("_HomePageNav.cshtml")
+
+        }
+
+
     </header>
-    <div">
+    <div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-    </div>
+        </div>
 
-    <footer class="border-top small text-right text-muted">
-        <p style="padding-right:15px; padding-top: 5px">
-            &copy; 2020 - WEB2020Apr_P01_T4 - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </p>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <footer class="border-top small text-right text-muted">
+            <p style="padding-right:15px; padding-top: 5px">
+                &copy; 2020 - WEB2020Apr_P01_T4 - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </p>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @RenderSection("Scripts", required: false)
+        @RenderSection("Scripts", required: false)
 </body>
 </html>
