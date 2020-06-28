@@ -21,6 +21,11 @@ namespace WEB2020Apr_P01_T4.Controllers
         // GET: /<controller>/Display
         public IActionResult DisplayAircraft(int? id)
         {
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             AircraftScheduleViewModel aircraftScheduleView = new AircraftScheduleViewModel();
             
             aircraftScheduleView.aircraftList = aircraftContext.GetAllAircraft();
@@ -49,9 +54,13 @@ namespace WEB2020Apr_P01_T4.Controllers
             return View("DisplayAircraft" , aircraftScheduleView);
         }
 
-        // GET: /<controller>/Create
+       
         public IActionResult CreateAircraft()
         {
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             ViewData["ModelList"] = GetModel();
             return View();
         }
@@ -76,6 +85,10 @@ namespace WEB2020Apr_P01_T4.Controllers
         // GET: /<controller>/Assign
         public IActionResult AssignAircraft(int? id)
         {
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (id != null)
             {
 
@@ -116,6 +129,10 @@ namespace WEB2020Apr_P01_T4.Controllers
         // GET: /<controller>/Update
         public IActionResult UpdateAircraft(int? id)
         {
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            {
+                return RedirectToAction("Index", "Login");
+            }
             ViewData["statusList"] = GetStatus();
             if (id != null)
             {
