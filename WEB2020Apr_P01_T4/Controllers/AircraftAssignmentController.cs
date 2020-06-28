@@ -78,6 +78,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             if (id != null)
             {
+
                 ViewData["flightList"] = GetFlights();
                 Aircraft aircraft = aircraftContext.FindAircraft(id.Value);
                 AircraftAssignViewModel aircraftAssignViewModel = new AircraftAssignViewModel
@@ -85,7 +86,8 @@ namespace WEB2020Apr_P01_T4.Controllers
                     AircraftID = aircraft.AircraftID,
                     AircraftModel = aircraft.AircraftModel,
                     NumBusinessSeat = aircraft.NumBusinessSeat,
-                    NumEconomySeat = aircraft.NumEconomySeat
+                    NumEconomySeat = aircraft.NumEconomySeat,
+                    status = aircraft.Status
                 };
                 return View(aircraftAssignViewModel);
             }
@@ -101,6 +103,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             ViewData["flightList"] = GetFlights();
             if (ModelState.IsValid)
             {
+                aircraftContext.Assign(aircraft.AircraftID, Convert.ToInt32(aircraft.flightSchedule));
                 return RedirectToAction("DisplayAircraft");
             }
             else
@@ -191,7 +194,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 flights.Add(new SelectListItem
                 {
-                    Value = schedule.FlightNumber,
+                    Value = schedule.ScheduleID.ToString(),
                     Text = schedule.FlightNumber
                 });
             }
@@ -217,5 +220,19 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         }
 
+        public bool CheckAssignmentValid(AircraftAssignViewModel aircraft)
+        {
+  
+            if (aircraft.status == "Under Maintenance")
+            {
+                return false;
+            }
+            else if (aircraftContext.CheckFlight(aircraft.AircraftID , Convert.ToInt32(aircraft.flightSchedule)))
+            {
+                return false; 
+            }
+            return true;
+        }
+        
     }
 }

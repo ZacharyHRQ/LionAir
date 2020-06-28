@@ -4,33 +4,53 @@
     ViewData["Title"] = "Assign Aircraft";
 }
 <div class="container">
-    <h1>Aircraft Assignment</h1>
+    <h1 style="color:#8095B3;" >Aircraft Assignment</h1>
     <div class="aircraft-details mx-auto">
-        <h3> Aircraft : @Model.AircraftID</h3>
-        <table class="table table-borderless">
-            <tbody>
-                <tr>
-                    <th scope="row">Model Name</th>
-                    <td>@Model.AircraftModel </td>
-                </tr>
-                <tr>
-                    <th scope="row">Business class seats</th>
-                    <td>@Model.NumBusinessSeat</td>
-                </tr>
-                <tr>
-                    <th scope="row">Economy class seats</th>
-                    <td>@Model.NumEconomySeat</td>
-                </tr>
-            </tbody>
-        </table>
+     
 
-        <form>
+        <form asp-action="AssignAircraft">
             <div class="form-group row">
-                <label asp-for="FlightSchedule">Flight schedule</label>
-                <select class="form-control" asp-for="FlightSchedule" asp-items="@ViewData["flightList"] as List<SelectListItem>">
-                </select>
+                <label asp-for="AircraftID"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="AircraftID" readonly
+                           class="form-control-plaintext" />
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group row">
+                <label asp-for="AircraftModel"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="AircraftModel" readonly
+                           class="form-control-plaintext" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="NumBusinessSeat"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="NumBusinessSeat" readonly
+                           class="form-control-plaintext" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="NumEconomySeat"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="NumEconomySeat" readonly
+                           class="form-control-plaintext" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="flightSchedule">Flight schedule</label>
+                <select class="form-control" asp-for="flightSchedule" asp-items="@ViewData["flightList"] as List<SelectListItem>">
+                </select>
+                <span asp-validation-for="flightSchedule"
+                      class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Assign</button>
+           
 
         </form>
     </div>
