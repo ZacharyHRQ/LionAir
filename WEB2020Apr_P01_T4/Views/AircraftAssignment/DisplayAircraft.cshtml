@@ -1,33 +1,52 @@
-﻿@model IEnumerable<WEB2020Apr_P01_T4.Models.Aircraft>
+﻿@model WEB2020Apr_P01_T4.ViewModel.AircraftScheduleViewModel
 @{
     Layout = "/Views/Shared/_StaffLayout.cshtml";
     ViewData["Title"] = "DisplayAircraft";
 }
 
-<h1 class="pl-5">
+<h1 class="pl-5" style="color:#80A4ED;">
     Aircraft
 </h1>
 <div class="float-right pr-5">
-    <a href="" class="pr-5">Maintain</a> <a href="~/AircraftAssignment/CreateAircraft">Add</a>
+    <a class="pr-5" asp-action="MaintainAircraft" asp-controller="AircraftAssignment">
+        Maintain <img src="~/icons/baseline_flight_black_18dp.png"
+                      width="20"
+                      height="20"
+                      style="vertical-align:middle;" />
+    </a>
+    <a href="~/AircraftAssignment/CreateAircraft">
+        Add <img src="~/icons/baseline_flight_black_18dp.png"
+                 width="20"
+                 height="20"
+                 style="vertical-align:middle;" />
+    </a>
 </div>
 
-@if (Model.ToList().Count > 0)
+@if (Model.aircraftList.Count > 0)
 {
     <div class="table-responsive">
         <table id="viewAircraft" class="table">
-            <thead class="thead-dark">
+            <thead>
                 <tr>
-                    <th>#</th>
+                    <th>ID</th>
                     <th>Model Name</th>
                     <th>business class seats</th>
                     <th>economy class seats</th>
                     <th>date of last maintenance</th>
-                    <th>Flight assigned</th>
+                    <th>Status</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                
+                
+                @foreach (var item in Model.aircraftList)
                 {
+                    string selectedRow = "";
+                    if (ViewData["selectedAircraft"].ToString() == item.AircraftID.ToString())
+                    {
+                        selectedRow = "class='table-primary'";
+                    }
                     <tr>
                         <td>@item.AircraftID</td>
                         <td>@item.AircraftModel</td>
@@ -35,20 +54,66 @@
                         <td>@item.NumBusinessSeat</td>
                         <td>@item.NumEconomySeat</td>
                         <td>@item.DateLastMaintenance</td>
+                        <td>@item.Status</td>
+
 
                         <td>
-                            <button type="button" class="btn btn-primary">Assign</button>
-                            <button type="button" class="btn btn-light">Update</button>
-
+                            <a asp-action="DisplayAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">View Schedule</a> |
+                            <a asp-action="AssignAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">Assign</a> |
+                            <a asp-action="UpdateAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">Update</a>
                         </td>
                     </tr>
-                }
+                 }
+                
+
             </tbody>
         </table>
     </div>
+
+    @if (ViewData["selectedAircraft"].ToString() != "")
+    {
+        if (Model.scheduleList.Count != 0)
+        {
+            <h5> Flight Schedules for Aircraft  @ViewData["selectedAircraft"].ToString() :</h5>
+            <div class="table-responsive">
+                <table id="viewAircraft" class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Flight Number</th>
+                            <th scope="col">RouteID</th>
+                            <th scope="col">Arrival DateTimee</th>
+                            <th scope="col">Departure Date</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.scheduleList)
+                        {
+                            <tr>
+                                <td>@item.FlightNumber</td>
+                                <td>@item.RouteID</td>
+
+                                <td>@item.ArrivalDateTime</td>
+                                <td>@item.DepartureDateTime</td>
+                                <td>@item.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <h5>No flight schedules for selected Aircraft!  </h5>
+        }
+    }
+
+
 }
 else
 {
     <span style="color: red;">No record found!</span>
 }
+
+
 

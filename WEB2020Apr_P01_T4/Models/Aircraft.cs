@@ -8,7 +8,6 @@ namespace WEB2020Apr_P01_T4.Models
         
         public int AircraftID { get; set; }
 
-        
         public String AircraftModel { get; set; }
         
         public int NumEconomySeat { get; set; }
@@ -18,8 +17,8 @@ namespace WEB2020Apr_P01_T4.Models
         [DataType(DataType.Date)]
         public DateTime? DateLastMaintenance { get; set; }
 
+        [ValidateMaintenance]
         public String Status { get; set; }
-
 
         public Aircraft()
         {

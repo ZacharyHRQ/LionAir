@@ -1,37 +1,57 @@
-﻿@page
-@{
+﻿@model WEB2020Apr_P01_T4.ViewModel.AircraftAssignViewModel
+@{ 
     Layout = "/Views/Shared/_StaffLayout.cshtml";
-    ViewData["Title"] = "DisplayAircraft";
+    ViewData["Title"] = "Assign Aircraft";
 }
-    <div class="container">
-        <h1>Aircraft Assignment</h1>
-        <div class="aircraft-details mx-auto">
-            <h3>
-                Aircraft : 1</h6>
-                <table class="table table-borderless">
-                    <tbody>
-                        <tr>
-                            <th scope="row">Model Name</th>
-                            <td>Airbus 380</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Business class seats</th>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Economy class seats</th>
-                            <td>200</td>
-                        </tr>
-                    </tbody>
-                </table>
+<div class="container">
+    <h1 style="color:#8095B3;" >Aircraft Assignment</h1>
+    <div class="aircraft-details mx-auto">
+     
 
-                <form>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Flight schedule</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <!-- autofill -->
-                        </select>
-                    </div>
-                </form>
-        </div>
+        <form asp-action="AssignAircraft">
+            <div class="form-group row">
+                <label asp-for="AircraftID"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="AircraftID" readonly
+                           class="form-control-plaintext" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="AircraftModel"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="AircraftModel" readonly
+                           class="form-control-plaintext" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="NumBusinessSeat"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="NumBusinessSeat" readonly
+                           class="form-control-plaintext" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="NumEconomySeat"
+                       class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9 col-md-5">
+                    <input asp-for="NumEconomySeat" readonly
+                           class="form-control-plaintext" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="flightSchedule">Flight schedule</label>
+                <select class="form-control" asp-for="flightSchedule" asp-items="@ViewData["flightList"] as List<SelectListItem>">
+                </select>
+                <span asp-validation-for="flightSchedule"
+                      class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Assign</button>
+           
+
+        </form>
     </div>
+</div>

@@ -1,39 +1,39 @@
-﻿
+﻿@model WEB2020Apr_P01_T4.Models.Aircraft
 @{
     Layout = "/Views/Shared/_StaffLayout.cshtml";
-    ViewData["Title"] = "DisplayAircraft";
+    ViewData["Title"] = "Create Aircraft";
 }
     <div class="container">
         <div class="row">
-            <div class="col-4">
+            <div class="col-4" style="color:#8A84E2;">
                 <h1>Create Aircraft</h1>
             </div>
             <div class="col-8">
-                <form>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Model Name</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                <form asp-action="CreateAircraft">
+                    <div class="form-group row">
+                        <label asp-for="AircraftModel">Model Name</label>
+                        <select class="form-control" asp-for="AircraftModel" asp-items="@ViewData["ModelList"] as List<SelectListItem>">
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Number of business seats  </label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    <div class="form-group row">
+                        <label asp-for="NumBusinessSeat">Number of business seats  </label>
+                        <input class="form-control" asp-for="NumBusinessSeat">
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Number of economy seats </label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    <div class="form-group row">
+                        <label asp-for="NumEconomySeat">Number of economy seats </label>
+                        <input class="form-control" asp-for="NumEconomySeat">
                     </div>
-                    <div class="form-group">
-                        <label for="maintenanceDate">Date of last maintenance</label>
-                        <input type="date" id="maintenanceDate" name="maintenanceDate">
+                    <div class="form-group row" >
+                        <label asp-for="DateLastMaintenance">Date of last maintenance</label>
+                        <input type="date" id="maintenanceDate" name="maintenanceDate" asp-for="DateLastMaintenance">
                     </div>
-
+                    <div class="form-group row">
+                        <label asp-for="Status">Number of economy seats </label>
+                        <input class="form-control" asp-for="Status" value="Operational">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
 
         </div>
+    </div>
