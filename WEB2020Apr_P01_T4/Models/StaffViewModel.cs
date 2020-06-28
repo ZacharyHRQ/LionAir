@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WEB2020Apr_P01_T4.Models
 {
-    public class FlightPersonnel
+    public class StaffViewModel
     {
         [Display(Name = "Staff ID")]
         public int StaffID { get; set; }
@@ -32,10 +32,22 @@ namespace WEB2020Apr_P01_T4.Models
         // Custom Validation Attribute for checking email address exists
         public string EmailAddr { get; set; }
 
-        [Display(Name = "Password")]
-        public string Password { get; set; }
-
         [Display(Name = "Status")]
         public string Status { get; set; }
+
+        [Display(Name = "ScheduleID")]
+        public int ScheduleID { get; set; }
+
+        [Display(Name = "RouteID")]
+        public int RouteID { get; set; }
+
+        [Display(Name = "Role")]
+        public string Role { get; set; }
+
+        [Display(Name = "FlightNumber")]
+        public string FlightNumber { get; set; }
+
+        [Display(Name = "AircraftID")]
+        public int AircraftID { get; set; }
     }
 }
