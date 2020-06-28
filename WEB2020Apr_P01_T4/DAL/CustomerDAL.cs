@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Data.SqlClient;
 using WEB2020Apr_P01_T4.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace WEB2020Apr_P01_T4.DAL
 {
@@ -65,7 +66,6 @@ namespace WEB2020Apr_P01_T4.DAL
         {
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
-
             //Specify an INSERT SQL statement which will return the auto-generated CustomerID after insertion
             cmd.CommandText = @"INSERT INTO Customer (CustomerName, Nationality, BirthDate, TelNo, EmailAddr, Password)
                                 OUTPUT INSERTED.CustomerID 
@@ -165,14 +165,14 @@ namespace WEB2020Apr_P01_T4.DAL
             }
         }
 
-        public int Update(ChangePassword changePassword)
+        public void Update(ChangePassword changePassword, int customerid)
         {
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
 
             //Specify an UPDATE SQL statement
             cmd.CommandText = @"UPDATE Customer SET Password=@newpassword
-                                WHERE CustomerID = 1";
+                                WHERE CustomerID =" + customerid.ToString();
 
             //Define the parameters used in SQL statement, value for each parameter
             //is retrieved from respective class's property.
@@ -181,11 +181,9 @@ namespace WEB2020Apr_P01_T4.DAL
             //Open a database connection
             conn.Open();
             //ExecuteNonQuery is used for UPDATE and DELETE
-            int count = cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();
             //Close the database connection
             conn.Close();
-
-            return count;
         }
         public List<Aircraftschedule> GetAllAircraftSchedule()
         {
