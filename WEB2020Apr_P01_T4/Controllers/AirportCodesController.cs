@@ -14,7 +14,6 @@ namespace WEB2020Apr_P01_T4.Controllers
     public class AirportCodesController : Controller
     {
         // GET: /<controller>/
-        
         public async Task<ActionResult> Index(Airport? airport)
         {
 
