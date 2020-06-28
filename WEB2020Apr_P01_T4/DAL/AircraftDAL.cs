@@ -157,9 +157,9 @@ namespace WEB2020Apr_P01_T4.DAL
                     aircraft.AircraftID = aircraftid;
                     aircraft.AircraftModel = !reader.IsDBNull(1) ? reader.GetString(1) : null;
                     // (char) 0 - ASCII Code 0 - null value
-                    aircraft.NumBusinessSeat = !reader.IsDBNull(2) ?
+                    aircraft.NumEconomySeat = !reader.IsDBNull(2) ?
                     reader.GetInt32(2) : 0;
-                    aircraft.NumEconomySeat = !reader.IsDBNull(3) ?
+                    aircraft.NumBusinessSeat = !reader.IsDBNull(3) ?
                     reader.GetInt32(3) : 0;
                     aircraft.DateLastMaintenance = !reader.IsDBNull(4) ?
                     reader.GetDateTime(4) : (DateTime?)null;
@@ -194,7 +194,7 @@ namespace WEB2020Apr_P01_T4.DAL
                     ScheduleID = reader.GetInt32(0),
                     FlightNumber = reader.GetString(1),
                     RouteID = reader.GetInt32(2),
-                    AircraftID = reader.GetInt32(3),
+                    //AircraftID = (int)(!reader.IsDBNull(7) ? reader.GetInt32(7) : 0),
                     DepartureDateTime = reader.GetDateTime(4),
                     ArrivalDateTime = reader.GetDateTime(5),
                     EconomyClassPrice = reader.GetDecimal(6),
@@ -209,32 +209,64 @@ namespace WEB2020Apr_P01_T4.DAL
 
         }
 
-        public bool CheckFlight(int aircraftid)
+        public bool CheckFlight(int aircraftid , int scheduleid )
         {
             SqlCommand cmd = conn.CreateCommand();
-
-            cmd.CommandText = @"SELECT AircraftID FROM FlightSchedule WHERE @DepartureDateTime BETWEEN DepartureDateTime AND ArrivalDateTime";
-            //cmd.Parameters.AddWithValue("@DepartureDateTime", departuretime);
+            FlightSchedule flightSchedule = FindSchedule(scheduleid);
+            cmd.CommandText = @"SELECT * FROM FlightSchedule WHERE (AircraftID = @aircraftid  AND DepartureDateTime BETWEEN @DepartureDateTime AND @ArrivalDateTime)";
+            cmd.Parameters.AddWithValue("@DepartureDateTime", flightSchedule.DepartureDateTime);
+            cmd.Parameters.AddWithValue("@aircraftid", aircraftid);
+            cmd.Parameters.AddWithValue("@ArrivalDateTime", flightSchedule.ArrivalDateTime);
 
             conn.Open();
 
             SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                int id = reader.GetInt32(0);
-                if (id == aircraftid)
-                {
-                    conn.Close();
-                    return false;
-                }
-            }
+            bool valid = reader.Read();
             conn.Close();
-            return true;
+            return valid;
 
         }
 
-        //update aircraft flight
-        public int Assign(Aircraft aircraft , int scheduleid)
+
+        public FlightSchedule FindSchedule(int scheduleid)
+        {
+            //Create a SqlCommand object from connection object
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify the SELECT SQL statement
+            cmd.CommandText = @"SELECT * FROM FlightSchedule WHERE ScheduleID = @scheduleid";
+            cmd.Parameters.AddWithValue("@scheduleid", scheduleid);
+            //Open a database connection
+            conn.Open();
+            //Execute the SELECT SQL through a DataReader
+            SqlDataReader reader = cmd.ExecuteReader();
+            FlightSchedule flightSchedule = new FlightSchedule();
+       
+            if (reader.HasRows)
+            {
+                //Read the record from database
+                while (reader.Read())
+                {
+                    flightSchedule.ScheduleID = reader.GetInt32(0);
+                    flightSchedule.FlightNumber = reader.GetString(1);
+                    flightSchedule.RouteID = reader.GetInt32(2);
+                    //flightSchedule.AircraftID = (int)(!reader.IsDBNull(7) ? reader.GetInt32(7) : (int?)null);
+                    flightSchedule.DepartureDateTime = reader.GetDateTime(4);
+                    flightSchedule.ArrivalDateTime = reader.GetDateTime(5);
+                    flightSchedule.EconomyClassPrice = reader.GetDecimal(6);
+                    flightSchedule.BusinessClassPrice = reader.GetDecimal(7);
+                    flightSchedule.Status = reader.GetString(8);
+                };
+            }
+            //Close DataReader
+            reader.Close();
+            //Close the database connection
+            conn.Close();
+            return flightSchedule;
+        }
+
+
+        //assign aircraft flight
+        public int Assign(int aircraftid , int scheduleid)
         {
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
@@ -242,7 +274,7 @@ namespace WEB2020Apr_P01_T4.DAL
             cmd.CommandText = @"UPDATE FlightSchedule SET AircraftID=@aircraftid WHERE ScheduleID = @scheduleid";
             //Define the parameters used in SQL statement, value for each parameter
             //is retrieved from respective class's property.
-            cmd.Parameters.AddWithValue("@aircraftid", aircraft.AircraftID);
+            cmd.Parameters.AddWithValue("@aircraftid", aircraftid);
             cmd.Parameters.AddWithValue("@scheduleid", scheduleid);
             //Open a database connection
             conn.Open();

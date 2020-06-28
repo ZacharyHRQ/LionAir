@@ -5,14 +5,16 @@ namespace WEB2020Apr_P01_T4.ViewModel
     {
         public int AircraftID { get; set; }
 
-        public String AircraftModel { get; set; }
+        public string AircraftModel { get; set; }
 
         public int NumEconomySeat { get; set; }
 
         public int NumBusinessSeat { get; set; }
 
-        public String FlightSchedule { get; set; }
-             
+        public string status { get; set; }
+
+        public string flightSchedule { get; set; }
+
         public AircraftAssignViewModel()
         {
         }
