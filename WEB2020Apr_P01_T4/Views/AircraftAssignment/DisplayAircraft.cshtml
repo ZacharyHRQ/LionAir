@@ -21,7 +21,6 @@
                  style="vertical-align:middle;" />
     </a>
 </div>
-
 @if (Model.aircraftList.Count > 0)
 {
     <div class="table-responsive">
@@ -38,8 +37,6 @@
                 </tr>
             </thead>
             <tbody>
-                
-                
                 @foreach (var item in Model.aircraftList)
                 {
                     string selectedRow = "";
@@ -47,16 +44,13 @@
                     {
                         selectedRow = "class='table-primary'";
                     }
-                    <tr>
+                    <tr @Html.Raw(selectedRow)>
                         <td>@item.AircraftID</td>
                         <td>@item.AircraftModel</td>
-
                         <td>@item.NumBusinessSeat</td>
                         <td>@item.NumEconomySeat</td>
                         <td>@item.DateLastMaintenance</td>
                         <td>@item.Status</td>
-
-
                         <td>
                             <a asp-action="DisplayAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">View Schedule</a> |
                             <a asp-action="AssignAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">Assign</a> |
