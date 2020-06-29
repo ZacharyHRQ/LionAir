@@ -61,6 +61,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
+            ViewData["statusList"] = GetStatus();
             ViewData["ModelList"] = GetModel();
             return View();
         }
@@ -69,7 +70,8 @@ namespace WEB2020Apr_P01_T4.Controllers
         public IActionResult CreateAircraft(Aircraft aircraft)
         {
             ViewData["ModelList"] = GetModel();
-            if(ModelState.IsValid)
+            ViewData["statusList"] = GetStatus();
+            if (ModelState.IsValid)
             {
                 aircraft.AircraftID = aircraftContext.Add(aircraft);
 
