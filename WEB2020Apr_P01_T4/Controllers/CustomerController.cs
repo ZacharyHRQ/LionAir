@@ -16,7 +16,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         private CustomerDAL CustomerContext = new CustomerDAL();
         [HttpGet]
         // GET: ChangePassword
-        public ActionResult ChangePassword()
+        public IActionResult ChangePassword()
         {
             if ((HttpContext.Session.GetString("Role") == null) ||
                 (HttpContext.Session.GetString("Role") != "Customer"))
@@ -33,7 +33,11 @@ namespace WEB2020Apr_P01_T4.Controllers
             if (ModelState.IsValid)
             {
                 //Update password record to database
-                CustomerContext.Update(changePassword);
+               
+
+                int customerid = (int)HttpContext.Session.GetInt32("id");
+                CustomerContext.Update(changePassword, customerid);
+
                 return RedirectToAction("CustomerMain", "Login");
             }
             else
