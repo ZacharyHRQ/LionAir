@@ -1,7 +1,7 @@
 ﻿@model WEB2020Apr_P01_T4.Models.FlightPersonnel
 
 @{
-    Layout = "/Views/Shared/_LayoutForStaffMain.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Create";
 }
 
@@ -40,8 +40,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="Vocation" class="control-label"></label>
-                <input asp-for="Vocation" class="form-control" />
-                <span asp-validation-for="Vocation" class="text-danger"></span>
+                <div class="col-sm-9 col-md-5">
+                    <select asp-for="Vocation" asp-items="@ViewData["VocationList"]as List<SelectListItem>" class="form-control"></select>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="EmailAddr" class="control-label"></label>

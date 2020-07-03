@@ -180,6 +180,7 @@ namespace WEB2020Apr_P01_T4.DAL
             return flightPersonnel;
         }
 
+<<<<<<< HEAD
         public bool VaildStaff(String email, String password, out int staffID)
         {
 
@@ -221,6 +222,34 @@ namespace WEB2020Apr_P01_T4.DAL
                 conn.Close();
             }
         }
+=======
+        public int Update(FlightPersonnel flightPersonnel)
+        {
+            //Create a SqlCommand object from connection object  
+            SqlCommand cmd = conn.CreateCommand();
+
+            //Specify an UPDATE SQL statement  
+            cmd.CommandText = @"UPDATE Staff SET Status=@status WHERE StaffID = @selectedStaffID";
+
+            //Define the parameters used in SQL statement, value for each parameter   
+            //is retrieved from respective class's property.  
+            cmd.Parameters.AddWithValue("@status", flightPersonnel.Status);
+
+            cmd.Parameters.AddWithValue("@selectedStaffID", flightPersonnel.StaffID);
+            //Open a database connection  
+            conn.Open();
+
+            //ExecuteNonQuery is used for UPDATE and DELETE   
+            int count = (int)(cmd.ExecuteNonQuery());
+
+            //Close the database connection  
+            conn.Close();
+
+            return count;
+
+        }
+
+>>>>>>> Completed my Viewing
     }
     
 }

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WEB2020Apr_P01_T4.Models.StaffViewModel>
 
 @{
-    Layout = "/Views/Shared/_LayoutForStaffMain.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Details";
 }
 
@@ -14,28 +14,31 @@
                 <th>Staff Name</th>
                 <th>Schedule ID</th>
                 <th>Role</th>
-                @*<th>Aircraft ID</th>
+                <th>Aircraft ID</th>
                 <th>Route ID</th>
                 <th>Flight Number</th>
-                <th>Status</th>*@
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
-                {
-            <tr>
-                <td>@item.StaffID.ToString()</td>
-                <td>@item.StaffName</td>
-                <td>@item.ScheduleID.ToString()</td>
-                <td>@item.Role</td>
-                @*<td>@item.AircraftID</td>
-                <td>@item.RouteID</td>
-                <td>@item.FlightNumber</td>
-                <td>@item.Status</td>*@
-            </tr>
-                }
+            {
+                <tr>
+                    <td>@item.StaffID.ToString()</td>
+                    <td>@item.StaffName</td>
+                    <td>@item.ScheduleID.ToString()</td>
+                    <td>@item.Role</td>
+                    <td>@item.AircraftID</td>
+                    <td>@item.RouteID</td>
+                    <td>@item.FlightNumber</td>
+                    <td>@item.Status</td>
+                </tr>
+            }
         </tbody>
     </table>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
 }
 else
