@@ -8,6 +8,7 @@ namespace WEB2020Apr_P01_T4.Models
 {
     public class ChangePassword
     {
+        public int CustomerId { get; set; }
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Current Password")]

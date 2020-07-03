@@ -89,10 +89,14 @@
                                 <td>@schedule.BusinessClassPrice</td>
                                 <td>@schedule.Status</td>
 
-                                <td>
-                                    @Html.ActionLink("", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-edit" })
-                                    @Html.ActionLink("", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-eye" })
-                                </td>
+                                @{
+                                    string ediClass = "fa fa-edit " + (schedule.Status != "Opened" ? "hide" : "");
+                                }
+
+                            <td>
+                                @Html.ActionLink("", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-eye" })
+                                @Html.ActionLink("", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = ediClass })
+                            </td>
                             </tr>
                             
                         }

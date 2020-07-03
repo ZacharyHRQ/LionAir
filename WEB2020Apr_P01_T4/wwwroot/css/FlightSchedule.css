@@ -245,3 +245,7 @@ input {
 .fa:hover {
     text-decoration: none;
 }
+
+.hide{
+    display: none
+}

@@ -9,7 +9,7 @@ namespace WEB2020Apr_P01_T4.ViewModel
         public FlightSchedule FlightSchedule { get; set; }
         public Route CreateRoute { get; set; }
         public List<String> SearchOption { get; set; }
-        public List<FlightSchedule> FlightScheduleList { get; set; }
+        public IEnumerable<FlightSchedule> FlightScheduleList { get; set; }
         public bool ShowEditPop { get; set; }
         public int TicketSize { get; set; }
 
