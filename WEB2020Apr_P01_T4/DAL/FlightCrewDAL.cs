@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Data.SqlClient;
 using WEB2020Apr_P01_T4.Models;
-using WEB2020Apr_P01_T4.Views.FlightPersonnel;
 
 namespace WEB2020Apr_P01_T4.DAL
 {
@@ -84,7 +83,7 @@ namespace WEB2020Apr_P01_T4.DAL
                 {
                     ScheduleID = reader.GetInt32(0),
                     StaffID = reader.GetInt32(1),
-                    Role = reader.GetString(3),  
+                    Role = reader.GetString(2),  
                 }       
                 );   
             } 

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using WEB2020Apr_P01_T4.DAL;
 using WEB2020Apr_P01_T4.Models;
-using WEB2020Apr_P01_T4.Views.FlightPersonnel;
 
 namespace WEB2020Apr_P01_T4.Controllers
 {
@@ -15,9 +14,10 @@ namespace WEB2020Apr_P01_T4.Controllers
     {
         private FlightPersonnelDAL staffContext = new FlightPersonnelDAL();
         private FlightCrewDAL crewContext = new FlightCrewDAL();
-
-            // GET: FliightPersonnel
-            public ActionResult Index()
+        private FlightScheduleDAL scheduleContext = new FlightScheduleDAL();
+        
+        // GET: FlightPersonnel
+        public ActionResult Index()
         {
             // Stop accessing the action if not logged in      
             // or account not in the "Staff" role         
@@ -46,83 +46,49 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         public List <StaffViewModel> MapToStaffVM(FlightPersonnel flightPersonnel)
         {
-            //string flightno = "";
-            //int routeid = 0;
-            //int aircraftid = 0;
-            //string status = "";
+            string flightno = "";
+            int routeid = 0;
+            int aircraftid = 0;
+            string status = "";
+
             List<StaffViewModel> staffvmList = new List<StaffViewModel>();
-            //List<FlightSchedule> fsList = FlightScheduleContext.GetAllFlightSchedule();
+            List<FlightSchedule> fslist = scheduleContext.GetAllFlightSchedule();
+            List<FlightCrew> fcList = crewContext.GetFlightCrew(flightPersonnel.StaffID);
+
             if (flightPersonnel.StaffID != null)
             {
-                List<FlightCrew> crewList = crewContext.GetAllCrew();
-                foreach (FlightCrew crew in crewList)
+                foreach (FlightCrew fc in fcList)
                 {
-                    //foreach (FlightSchedule fs in fsList)
-                    //{
-                    //    if (crew.ScheduleID = fs.ScheduleID)
-                    //    {
-                    //        flightno = fs.FlightNumber;
-                    //        routeid = fs.RouteID;
-                    //        aircraftid = fs.AircraftID;
-                    //        status = fs.Status;
-                    //    }
-                    staffvmList.Add(new StaffViewModel
+                    foreach (FlightSchedule fs in fslist)
                     {
-                        StaffID = flightPersonnel.StaffID,
-                        StaffName = flightPersonnel.StaffName,
-                        ScheduleID = crew.ScheduleID,
-                        Role = crew.Role
-                        //FlightNumber = flightno
-                        //AircraftID = aircraftid
-                        //RouteID = routeid
-                        //Status = status
-                    });
-                    //}
+                        if (fc.ScheduleID == fs.ScheduleID)
+                        {
+                            flightno = fs.FlightNumber;
+                            routeid = fs.RouteID;
+                            aircraftid = fs.AircraftID;
+                            status = fs.Status;
 
+                            staffvmList.Add(new StaffViewModel
+                            {
+                                StaffID = flightPersonnel.StaffID,
+                                StaffName = flightPersonnel.StaffName,
+                                ScheduleID = fc.ScheduleID,
+                                Role = fc.Role,
+                                FlightNumber = flightno,
+                                AircraftID = aircraftid,
+                                RouteID = routeid,
+                                Status = status,
+                            });
 
-                    //scheduleID = crew.ScheduleID;
-                    //role = crew.Role;
-                    //Exit the foreach loop once the name is found     
-                    //break;
-
+                            break;
+                        }
+                    }
                 }
+                   
+        
             }
 
             return staffvmList;
-
-
-            //int scheduleID = 0;
-            //String role = "";
-            //int scheduleID = 0;
-            //String role = "";
-            //if (flightPersonnel.StaffID != null)
-            //{
-            //    List<FlightCrew> crewList = crewContext.GetAllCrew();
-            //    foreach (FlightCrew crew in crewList)
-            //    {
-            //        if (crew.StaffID == flightPersonnel.StaffID)
-            //        {
-            //            scheduleID = crew.ScheduleID;
-            //            role = crew.Role;
-            //            //Exit the foreach loop once the name is found     
-            //            break;
-            //        }
-            //    }
-            //}
-
-            //StaffViewModel staffVM = new StaffViewModel
-            //{
-            //    StaffID = flightPersonnel.StaffID,
-            //    StaffName = flightPersonnel.StaffName,
-            //    Gender = flightPersonnel.Gender,
-            //    DateEmployed = flightPersonnel.DateEmployed,
-            //    Vocation = flightPersonnel.Vocation,
-            //    EmailAddr = flightPersonnel.EmailAddr,
-            //    Status = flightPersonnel.Status,
-            //    ScheduleID = scheduleID,
-            //    Role = role,
-            //};     
-            //return staffVM;
         }
 
         // GET: FlightPersonnel/Create
@@ -141,10 +107,18 @@ namespace WEB2020Apr_P01_T4.Controllers
         private List<SelectListItem> GetVocation()
         { 
             List<SelectListItem> vocation = new List<SelectListItem>(); 
-            vocation.Add(new SelectListItem { Value = "Administrator,", Text = "Administrator" }); 
+            vocation.Add(new SelectListItem { Value = "Administrator", Text = "Administrator" }); 
             vocation.Add(new SelectListItem { Value = "Pilot", Text = "Pilot" }); 
             vocation.Add(new SelectListItem { Value = "Flight Attendance", Text = "Flight Attendance" });
             return vocation;
+        }
+
+        private List<SelectListItem> GetStatus()
+        {
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem { Value = "Active", Text = "Active" });
+            status.Add(new SelectListItem { Value = "Inactive", Text = "Inactive" });
+            return status;
         }
 
 
@@ -169,29 +143,78 @@ namespace WEB2020Apr_P01_T4.Controllers
                 //to display error message          
                 return View(flightPersonnel);     
             }    
-        } 
+        }
 
         // GET: FlightPersonnel/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            // Stop accessing the action if not logged in         
+            // or account not in the "Staff" role      
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (id == null)
+            {
+                //Query string parameter not provided          
+                //Return to listing page, not allowed to edit     
+                return RedirectToAction("Index");
+            }
+            FlightPersonnel flightPersonnel = staffContext.GetDetails(id.Value);
+            if (flightPersonnel == null)
+            {
+                //Return to listing page, not allowed to edit      
+                return RedirectToAction("Index");
+            }
+            ViewData["StatusList"] = GetStatus();
+            return View(flightPersonnel);
         }
+
 
         // POST: FlightPersonnel/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(FlightPersonnel flightPersonnel)
         {
-            try
+            FlightSchedule fs = scheduleContext.GetFlightSchedule(flightPersonnel.StaffID);
+            DateTime currentDate = DateTime.Today;
+            bool check = false;
+            if (fs != null)
             {
-                // TODO: Add update logic here
+                if(fs.DepartureDateTime < currentDate)
+                {
+                    check = true;
+                }
+                else
+                {
+                    check = false;
+                }
+            }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            //Get status list for drop-down list       
+            //in case of the need to return to Edit.cshtml view        
+            ViewData["StatusList"] = GetStatus();
+            if (ModelState.IsValid)
             {
-                return View();
+                if (check == true)
+                {
+                    //Update staff record to database    
+                    staffContext.Update(flightPersonnel);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
+
             }
+            else
+            {
+                //Input validation fails, return to the view   
+                //to display error message     
+                return View(flightPersonnel);
+            }
+
         }
 
         // GET: FlightPersonnel/Delete/5

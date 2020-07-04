@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using WEB2020Apr_P01_T4.DAL;
+using WEB2020Apr_P01_T4.ViewModel;
 namespace WEB2020Apr_P01_T4.Models
 {
     public class ValidateAircraftAssignment : ValidationAttribute
@@ -13,24 +14,17 @@ namespace WEB2020Apr_P01_T4.Models
         protected override ValidationResult IsValid(
         object value, ValidationContext validationContext)
         {
-            Aircraft newaircraft = (Aircraft)validationContext.ObjectInstance; //model from update view 
-            Aircraft oldaircraft = aircraftContext.FindAircraft(newaircraft.AircraftID); // model from database
-            String newstatus = newaircraft.Status;
-            String oldstatus = oldaircraft.Status;
+            AircraftAssignViewModel aircraft = (AircraftAssignViewModel)validationContext.ObjectInstance;
 
-            if (newstatus == oldstatus)
+            if (aircraft.status == "Under Maintenance")
             {
-                return new ValidationResult("Same status was selected , no update in status was made");
+                return new ValidationResult("Aircraft selected is under maintenance ");
             }
-            else if (newstatus == "Operational")
+            else if (aircraftContext.CheckFlight(aircraft.AircraftID, Convert.ToInt32(aircraft.flightSchedule))) //checks for conflicts in timings when assignment flight schedules
             {
-                return ValidationResult.Success;
+                return new ValidationResult("This aircraft a flight schedule that conflicts with selected flight schedule");
             }
-            else if (aircraftContext.CheckMaintenance(newaircraft.AircraftID))
-            {
-                return new ValidationResult("This aircraft has flight schedules");
-            }
-            else return ValidationResult.Success;
+            return ValidationResult.Success;
         }
         public ValidateAircraftAssignment()
         {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace WEB2020Apr_P01_T4.Views.FlightPersonnel
+namespace WEB2020Apr_P01_T4.Models
 {
     public class FlightCrew
     {
