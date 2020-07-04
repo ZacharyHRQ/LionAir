@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using WEB2020Apr_P01_T4.DAL;
+using WEB2020Apr_P01_T4.ViewModel;
 namespace WEB2020Apr_P01_T4.Models
 {
     public class ValidateMaintenance : ValidationAttribute
@@ -31,6 +32,7 @@ namespace WEB2020Apr_P01_T4.Models
                 return new ValidationResult("This aircraft has flight schedules");
             }
             else return ValidationResult.Success;
+            
         }
 
         public ValidateMaintenance()
