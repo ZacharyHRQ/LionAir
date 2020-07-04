@@ -6,14 +6,16 @@
     bool isEdit = false;
 
     var cssClass = "";
+    var type = "datetime-local";
     String action = "SaveSchedule";
     if (disable)
     {
         cssClass = "disabled";
         action = "UpdateSchedule";
+        type = "";
+
     }
 }
-
 
 <div class="bg-Flight-modal">
     <div class="modal-contents">
@@ -21,39 +23,39 @@
 
         @if (Model.DepartureDateTime != null)
         {
-            @Html.ActionLink("+", "Schedule", "FlightScheduling", new {  }, new { @class = "close close-Flight" })
+            @Html.ActionLink("+", "Schedule", "FlightScheduling", new { }, new { @class = "close close-Flight" })
             isEdit = true;
         }
         else
         {
-            @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class = "close close-Flight" }) 
+            @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class = "close close-Flight" })
         }
 
-      
+
         <h1>Create New Flight Schedule</h1>
-        @using (@Html.BeginForm(action, "FlightScheduling", new { @id = Model.RouteID, @isEdit=isEdit }, FormMethod.Post))
+        @using (@Html.BeginForm(action, "FlightScheduling", new { @id = Model.RouteID, @isEdit = isEdit }, FormMethod.Post))
         {
             <div class="form-group">
                 @Html.LabelFor(m => m.FlightNumber)
-                @Html.TextBoxFor(m => m.FlightNumber, new { @class = "form-control " + cssClass})
+                @Html.TextBoxFor(m => m.FlightNumber, new { @class = "form-control " + cssClass })
                 @Html.ValidationMessageFor(m => m.FlightNumber)
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.DepartureDateTime)
-                @Html.TextBoxFor(m => m.DepartureDateTime, new { @class = "form-control " + cssClass, @type = "datetime-local" })
+                @Html.EditorFor(m => m.DepartureDateTime, new { htmlAttributes = new { @id= "datetimepicker", @class = "form-control " + cssClass, @type = type } })
                 @Html.ValidationMessageFor(m => m.DepartureDateTime)
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.EconomyClassPrice)
-                @Html.TextBoxFor(m => m.EconomyClassPrice, new { @class = "form-control " + cssClass })
+                @Html.EditorFor(m => m.EconomyClassPrice, new { htmlAttributes = new { @class = "form-control " + cssClass } })
                 @Html.ValidationMessageFor(m => m.EconomyClassPrice)
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.BusinessClassPrice)
-                @Html.TextBoxFor(m => m.BusinessClassPrice, new { @class = "form-control " + cssClass })
+                @Html.EditorFor(m => m.BusinessClassPrice, new { htmlAttributes = new { @class = "form-control " + cssClass } })
                 @Html.ValidationMessageFor(m => m.BusinessClassPrice)
             </div>
 
@@ -75,13 +77,23 @@
 
             <button type="submit" class="btn btn-primary">Submit</button>
         }
-        
+
 
 
     </div>
 </div>
 
 
+<script type="text/javascript">/* ... */
+    $(function () {
+        $('#datetimepicker').datetimepicker({
+            language: 'pt-BR'
+        });
+    });
+
+
+    }
+    });</script>
 
 
 

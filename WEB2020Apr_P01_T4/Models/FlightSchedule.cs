@@ -22,25 +22,28 @@ namespace WEB2020Apr_P01_T4.Models
 
         public int AircraftID { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Departure Date Time")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         [ADayBeforeDepature]
         public DateTime? DepartureDateTime { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Display(Name = "Arrival Date Time")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         public DateTime? ArrivalDateTime { get; set; }
 
         [Display(Name = "Economy Class Price")]
         [DataType(DataType.Currency)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "${0:#,##0.00}")]
         [Required]
-        public Decimal EconomyClassPrice { get; set; }
+        public decimal EconomyClassPrice { get; set; }
 
         [Display(Name = "Business Class Price")]
         [DataType(DataType.Currency)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "${0:#,##0.00}")]
         [Required]
-        public Decimal BusinessClassPrice { get; set; }
+        public decimal BusinessClassPrice { get; set; }
 
         [Display(Name = "Status")]
         [StringLength(20)]
