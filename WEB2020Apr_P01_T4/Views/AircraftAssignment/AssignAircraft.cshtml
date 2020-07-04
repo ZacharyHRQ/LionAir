@@ -5,46 +5,46 @@
 }
 <div class="container">
     <h1 style="color:#8095B3;" >Aircraft Assignment</h1>
-    <div class="aircraft-details mx-auto">
+    <div class="aircraft-details mx-auto text-center">
      
 
-        <form asp-action="AssignAircraft">
+        <form asp-action="AssignAircraft" >
             <div class="form-group row">
                 <label asp-for="AircraftID"
-                       class="col-sm-3 col-form-label"></label>
+                       class="col-sm-3 col-form-label aircraftinfo"></label>
                 <div class="col-sm-9 col-md-5">
                     <input asp-for="AircraftID" readonly
-                           class="form-control-plaintext" />
+                           class="form-control-plaintext aircraftinfo" />
                 </div>
             </div>
             <div class="form-group row">
                 <label asp-for="AircraftModel"
-                       class="col-sm-3 col-form-label"></label>
+                       class="col-sm-3 col-form-label aircraftinfo"></label>
                 <div class="col-sm-9 col-md-5">
                     <input asp-for="AircraftModel" readonly
-                           class="form-control-plaintext" />
+                           class="form-control-plaintext aircraftinfo" />
                 </div>
             </div>
             <div class="form-group row">
                 <label asp-for="NumBusinessSeat"
-                       class="col-sm-3 col-form-label"></label>
+                       class="col-sm-3 col-form-label aircraftinfo"></label>
                 <div class="col-sm-9 col-md-5">
                     <input asp-for="NumBusinessSeat" readonly
-                           class="form-control-plaintext" />
+                           class="form-control-plaintext aircraftinfo" />
                 </div>
             </div>
 
             <div class="form-group row">
                 <label asp-for="NumEconomySeat"
-                       class="col-sm-3 col-form-label"></label>
+                       class="col-sm-3 col-form-label aircraftinfo"></label>
                 <div class="col-sm-9 col-md-5">
                     <input asp-for="NumEconomySeat" readonly
-                           class="form-control-plaintext" />
+                           class="form-control-plaintext aircraftinfo" />
                 </div>
             </div>
             <div class="form-group row">
                 <label asp-for="flightSchedule">Flight schedule</label>
-                <select class="form-control" asp-for="flightSchedule" asp-items="@ViewData["flightList"] as List<SelectListItem>">
+                <select class="form-control" asp-for="flightSchedule"  asp-items="@ViewData["flightList"] as List<SelectListItem>">
                 </select>
                 <span asp-validation-for="flightSchedule"
                       class="text-danger"></span>
