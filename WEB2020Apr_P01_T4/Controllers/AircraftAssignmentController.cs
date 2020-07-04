@@ -19,7 +19,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         private AircraftDAL aircraftContext = new AircraftDAL();
        
         // GET: /<controller>/Display
-        public IActionResult DisplayAircraft(int? id)
+        public IActionResult DisplayAircraft(int? id , string maintain )
         {
             if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
             {
@@ -27,10 +27,14 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
 
             AircraftScheduleViewModel aircraftScheduleView = new AircraftScheduleViewModel();
-            
-            aircraftScheduleView.aircraftList = aircraftContext.GetAllAircraft();
 
-            aircraftScheduleView.maintainceList = aircraftContext.GetMaintenanceAircraft();
+
+
+            aircraftScheduleView.aircraftList = maintain == "true" ? aircraftContext.GetMaintenanceAircraft() : aircraftContext.GetAllAircraft();
+
+
+
+            //aircraftScheduleView.maintainceList = aircraftContext.GetMaintenanceAircraft();
 
             if(id != null)
             {
@@ -45,14 +49,14 @@ namespace WEB2020Apr_P01_T4.Controllers
             return View(aircraftScheduleView);
         }
 
-        public IActionResult MaintainAircraft()
-        {
-            AircraftScheduleViewModel aircraftScheduleView = new AircraftScheduleViewModel();
+        //public IActionResult MaintainAircraft()
+        //{
+        //    AircraftScheduleViewModel aircraftScheduleView = new AircraftScheduleViewModel();
+        //    aircraftScheduleView.aircraftList = aircraftContext.GetMaintenanceAircraft();
+        //    ViewData["selectedAircraft"] = "";
 
-            aircraftScheduleView.aircraftList = aircraftContext.GetMaintenanceAircraft();
-            ViewData["selectedAircraft"] = "";
-            return View("DisplayAircraft" , aircraftScheduleView);
-        }
+        //    return View("DisplayAircraft" , aircraftScheduleView);
+        //}
 
        
         public IActionResult CreateAircraft()
@@ -128,7 +132,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             
         }
 
-        // GET: /<controller>/Update
+      
         public IActionResult UpdateAircraft(int? id)
         {
             if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
@@ -237,20 +241,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             });
             return status;
 
-        }
-
-        public bool CheckAssignmentValid(AircraftAssignViewModel aircraft)
-        {
-  
-            if (aircraft.status == "Under Maintenance")
-            {
-                return false;
-            }
-            else if (aircraftContext.CheckFlight(aircraft.AircraftID , Convert.ToInt32(aircraft.flightSchedule)))
-            {
-                return false; 
-            }
-            return true;
         }
         
     }
