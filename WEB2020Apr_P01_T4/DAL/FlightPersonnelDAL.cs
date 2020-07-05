@@ -180,7 +180,6 @@ namespace WEB2020Apr_P01_T4.DAL
             return flightPersonnel;
         }
 
-<<<<<<< HEAD
         public bool VaildStaff(String email, String password, out int staffID)
         {
 
@@ -222,7 +221,6 @@ namespace WEB2020Apr_P01_T4.DAL
                 conn.Close();
             }
         }
-=======
         public int Update(FlightPersonnel flightPersonnel)
         {
             //Create a SqlCommand object from connection object  
@@ -249,7 +247,6 @@ namespace WEB2020Apr_P01_T4.DAL
 
         }
 
->>>>>>> Completed my Viewing
     }
     
 }
