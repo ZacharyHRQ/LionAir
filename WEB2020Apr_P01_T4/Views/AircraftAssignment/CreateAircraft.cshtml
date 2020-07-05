@@ -31,7 +31,7 @@
                     </div>
                     <div class="form-group row" >
                         <label asp-for="DateLastMaintenance">Date of last maintenance</label>
-                        <input class="form-control" type="date" id="maintenanceDate" name="maintenanceDate" asp-for="DateLastMaintenance">
+                        <input class="form-control selector" type="date" id="maintenanceDate" name="maintenanceDate" asp-for="DateLastMaintenance">
                     </div>
                     <div class="form-group row">
                         <label asp-for="Status">Status</label>
@@ -40,6 +40,11 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
-
         </div>
     </div>
+<script>
+    //ensures that date picker max date is today
+
+    datePickerId = document.getElementById("maintenanceDate")
+    datePickerId.max = new Date().toISOString().split("T")[0];
+</script>
