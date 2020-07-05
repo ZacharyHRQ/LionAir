@@ -223,6 +223,8 @@ namespace WEB2020Apr_P01_T4.DAL
 
             return 0;
         }
+
+
         public int CountBusinessSeat(int sID)
         {
             try
