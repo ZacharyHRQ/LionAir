@@ -118,7 +118,9 @@
 @if (Model.ShowRoutePop)
 {
     @await Html.PartialAsync("_RouteForm.cshtml", Model.CreateRoute)
-    <script>document.querySelector('.bg-modal').style.display = "flex";</script>
+    <script>
+        document.querySelector('.bg-modal').style.display = "flex";
+    </script>
 }
 else
 {

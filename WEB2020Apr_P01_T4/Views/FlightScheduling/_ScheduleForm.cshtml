@@ -50,13 +50,13 @@
 
             <div class="form-group">
                 @Html.LabelFor(m => m.EconomyClassPrice)
-                @Html.EditorFor(m => m.EconomyClassPrice, new { htmlAttributes = new { @class = "form-control " + cssClass } })
+                @Html.TextBoxFor(m => m.EconomyClassPrice,  new { @class = "form-control " + cssClass } )
                 @Html.ValidationMessageFor(m => m.EconomyClassPrice)
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.BusinessClassPrice)
-                @Html.EditorFor(m => m.BusinessClassPrice, new { htmlAttributes = new { @class = "form-control " + cssClass } })
+                @Html.TextBoxFor(m => m.BusinessClassPrice, new  { @class = "form-control " + cssClass } )
                 @Html.ValidationMessageFor(m => m.BusinessClassPrice)
             </div>
 
