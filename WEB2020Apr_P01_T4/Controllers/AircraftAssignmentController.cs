@@ -19,7 +19,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         private AircraftDAL aircraftContext = new AircraftDAL();
        
         // GET: /<controller>/Display
-        public IActionResult DisplayAircraft(int? id , bool maintain )
+        public IActionResult DisplayAircraft(int? id , string maintain )
         {
             if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
             {
@@ -44,6 +44,39 @@ namespace WEB2020Apr_P01_T4.Controllers
             
             return View(aircraftScheduleView);
         }
+
+            AircraftScheduleViewModel aircraftScheduleView = new AircraftScheduleViewModel();
+
+
+
+            aircraftScheduleView.aircraftList = maintain == "true" ? aircraftContext.GetMaintenanceAircraft() : aircraftContext.GetAllAircraft();
+
+
+
+            //aircraftScheduleView.maintainceList = aircraftContext.GetMaintenanceAircraft();
+
+            if(id != null)
+            {
+                ViewData["selectedAircraft"] = id.Value.ToString();
+                aircraftScheduleView.scheduleList = aircraftContext.GetSchedules(id.Value);
+            }
+            else
+            {
+                ViewData["selectedAircraft"] = "";
+            }
+            
+            return View(aircraftScheduleView);
+        }
+
+        //public IActionResult MaintainAircraft()
+        //{
+        //    AircraftScheduleViewModel aircraftScheduleView = new AircraftScheduleViewModel();
+        //    aircraftScheduleView.aircraftList = aircraftContext.GetMaintenanceAircraft();
+        //    ViewData["selectedAircraft"] = "";
+
+        //    return View("DisplayAircraft" , aircraftScheduleView);
+        //}
+
        
         public IActionResult CreateAircraft()
         {
@@ -74,6 +107,10 @@ namespace WEB2020Apr_P01_T4.Controllers
         
         }
         
+<<<<<<< HEAD
+=======
+        // GET: /<controller>/Assign
+>>>>>>> Scheduling
         public IActionResult AssignAircraft(int? id)
         {
             if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
@@ -115,6 +152,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 return View(aircraft);
             }
             
+<<<<<<< HEAD
         }
       
         public IActionResult UpdateAircraft(int? id)
@@ -195,6 +233,89 @@ namespace WEB2020Apr_P01_T4.Controllers
         
         private List<SelectListItem> GetFlights()
         {
+=======
+        }
+
+      
+        public IActionResult UpdateAircraft(int? id)
+        {
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            ViewData["statusList"] = GetStatus();
+            if (id != null)
+            {
+                Aircraft aircraft = aircraftContext.FindAircraft(id.Value);
+                ViewData["status"] = aircraft.Status;
+                return View(aircraft);
+            }
+            else
+            {
+                return RedirectToAction("DisplayAircraft");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult UpdateAircraft(Aircraft aircraft)
+        {
+            ViewData["statusList"] = GetStatus();
+            if (ModelState.IsValid)
+            {
+                aircraftContext.Update(aircraft);
+                return RedirectToAction("DisplayAircraft");
+            }
+            else
+            {
+                return View(aircraft);
+            }
+            
+
+        }
+
+        // Aircraft Models 
+        private List<SelectListItem> GetModel()
+        {
+            List<SelectListItem> models = new List<SelectListItem>();
+            models.Add(new SelectListItem
+            {
+                Value = "Boeing 747",
+                Text = "Boeing 747"
+            });
+            models.Add(new SelectListItem
+            {
+                Value = "Airbus A321",
+                Text = "Airbus A321"
+            });
+            models.Add(new SelectListItem
+            {
+                Value = "Boeing 757",
+                Text = "Boeing 757"
+            });
+            models.Add(new SelectListItem
+            {
+                Value = "Boeing 777",
+                Text = "Boeing 777"
+            });
+            models.Add(new SelectListItem
+            {
+                Value = "Airbus A380",
+                Text = "Airbus A380"
+            });
+
+            models.Insert(0, new SelectListItem
+            {
+                Value = "--Select--",
+                Text = "--Select--"
+   
+            });
+            return models;
+        }
+
+        
+        private List<SelectListItem> GetFlights()
+        {
+>>>>>>> Scheduling
             List<SelectListItem> flights = new List<SelectListItem>();
             List<FlightSchedule> flightSchedules = aircraftContext.GetAvailableFlights();
             foreach (FlightSchedule schedule in flightSchedules)

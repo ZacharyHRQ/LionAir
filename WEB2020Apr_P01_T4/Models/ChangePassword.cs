@@ -9,6 +9,7 @@ namespace WEB2020Apr_P01_T4.Models
     public class ChangePassword
     {
         public int CustomerId { get; set; }
+<<<<<<< HEAD
 
         [Required]
         [DataType(DataType.Password)]
@@ -18,6 +19,13 @@ namespace WEB2020Apr_P01_T4.Models
 
         public string DatabasePassword { get; set; }
 
+=======
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Current Password")]
+        public string Password { get; set; }
+
+>>>>>>> Scheduling
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "New Password")]

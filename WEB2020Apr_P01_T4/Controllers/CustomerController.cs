@@ -23,9 +23,13 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+<<<<<<< HEAD
             ChangePassword changePassword = new ChangePassword();
             changePassword.DatabasePassword = HttpContext.Session.GetString("password");
             return View(changePassword);
+=======
+            return View();
+>>>>>>> Scheduling
         }
 
         [HttpPost]
@@ -35,6 +39,10 @@ namespace WEB2020Apr_P01_T4.Controllers
             if (ModelState.IsValid)
             {
                 //Update password record to database
+<<<<<<< HEAD
+=======
+               
+>>>>>>> Scheduling
 
                 int customerid = (int)HttpContext.Session.GetInt32("id");
                 CustomerContext.Update(changePassword, customerid);
@@ -43,7 +51,10 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             else
             {
+<<<<<<< HEAD
 
+=======
+>>>>>>> Scheduling
                 return View(changePassword);
             }
         }
@@ -65,7 +76,11 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         [HttpGet]
         // GET: BookAirTicket
+<<<<<<< HEAD
         public IActionResult BookAirTicket(int id)
+=======
+        public ActionResult BookAirTicket(int id)
+>>>>>>> Scheduling
         {
             // Stop accessing the action if not logged in
             // or account not in the "Customer" role
@@ -82,6 +97,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         public Aircraftschedule MaptobookingVM(Aircraftschedule booking)
         {
+<<<<<<< HEAD
             Aircraftschedule customerid = new Aircraftschedule();
             customerid.CustomerID = (int)HttpContext.Session.GetInt32("id");
             Aircraftschedule bookingVM = new Aircraftschedule
@@ -89,6 +105,12 @@ namespace WEB2020Apr_P01_T4.Controllers
 
                 BookingID = booking.BookingID,
                 CustomerID = customerid.CustomerID,
+=======
+            Aircraftschedule bookingVM = new Aircraftschedule
+            {
+                BookingID = booking.BookingID,
+                CustomerID = booking.CustomerID,
+>>>>>>> Scheduling
                 ScheduleID = booking.ScheduleID,
                 PassengerName = booking.PassengerName,
                 PassportNumber = booking.PassportNumber,
@@ -159,6 +181,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             if (ModelState.IsValid)
             {
+<<<<<<< HEAD
                 if (booking.SeatClass == "Economy")
                 {
                     booking.AmtPayable = booking.EconomyClassPrice;
@@ -170,6 +193,10 @@ namespace WEB2020Apr_P01_T4.Controllers
                 //Add customer record to database
                 int customerid = (int)HttpContext.Session.GetInt32("id");
                 CustomerContext.Add(booking, customerid);
+=======
+                //Add customer record to database
+                booking.CustomerID = CustomerContext.Add(booking);
+>>>>>>> Scheduling
                 //Redirect user to Login/Index view
                 return RedirectToAction("CustomerMain", "Login");
             }
@@ -190,8 +217,13 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+<<<<<<< HEAD
             int customerid = (int)HttpContext.Session.GetInt32("id");
             List<Aircraftschedule> viewAirTicketList = CustomerContext.ViewAirTicket(customerid);
+=======
+
+            List<Aircraftschedule> viewAirTicketList = CustomerContext.ViewAirTicket();
+>>>>>>> Scheduling
             return View(viewAirTicketList);
         }
 

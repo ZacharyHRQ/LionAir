@@ -244,8 +244,11 @@ input {
 
 .fa:hover {
     text-decoration: none;
+<<<<<<< HEAD
 }
 
 .hide{
     display: none
+=======
+>>>>>>> Scheduling
 }

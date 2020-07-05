@@ -54,8 +54,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 //Store Login ID in session with the key "LoginID"
                 HttpContext.Session.SetInt32("id", id);
-                //Store Password in session with the key "password"
-                HttpContext.Session.SetString("password", password);
                 //Store the user role "Customer" as a string in session with the key "Role"
                 HttpContext.Session.SetString("Role", "Customer");
                 //Store login datetime in session as a string

@@ -3,29 +3,50 @@
 @{
 
     bool disable = Model.ScheduleID != 0;
+<<<<<<< HEAD
     bool isEdit = false;
 
     var cssClass = "";
     String action = "SaveSchedule";
+=======
+    bool isEdit = false;
+
+    var cssClass = "";
+    var type = "datetime-local";
+    String action = "SaveSchedule";
+>>>>>>> Scheduling
     if (disable)
     {
         cssClass = "disabled";
         action = "UpdateSchedule";
+<<<<<<< HEAD
     }
 }
 
 
+=======
+        type = "";
+
+    }
+}
+
+>>>>>>> Scheduling
 <div class="bg-Flight-modal">
     <div class="modal-contents">
 
 
         @if (Model.DepartureDateTime != null)
         {
+<<<<<<< HEAD
             @Html.ActionLink("+", "Schedule", "FlightScheduling", new {  }, new { @class = "close close-Flight" })
+=======
+            @Html.ActionLink("+", "Schedule", "FlightScheduling", new { }, new { @class = "close close-Flight" })
+>>>>>>> Scheduling
             isEdit = true;
         }
         else
         {
+<<<<<<< HEAD
             @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class = "close close-Flight" }) 
         }
 
@@ -36,24 +57,49 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.FlightNumber)
                 @Html.TextBoxFor(m => m.FlightNumber, new { @class = "form-control " + cssClass})
+=======
+            @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class = "close close-Flight" })
+        }
+
+
+        <h1>Create New Flight Schedule</h1>
+
+        @using (@Html.BeginForm(action, "FlightScheduling", new { @id = Model.RouteID, @isEdit = isEdit }, FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.FlightNumber)
+                @Html.TextBoxFor(m => m.FlightNumber, new { @class = "form-control " + cssClass })
+>>>>>>> Scheduling
                 @Html.ValidationMessageFor(m => m.FlightNumber)
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.DepartureDateTime)
+<<<<<<< HEAD
                 @Html.TextBoxFor(m => m.DepartureDateTime, new { @class = "form-control " + cssClass, @type = "datetime-local" })
+=======
+                @Html.EditorFor(m => m.DepartureDateTime, new { htmlAttributes = new { @class = "form-control " + cssClass, @type = type } })
+>>>>>>> Scheduling
                 @Html.ValidationMessageFor(m => m.DepartureDateTime)
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.EconomyClassPrice)
+<<<<<<< HEAD
                 @Html.TextBoxFor(m => m.EconomyClassPrice, new { @class = "form-control " + cssClass })
+=======
+                @Html.EditorFor(m => m.EconomyClassPrice, new { htmlAttributes = new { @class = "form-control " + cssClass } })
+>>>>>>> Scheduling
                 @Html.ValidationMessageFor(m => m.EconomyClassPrice)
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.BusinessClassPrice)
+<<<<<<< HEAD
                 @Html.TextBoxFor(m => m.BusinessClassPrice, new { @class = "form-control " + cssClass })
+=======
+                @Html.EditorFor(m => m.BusinessClassPrice, new { htmlAttributes = new { @class = "form-control " + cssClass } })
+>>>>>>> Scheduling
                 @Html.ValidationMessageFor(m => m.BusinessClassPrice)
             </div>
 
@@ -75,7 +121,11 @@
 
             <button type="submit" class="btn btn-primary">Submit</button>
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> Scheduling
 
 
     </div>
@@ -85,5 +135,9 @@
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Scheduling
 <script src="~/wwwroot/lib/jquery-validation/dist/jquery.validate.js"></script>
 <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
