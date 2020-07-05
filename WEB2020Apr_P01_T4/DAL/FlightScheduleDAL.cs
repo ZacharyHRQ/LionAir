@@ -184,8 +184,6 @@ namespace WEB2020Apr_P01_T4.DAL
                 con.Close();
             }
         }
-<<<<<<< HEAD
-=======
 
         public int CountEconomySeat(int sID)
         {
@@ -265,6 +263,5 @@ namespace WEB2020Apr_P01_T4.DAL
 
             return 0;
         }
->>>>>>> Scheduling
     }
 }

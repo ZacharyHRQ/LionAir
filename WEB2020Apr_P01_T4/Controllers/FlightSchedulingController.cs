@@ -148,20 +148,11 @@ namespace WEB2020Apr_P01_T4.Controllers
         [HttpPost]
         public IActionResult SaveRoute(Route route)
         {
-<<<<<<< HEAD
-
-=======
             bool isValid = true;
->>>>>>> Scheduling
             if (ModelState.IsValid)
             {
 
                 //Insert the data
-<<<<<<< HEAD
-                routeDAL.InsertData(route);
-
-                return RedirectToAction("Index");
-=======
                 ViewData["routeExist"] = routeDAL.InsertData(route);
                 isValid = (bool)ViewData["routeExist"];
                 
@@ -179,7 +170,6 @@ namespace WEB2020Apr_P01_T4.Controllers
 
                 return RedirectToAction("Index");
 
->>>>>>> Scheduling
             }
             else
             {
@@ -197,10 +187,6 @@ namespace WEB2020Apr_P01_T4.Controllers
 
 
                 return View("Index", routeViewModel);
-<<<<<<< HEAD
-
-=======
->>>>>>> Scheduling
             }
 
 
@@ -209,13 +195,8 @@ namespace WEB2020Apr_P01_T4.Controllers
 
 
         [HttpPost]
-<<<<<<< HEAD
-        [Route("FlightScheduling/SaveSchedule/{id}/{isEdit}")]
-        public IActionResult SaveSchedule(FlightSchedule flightSchedule, int id, bool isEdit)
-=======
         [Route("FlightScheduling/SaveSchedule/{id}")]
         public IActionResult SaveSchedule(FlightSchedule flightSchedule, int id)
->>>>>>> Scheduling
         {
             int RouteID = id;
 
