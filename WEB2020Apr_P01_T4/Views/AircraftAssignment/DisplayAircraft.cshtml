@@ -2,19 +2,25 @@
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "DisplayAircraft";
-    string maintain = "true";
+    bool maintain = (bool)ViewData["maintain"]; 
+    if (maintain == null)
+    {
+        maintain = true;
+    }
 }
 
 <h1 class="pl-5" style="color:#80A4ED;">
     Aircraft
 </h1>
 <div class="float-right pr-5">
+    
     <a class="pr-5" asp-action="DisplayAircraft" asp-route-maintain=@maintain asp-controller="AircraftAssignment">
         Maintain <img src="~/icons/baseline_flight_black_18dp.png"
                       width="20"
                       height="20"
                       style="vertical-align:middle;" />
     </a>
+
     <a href="~/AircraftAssignment/CreateAircraft">
         Add <img src="~/icons/baseline_flight_black_18dp.png"
                  width="20"

@@ -23,7 +23,9 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            return View();
+            ChangePassword changePassword = new ChangePassword();
+            changePassword.DatabasePassword = HttpContext.Session.GetString("password");
+            return View(changePassword);
         }
 
         [HttpPost]
@@ -33,7 +35,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             if (ModelState.IsValid)
             {
                 //Update password record to database
-               
 
                 int customerid = (int)HttpContext.Session.GetInt32("id");
                 CustomerContext.Update(changePassword, customerid);
@@ -42,6 +43,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             else
             {
+
                 return View(changePassword);
             }
         }
@@ -63,7 +65,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         [HttpGet]
         // GET: BookAirTicket
-        public ActionResult BookAirTicket(int id)
+        public IActionResult BookAirTicket(int id)
         {
             // Stop accessing the action if not logged in
             // or account not in the "Customer" role
@@ -80,10 +82,13 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         public Aircraftschedule MaptobookingVM(Aircraftschedule booking)
         {
+            Aircraftschedule customerid = new Aircraftschedule();
+            customerid.CustomerID = (int)HttpContext.Session.GetInt32("id");
             Aircraftschedule bookingVM = new Aircraftschedule
             {
+
                 BookingID = booking.BookingID,
-                CustomerID = booking.CustomerID,
+                CustomerID = customerid.CustomerID,
                 ScheduleID = booking.ScheduleID,
                 PassengerName = booking.PassengerName,
                 PassportNumber = booking.PassportNumber,
@@ -154,8 +159,17 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             if (ModelState.IsValid)
             {
+                if (booking.SeatClass == "Economy")
+                {
+                    booking.AmtPayable = booking.EconomyClassPrice;
+                }
+                else
+                {
+                    booking.AmtPayable = booking.BusinessClassPrice;
+                }
                 //Add customer record to database
-                booking.CustomerID = CustomerContext.Add(booking);
+                int customerid = (int)HttpContext.Session.GetInt32("id");
+                CustomerContext.Add(booking, customerid);
                 //Redirect user to Login/Index view
                 return RedirectToAction("CustomerMain", "Login");
             }
@@ -176,8 +190,8 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
-            List<Aircraftschedule> viewAirTicketList = CustomerContext.ViewAirTicket();
+            int customerid = (int)HttpContext.Session.GetInt32("id");
+            List<Aircraftschedule> viewAirTicketList = CustomerContext.ViewAirTicket(customerid);
             return View(viewAirTicketList);
         }
 

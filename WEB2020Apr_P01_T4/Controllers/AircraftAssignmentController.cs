@@ -19,7 +19,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         private AircraftDAL aircraftContext = new AircraftDAL();
        
         // GET: /<controller>/Display
-        public IActionResult DisplayAircraft(int? id , string maintain )
+        public IActionResult DisplayAircraft(int? id , bool maintain )
         {
             if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
             {
@@ -27,16 +27,12 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
 
             AircraftScheduleViewModel aircraftScheduleView = new AircraftScheduleViewModel();
+    
+            //find aircraft that has a maintainance date 30 days or more 
+            aircraftScheduleView.aircraftList = maintain? aircraftContext.GetMaintenanceAircraft() : aircraftContext.GetAllAircraft();
+            ViewData["maintain"] = !maintain;
 
-
-
-            aircraftScheduleView.aircraftList = maintain == "true" ? aircraftContext.GetMaintenanceAircraft() : aircraftContext.GetAllAircraft();
-
-
-
-            //aircraftScheduleView.maintainceList = aircraftContext.GetMaintenanceAircraft();
-
-            if(id != null)
+            if (id != null)
             {
                 ViewData["selectedAircraft"] = id.Value.ToString();
                 aircraftScheduleView.scheduleList = aircraftContext.GetSchedules(id.Value);
@@ -48,16 +44,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             
             return View(aircraftScheduleView);
         }
-
-        //public IActionResult MaintainAircraft()
-        //{
-        //    AircraftScheduleViewModel aircraftScheduleView = new AircraftScheduleViewModel();
-        //    aircraftScheduleView.aircraftList = aircraftContext.GetMaintenanceAircraft();
-        //    ViewData["selectedAircraft"] = "";
-
-        //    return View("DisplayAircraft" , aircraftScheduleView);
-        //}
-
        
         public IActionResult CreateAircraft()
         {
@@ -88,7 +74,6 @@ namespace WEB2020Apr_P01_T4.Controllers
         
         }
         
-        // GET: /<controller>/Assign
         public IActionResult AssignAircraft(int? id)
         {
             if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
@@ -131,7 +116,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             
         }
-
       
         public IActionResult UpdateAircraft(int? id)
         {
