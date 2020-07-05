@@ -43,6 +43,7 @@ namespace WEB2020Apr_P01_T4.DAL
             cmd.Parameters.AddWithValue("@nationality", register.Nationality);
             cmd.Parameters.AddWithValue("@birthdate", register.BirthDate);
             cmd.Parameters.AddWithValue("@telno", register.TelNo);
+            cmd.Parameters.AddWithValue("@emailaddr", register.TelNo);
             cmd.Parameters.AddWithValue("@password", register.Password);
 
             //A connection to database must be opened before any operations made.
