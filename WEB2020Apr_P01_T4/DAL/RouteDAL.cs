@@ -128,11 +128,12 @@ namespace WEB2020Apr_P01_T4.DAL
 
                 // writing sql query  
                 SqlCommand cm = new SqlCommand(String.Format("SELECT * FROM FlightRoute WHERE " +
-                    "DepartureCity='{0}' AND DepartureCountry='{1}' AND ArrivalCity='{2}' AND ArrivalCountry='{3}';",
+                    "DepartureCity='{0}' AND DepartureCountry='{1}' AND ArrivalCity='{2}' AND ArrivalCountry='{3}' AND FlightDuration = {4} ;",
                     route.DepartureCity,
                     route.DepartureCountry,
                     route.ArrivalCity,
-                    route.ArrivalCountry
+                    route.ArrivalCountry,
+                    route.FlightDuration
                     ), con);
 
                 //Open the connection
