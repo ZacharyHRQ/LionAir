@@ -96,8 +96,12 @@
                                 <td>@schedule.Status</td>
 
                                 <td>
-                                    @Html.ActionLink("", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-edit" })
                                     @Html.ActionLink("", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-eye" })
+                                    @if (schedule.Status == "Opened")
+                                    {
+                                        @Html.ActionLink("", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-edit" })
+                                    }
+
                                 </td>
                             </tr>
                             
