@@ -66,9 +66,19 @@ namespace WEB2020Apr_P01_T4.Controllers
                 SearchOption = FlightSchedule.GetTableList(),
                 FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(),
                 ShowEditPop = false,
-                TicketSize = bookingDAL.GetAllBooking().Count(),
+                TicketSize = bookingDAL.GetAllBooking().Count(), 
 
             };
+
+            foreach (FlightSchedule flightSchedule  in scheduleViewModel.FlightScheduleList)
+            {
+                flightSchedule.EconomySeats = flightScheduleDAL.CountEconomySeat(flightSchedule.ScheduleID);
+                flightSchedule.BusinessSeats = flightScheduleDAL.CountBusinessSeat(flightSchedule.ScheduleID);
+
+            }
+
+
+
             return CheckAdmin(View("Schedule", scheduleViewModel));
         }
 

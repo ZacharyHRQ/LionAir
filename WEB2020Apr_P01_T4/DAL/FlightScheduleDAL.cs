@@ -49,6 +49,7 @@ namespace WEB2020Apr_P01_T4.DAL
                         EconomyClassPrice = sqlDataReader.GetDecimal(EconomyClassPrice),
                         BusinessClassPrice = sqlDataReader.GetDecimal(BusinessClassPrice),
                         Status = sqlDataReader.GetString(Status),
+                        
 
 
                     });
@@ -136,6 +137,7 @@ namespace WEB2020Apr_P01_T4.DAL
                     ), con);
 
 
+
                 // Opening Connection  
                 con.Open();
                 // Executing the SQL query  
@@ -181,6 +183,83 @@ namespace WEB2020Apr_P01_T4.DAL
             {
                 con.Close();
             }
+        }
+
+        public int CountEconomySeat(int sID)
+        {
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("SELECT COUNT(SeatClass), FlightSchedule.ScheduleID FROM Booking  " +
+                    "JOIN FlightSchedule ON FlightSchedule.ScheduleID = Booking.ScheduleID WHERE SeatClass = 'Economy' " +
+                    "AND FlightSchedule.ScheduleID = {0} GROUP BY FlightSchedule.ScheduleID",
+                    sID
+                    ), con);
+
+
+                // Opening Connection  
+                con.Open();
+
+                //Excuting the query
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+                if (sqlDataReader.Read())
+                {
+
+                    return sqlDataReader.GetInt32(0);
+                }
+
+               }
+            catch (Exception e)
+            {
+
+            }
+            // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+
+            return 0;
+        }
+        public int CountBusinessSeat(int sID)
+        {
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("SELECT COUNT(SeatClass), FlightSchedule.ScheduleID FROM Booking  " +
+                    "JOIN FlightSchedule ON FlightSchedule.ScheduleID = Booking.ScheduleID WHERE SeatClass = 'Business' " +
+                    "AND FlightSchedule.ScheduleID = {0} GROUP BY FlightSchedule.ScheduleID",
+                    sID
+                    ), con);
+
+
+                // Opening Connection  
+                con.Open();
+
+                //Excuting the query
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+                if (sqlDataReader.Read())
+                {
+
+                    return sqlDataReader.GetInt32(0);
+                }
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+
+            return 0;
         }
     }
 }

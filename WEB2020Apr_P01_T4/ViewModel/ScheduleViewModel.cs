@@ -13,5 +13,7 @@ namespace WEB2020Apr_P01_T4.ViewModel
         public bool ShowEditPop { get; set; }
         public int TicketSize { get; set; }
 
+
+
     }
 }

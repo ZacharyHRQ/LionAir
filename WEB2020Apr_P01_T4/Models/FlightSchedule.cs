@@ -50,6 +50,10 @@ namespace WEB2020Apr_P01_T4.Models
         [Required]
         public String Status { get; set; }
 
+        public int EconomySeats { get; set; }
+
+        public int BusinessSeats { get; set; }
+
 
         public List<String> GetStatusOption()
         {

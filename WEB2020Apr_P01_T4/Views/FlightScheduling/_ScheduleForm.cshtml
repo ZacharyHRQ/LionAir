@@ -43,7 +43,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(m => m.DepartureDateTime)
-                @Html.EditorFor(m => m.DepartureDateTime, new { htmlAttributes = new { @id= "datetimepicker", @class = "form-control " + cssClass, @type = type } })
+                @Html.EditorFor(m => m.DepartureDateTime, new { htmlAttributes = new { @class = "form-control " + cssClass, @type = type } })
                 @Html.ValidationMessageFor(m => m.DepartureDateTime)
             </div>
 
@@ -84,16 +84,7 @@
 </div>
 
 
-<script type="text/javascript">/* ... */
-    $(function () {
-        $('#datetimepicker').datetimepicker({
-            language: 'pt-BR'
-        });
-    });
 
-
-    }
-    });</script>
 
 
 
