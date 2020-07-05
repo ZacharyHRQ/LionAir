@@ -9,10 +9,14 @@ namespace WEB2020Apr_P01_T4.Models
     public class ChangePassword
     {
         public int CustomerId { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Current Password")]
+        [Compare("DatabasePassword", ErrorMessage = "The Current Password do not match.")]
         public string Password { get; set; }
+
+        public string DatabasePassword { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
