@@ -177,7 +177,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         public ActionResult Edit(FlightPersonnel flightPersonnel)
         {
             FlightSchedule fs = scheduleContext.GetFlightSchedule(flightPersonnel.StaffID);
-            DateTime currentDate = DateTime.Now;
+            DateTime currentDate = DateTime.Today;
             bool check = false;
             if (fs != null)
             {
