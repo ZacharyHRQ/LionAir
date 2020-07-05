@@ -48,11 +48,7 @@
 
     <div class="row">
         <div class="col col-sm">
-<<<<<<< HEAD
-            <p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Tickets Brought</p>
-=======
             <p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Total Tickets Brought</p>
->>>>>>> Scheduling
         </div>
         <div class="col-sm">
             <p class="dash-info red"><span class="dash-header">@count</span> <br>Schedules</p>
@@ -76,12 +72,9 @@
                             <th scope="col">Arrival Date and Time</th>
                             <th scope="col">Economy Price</th>
                             <th scope="col">Business Price</th>
-<<<<<<< HEAD
-=======
                             <th scope="col">Economy Seats</th>
                             <th scope="col">Business Seat</th>
                             <th scope="col">Aircraft</th>
->>>>>>> Scheduling
                             <th scope="col">Status</th>
                             <th scope="col"></th>
                         </tr>
@@ -93,22 +86,6 @@
                                 <td>@schedule.FlightNumber</td>
                                 <td>@schedule.RouteID</td>
                                 <td>@schedule.AircraftID</td>
-<<<<<<< HEAD
-                                <td>@schedule.DepartureDateTime</td>
-                                <td>@schedule.ArrivalDateTime</td>
-                                <td>@schedule.EconomyClassPrice</td>
-                                <td>@schedule.BusinessClassPrice</td>
-                                <td>@schedule.Status</td>
-
-                                @{
-                                    string ediClass = "fa fa-edit " + (schedule.Status != "Opened" ? "hide" : "");
-                                }
-
-                            <td>
-                                @Html.ActionLink("", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-eye" })
-                                @Html.ActionLink("", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = ediClass })
-                            </td>
-=======
                                 <td>@Html.DisplayFor(modelItem => schedule.DepartureDateTime)</td>
                                 <td>@Html.DisplayFor(modelItem => schedule.ArrivalDateTime)</td>
                                 <td>@Html.DisplayFor(modelItem => schedule.EconomyClassPrice)</td>
@@ -126,7 +103,6 @@
                                     }
 
                                 </td>
->>>>>>> Scheduling
                             </tr>
                             
                         }
