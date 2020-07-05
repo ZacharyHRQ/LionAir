@@ -3,20 +3,8 @@
     <div class="modal-contents">
 
         @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class = "close" })
-<<<<<<< HEAD
         
         <h1>Create Flight Route</h1>
-=======
-
-        <h1>Create Flight Route</h1>
-
-        @if ((ViewData["routeExist"] != null) &&!(bool)ViewData["routeExist"])
-        {
-            <span class="field-validation-error">The route already exist</span>
-        }
-
-
->>>>>>> Scheduling
         @using (@Html.BeginForm("SaveRoute", "FlightScheduling"))
         {
             <div class="form-group">

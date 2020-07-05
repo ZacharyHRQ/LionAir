@@ -264,7 +264,7 @@ namespace WEB2020Apr_P01_T4.DAL
             //Return id when no error occurs.
             return booking.BookingID;
         }
-        public List<Aircraftschedule> ViewAirTicket()
+        public List<Aircraftschedule> ViewAirTicket(int customerid)
         {
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
@@ -274,7 +274,7 @@ namespace WEB2020Apr_P01_T4.DAL
                                 ON Booking.ScheduleID = FlightSchedule.ScheduleID
                                 INNER JOIN FlightRoute
                                 ON FlightSchedule.RouteID = FlightRoute.RouteID
-                                WHERE CustomerID = 1";
+                                WHERE CustomerID = " + customerid;
             //Open a database connection
             conn.Open();
             //Execute the SELECT SQL through a DataReader

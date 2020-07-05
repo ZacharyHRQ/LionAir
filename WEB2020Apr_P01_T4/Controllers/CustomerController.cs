@@ -168,7 +168,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 }
                 //Add customer record to database
                 int customerid = (int)HttpContext.Session.GetInt32("id");
-                CustomerContext.Add(booking, customerid);
+                CustomerContext.Add(booking);
                 //Redirect user to Login/Index view
                 return RedirectToAction("CustomerMain", "Login");
             }

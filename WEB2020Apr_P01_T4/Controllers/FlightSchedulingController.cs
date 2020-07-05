@@ -25,8 +25,8 @@ namespace WEB2020Apr_P01_T4.Controllers
         private  IActionResult CheckAdmin(IActionResult view)
         {
             
-            //Change later (HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff")
-            if (false)
+            
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
             {
 
                 return RedirectToAction("Index", "Home");
