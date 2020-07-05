@@ -57,9 +57,9 @@ input {
     cursor: pointer;
 }
 
-    .close:hover {
-        color: #666;
-    }
+.close:hover {
+    color: #666;
+}
 
 .field-validation-error {
     color: red;
@@ -196,19 +196,19 @@ input {
     padding: 10px;
 }
 
-    .table-switch a {
-        margin: 5px 10px 5px 10px;
-    }
+.table-switch a {
+    margin: 5px 10px 5px 10px;
+}
 
-        .table-switch a:first-child {
-            background: #80A4ED;
-            border-color: #80A4ED;
-        }
+.table-switch a:first-child {
+    background: #80A4ED;
+    border-color: #80A4ED;
+}
 
-        .table-switch a:last-child {
-            background: #8095B3;
-            border-color: #8095B3;
-        }
+.table-switch a:last-child {
+    background: #8095B3;
+    border-color: #8095B3;
+}
 
 .dash-search #search,
 .dash-search #options,
@@ -229,7 +229,6 @@ input {
     margin: 30px 30px 50px;
 }
 
-
 .disabled {
     background-color: #e9ecef;
     opacity: 1;
@@ -239,16 +238,13 @@ input {
 .fa::before {
     font-size: 40px;
     color: black;
-    padding:10px;
+    padding: 10px;
 }
 
 .fa:hover {
     text-decoration: none;
-<<<<<<< HEAD
 }
 
-.hide{
+.hide {
     display: none
-=======
->>>>>>> Scheduling
 }
