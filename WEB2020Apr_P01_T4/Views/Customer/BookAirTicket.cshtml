@@ -34,10 +34,10 @@
         <div class="form-group row">
             <label asp-for="Nationality" class="col-sm-3 col-form-label"></label>
             <div class="col-sm-9 col-md-5">
-                <select asp-for="Nationality"
+                <select asp-for="Nationality" 
                         asp-items="@ViewData["CountryList"]
                             as List<SelectListItem>"
-                        class="form-control">
+                        class="form-control" onmousedown="this.size = 5" onfocusout="this.size = 1" style="overflow-y: scroll">
                 </select>
             </div>
         </div>
