@@ -17,10 +17,11 @@ namespace WEB2020Apr_P01_T4.Models
         [Display(Name = "Nationality")]
         public string Nationality { get; set; }
 
+        [Required]
         [Display(Name = "Birth Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}")]
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         [Display(Name = "Telephone number")]
         public int? TelNo { get; set; }
