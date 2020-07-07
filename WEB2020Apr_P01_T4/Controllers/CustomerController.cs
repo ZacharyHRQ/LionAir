@@ -110,7 +110,84 @@ namespace WEB2020Apr_P01_T4.Controllers
             };
             return bookingVM;
         }
+        // POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BookAirTicket(Aircraftschedule booking)
+        {
+            //Get country list for drop-down list
+            //in case of the need to return to index.cshtml view
+            ViewData["CountryList"] = GetCountries();
 
+            if (ModelState.IsValid)
+            {
+                //Add customer record to database
+                int customerid = (int)HttpContext.Session.GetInt32("id");
+                CustomerContext.Add(booking);
+                //Redirect user to Login/Index view
+                return RedirectToAction("CustomerMain", "Login");
+            }
+            else
+            {
+                //Input validation fails, return to the register view to display error message
+                return View(booking);
+            }
+        }
+        [HttpGet]
+        // ViewAirTicket
+        public ActionResult ViewAirTicket()
+        {
+            // Stop accessing the action if not logged in
+            // or account not in the "Customer" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+                (HttpContext.Session.GetString("Role") != "Customer"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            int customerid = (int)HttpContext.Session.GetInt32("id");
+            List<Aircraftschedule> viewAirTicketList = CustomerContext.ViewAirTicket(customerid);
+            return View(viewAirTicketList);
+        }
+
+        [HttpGet]
+        // MoreDetails
+        public ActionResult MoreDetails(int id)
+        {
+            // Stop accessing the action if not logged in
+            // or account not in the "Customer" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+                (HttpContext.Session.GetString("Role") != "Customer"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            Aircraftschedule passenger = CustomerContext.GetDetails(id);
+            Aircraftschedule passengerVM = MaptopassengerVM(passenger);
+            return View(passengerVM);
+        }
+
+        public Aircraftschedule MaptopassengerVM(Aircraftschedule passenger)
+        {
+            Aircraftschedule passengerVM = new Aircraftschedule
+            {
+                BookingID = passenger.BookingID,
+                PassengerName = passenger.PassengerName,
+                PassportNumber = passenger.PassportNumber,
+                Nationality = passenger.Nationality,
+                FlightNumber = passenger.FlightNumber,
+                DepartureCity = passenger.DepartureCity,
+                DepartureCountry = passenger.DepartureCountry,
+                DepartureDateTime = passenger.DepartureDateTime,
+                ArrivalCity = passenger.ArrivalCity,
+                ArrivalCountry = passenger.ArrivalCountry,
+                ArrivalDateTime = passenger.ArrivalDateTime,
+                FlightDuration = passenger.FlightDuration,
+                SeatClass = passenger.SeatClass,
+                AmtPayable = passenger.AmtPayable,
+                Remarks = passenger.Remarks
+            };
+            return passengerVM;
+        }
         private List<SelectListItem> GetCountries()
         {
             List<SelectListItem> countries = new List<SelectListItem>();
@@ -735,85 +812,6 @@ namespace WEB2020Apr_P01_T4.Controllers
                 Text = "Zimbabiwe"
             });
             return countries;
-        }
-
-        // POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult BookAirTicket(Aircraftschedule booking)
-        {
-            //Get country list for drop-down list
-            //in case of the need to return to index.cshtml view
-            ViewData["CountryList"] = GetCountries();
-
-            if (ModelState.IsValid)
-            {
-                //Add customer record to database
-                int customerid = (int)HttpContext.Session.GetInt32("id");
-                CustomerContext.Add(booking);
-                //Redirect user to Login/Index view
-                return RedirectToAction("CustomerMain", "Login");
-            }
-            else
-            {
-                //Input validation fails, return to the register view to display error message
-                return View(booking);
-            }
-        }
-        [HttpGet]
-        // ViewAirTicket
-        public ActionResult ViewAirTicket()
-        {
-            // Stop accessing the action if not logged in
-            // or account not in the "Customer" role
-            if ((HttpContext.Session.GetString("Role") == null) ||
-                (HttpContext.Session.GetString("Role") != "Customer"))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            int customerid = (int)HttpContext.Session.GetInt32("id");
-            List<Aircraftschedule> viewAirTicketList = CustomerContext.ViewAirTicket(customerid);
-            return View(viewAirTicketList);
-        }
-
-        [HttpGet]
-        // MoreDetails
-        public ActionResult MoreDetails(int id)
-        {
-            // Stop accessing the action if not logged in
-            // or account not in the "Customer" role
-            if ((HttpContext.Session.GetString("Role") == null) ||
-                (HttpContext.Session.GetString("Role") != "Customer"))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            Aircraftschedule passenger = CustomerContext.GetDetails(id);
-            Aircraftschedule passengerVM = MaptopassengerVM(passenger);
-            return View(passengerVM);
-        }
-
-        public Aircraftschedule MaptopassengerVM(Aircraftschedule passenger)
-        {
-            Aircraftschedule passengerVM = new Aircraftschedule
-            {
-                BookingID = passenger.BookingID,
-                PassengerName = passenger.PassengerName,
-                PassportNumber = passenger.PassportNumber,
-                Nationality = passenger.Nationality,
-                FlightNumber = passenger.FlightNumber,
-                DepartureCity = passenger.DepartureCity,
-                DepartureCountry = passenger.DepartureCountry,
-                DepartureDateTime = passenger.DepartureDateTime,
-                ArrivalCity = passenger.ArrivalCity,
-                ArrivalCountry = passenger.ArrivalCountry,
-                ArrivalDateTime = passenger.ArrivalDateTime,
-                FlightDuration = passenger.FlightDuration,
-                SeatClass = passenger.SeatClass,
-                AmtPayable = passenger.AmtPayable,
-                Remarks = passenger.Remarks
-            };
-            return passengerVM;
         }
     }
 }

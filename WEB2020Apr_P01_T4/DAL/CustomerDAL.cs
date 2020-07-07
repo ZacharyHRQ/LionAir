@@ -272,13 +272,20 @@ namespace WEB2020Apr_P01_T4.DAL
             {
                 cmd.Parameters.AddWithValue("@Remarks", booking.Remarks);
             }
+            if (booking.SeatClass == "Economy")
+            {
+                cmd.Parameters.AddWithValue("@AmtPayable", booking.EconomyClassPrice);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@AmtPayable", booking.BusinessClassPrice);
+            }
             cmd.Parameters.AddWithValue("@CustomerID", booking.CustomerID);
             cmd.Parameters.AddWithValue("@ScheduleID", booking.ScheduleID);
             cmd.Parameters.AddWithValue("@PassengerName", booking.PassengerName);
             cmd.Parameters.AddWithValue("@PassportNumber", booking.PassportNumber);
             cmd.Parameters.AddWithValue("@Nationality", booking.Nationality);
             cmd.Parameters.AddWithValue("@SeatClass", booking.SeatClass);
-            cmd.Parameters.AddWithValue("@AmtPayable", booking.AmtPayable);
             cmd.Parameters.AddWithValue("@DateTimeCreated", booking.DateTimeCreated);
 
             //A connection to database must be opened before any operations made.
