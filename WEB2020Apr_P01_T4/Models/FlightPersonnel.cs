@@ -37,5 +37,8 @@ namespace WEB2020Apr_P01_T4.Models
 
         [Display(Name = "Status")]
         public string Status { get; set; }
+
+        [Display(Name = "ScheduleID")]
+        public int ScheduleID { get; set; }
     }
 }

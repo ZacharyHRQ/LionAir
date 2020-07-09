@@ -121,6 +121,19 @@ namespace WEB2020Apr_P01_T4.Controllers
             return status;
         }
 
+        private List<SelectListItem> GetSchedule()
+        {
+            List<FlightSchedule> fslist = scheduleContext.GetAllFlightSchedule();
+            List<SelectListItem> schedule = new List<SelectListItem>();
+
+            foreach (FlightSchedule fs in fslist)
+            {
+                schedule.Add(new SelectListItem { Value = fs.ScheduleID.ToString(), Text = fs.ScheduleID.ToString() });
+            }
+            return schedule;
+        }
+
+        
 
         // POST: Staff/Create     
         [HttpPost]    
@@ -181,7 +194,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             bool check = false;
             if (fs != null)
             {
-                if(fs.DepartureDateTime < currentDate)
+                if(fs.DepartureDateTime > currentDate)
                 {
                     check = true;
                 }
@@ -193,7 +206,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             //Get status list for drop-down list       
             //in case of the need to return to Edit.cshtml view        
-            ViewData["StatusList"] = GetStatus();
+            ViewData["ScheduleList"] = GetStatus();
             if (ModelState.IsValid)
             {
                 if (check == true)
@@ -206,6 +219,56 @@ namespace WEB2020Apr_P01_T4.Controllers
                 {
                     return View();
                 }
+
+            }
+            else
+            {
+                //Input validation fails, return to the view   
+                //to display error message     
+                return View(flightPersonnel);
+            }
+
+        }
+
+        // GET: FlightPersonnel/Assign/5
+        public ActionResult Assign(int? id)
+        {
+            // Stop accessing the action if not logged in         
+            // or account not in the "Staff" role      
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (id == null)
+            {
+                //Query string parameter not provided          
+                //Return to listing page, not allowed to edit     
+                return RedirectToAction("Index");
+            }
+            FlightPersonnel flightPersonnel = staffContext.GetDetails(id.Value);
+            if (flightPersonnel == null)
+            {
+                //Return to listing page, not allowed to edit      
+                return RedirectToAction("Index");
+            }
+            ViewData["ScheduleList"] = GetSchedule();
+            return View(flightPersonnel);
+        }
+
+
+        // POST: FlightPersonnel/Assign/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Assign(FlightPersonnel flightPersonnel)
+        {
+            //Get status list for drop-down list       
+            //in case of the need to return to Edit.cshtml view        
+            ViewData["ScheduleList"] = GetSchedule();
+            if (ModelState.IsValid)
+            {
+                //Update staff record to database    
+                staffContext.Update(flightPersonnel);
+                return RedirectToAction("Index");
 
             }
             else
