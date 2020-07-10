@@ -83,7 +83,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             if (id != null)
             {
-                ViewData["flightList"] = GetFlights();
+                ViewData["flightList"] = GetFlights(id.Value);
                 Aircraft aircraft = aircraftContext.FindAircraft(id.Value);
                 AircraftAssignViewModel aircraftAssignViewModel = new AircraftAssignViewModel
                 {
@@ -104,7 +104,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         [HttpPost]
         public IActionResult AssignAircraft(AircraftAssignViewModel aircraft)
         {
-            ViewData["flightList"] = GetFlights();
+            ViewData["flightList"] = GetFlights(aircraft.AircraftID);
             if (ModelState.IsValid && aircraft.status != "Under Maintenance")
             {
                 aircraftContext.Assign(aircraft.AircraftID, Convert.ToInt32(aircraft.flightSchedule));
@@ -192,11 +192,21 @@ namespace WEB2020Apr_P01_T4.Controllers
             return models;
         }
 
-        //fix
-        private List<SelectListItem> GetFlights()
+
+        private List<SelectListItem> GetFlights(int aircraftid)
         {
             List<SelectListItem> flights = new List<SelectListItem>();
-            List<FlightSchedule> flightSchedules = aircraftContext.GetAvailableFlights();
+            List<FlightSchedule> flightSchedules = new List<FlightSchedule>();
+
+            //GetUnconflictedFlightSchedules
+            foreach (FlightSchedule schedule in aircraftContext.GetAvailableFlights())
+            {
+                if (!aircraftContext.CheckFlight(aircraftid , schedule.ScheduleID))
+                {
+                    flightSchedules.Add(schedule);
+                }
+            }
+
             foreach (FlightSchedule schedule in flightSchedules)
             {
                 flights.Add(new SelectListItem
@@ -208,7 +218,6 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             return flights;
         }
-
 
         private List<SelectListItem> GetStatus()
         {
