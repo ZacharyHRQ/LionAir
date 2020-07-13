@@ -39,7 +39,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             CustomerDAL customerDAL = new CustomerDAL();
             FlightPersonnelDAL flightPersonnelDAL = new FlightPersonnelDAL();
 
-            if (flightPersonnelDAL.VaildStaff(email: loginID, password: password, staffID: out id))
+            if (flightPersonnelDAL.VaildAdmin(email: loginID, password: password, staffID: out id))
             {
                 //Store Login ID in session with the key "LoginID"
                 HttpContext.Session.SetInt32("id", id);
