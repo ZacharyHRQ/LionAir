@@ -36,12 +36,14 @@ namespace WEB2020Apr_P01_T4.Models
         [Display(Name = "Economy Class Price")]
         [DataType(DataType.Currency)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "${0:#,##0.00}")]
+        [Range(0, (Double)decimal.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
         [Required]
         public decimal EconomyClassPrice { get; set; }
 
         [Display(Name = "Business Class Price")]
         [DataType(DataType.Currency)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "${0:#,##0.00}")]
+        [Range(0, (Double)decimal.MaxValue, ErrorMessage = "Please enter a value bigger than {1}")]
         [Required]
         public decimal BusinessClassPrice { get; set; }
 

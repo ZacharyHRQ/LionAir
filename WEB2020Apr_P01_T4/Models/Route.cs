@@ -30,6 +30,7 @@ namespace WEB2020Apr_P01_T4.Models
         public String ArrivalCountry { get; set; }
 
         [Display(Name = "Flight Duration")]
+        [Range(0, 36, ErrorMessage = "Please enter a flight time from 0 to 36")]
         public int? FlightDuration { get; set; }
 
         public static List<String> GetTableList()
