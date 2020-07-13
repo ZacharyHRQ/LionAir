@@ -119,6 +119,59 @@ namespace WEB2020Apr_P01_T4.DAL
             }
         }
 
+
+
+
+        public List<FlightSchedule> GetAllFlightSchedule(int routeId)
+        {
+            List<FlightSchedule> flightScheduleList = new List<FlightSchedule>();
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand("SELECT * FROM FlightSchedule WHERE RouteID = " + routeId, con);
+
+                //Open the connection
+                con.Open();
+
+                //Excuting the query
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+                while (sqlDataReader.Read())
+                {
+                    flightScheduleList.Add(new FlightSchedule
+                    {
+
+                        ScheduleID = sqlDataReader.GetInt32(ScheduleID),
+                        FlightNumber = sqlDataReader.GetString(FlightNumber),
+                        RouteID = sqlDataReader.GetInt32(RouteID),
+                        AircraftID = sqlDataReader.IsDBNull(AircraftID) ? 0 : sqlDataReader.GetInt32(AircraftID),
+                        DepartureDateTime = sqlDataReader.GetDateTime(DepartureDateTime),
+                        ArrivalDateTime = sqlDataReader.GetDateTime(ArrivalDateTime),
+                        EconomyClassPrice = sqlDataReader.GetDecimal(EconomyClassPrice),
+                        BusinessClassPrice = sqlDataReader.GetDecimal(BusinessClassPrice),
+                        Status = sqlDataReader.GetString(Status),
+
+
+
+                    });
+                }
+
+
+                return flightScheduleList;
+
+
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
         public void InsertData(FlightSchedule flightSchedule)
         {
             try

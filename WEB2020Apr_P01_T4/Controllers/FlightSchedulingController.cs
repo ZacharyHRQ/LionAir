@@ -82,6 +82,34 @@ namespace WEB2020Apr_P01_T4.Controllers
             return CheckAdmin(View("Schedule", scheduleViewModel));
         }
 
+        [Route("FlightScheduling/Schedule/{id}")]
+        public IActionResult Schedule(int id)
+        {
+
+            ScheduleViewModel scheduleViewModel = new ScheduleViewModel
+            {
+                FlightSchedule = new FlightSchedule(),
+                CreateRoute = new Route(),
+                SearchOption = FlightSchedule.GetTableList(),
+                FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(id),
+                ShowEditPop = false,
+                TicketSize = bookingDAL.GetAllBooking().Count(),
+
+            };
+
+            foreach (FlightSchedule flightSchedule in scheduleViewModel.FlightScheduleList)
+            {
+                flightSchedule.EconomySeats = flightScheduleDAL.CountEconomySeat(flightSchedule.ScheduleID);
+                flightSchedule.BusinessSeats = flightScheduleDAL.CountBusinessSeat(flightSchedule.ScheduleID);
+
+            }
+
+
+
+            return CheckAdmin(View("Schedule", scheduleViewModel));
+        }
+
+
 
         public IActionResult FlightBooking(int id)
         {
