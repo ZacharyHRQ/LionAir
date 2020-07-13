@@ -13,6 +13,7 @@ namespace WEB2020Apr_P01_T4.ViewModel
 
         public int NumBusinessSeat { get; set; }
 
+        [ValidateAircraftAssignment]
         public string status { get; set; }
 
         [ValidateAircraftAssignment]

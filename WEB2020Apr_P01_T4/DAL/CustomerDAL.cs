@@ -39,11 +39,32 @@ namespace WEB2020Apr_P01_T4.DAL
                                 VALUES(@customername, @nationality, @birthdate, @telno, @emailaddr, @password)";
             //Define the parameters used in SQL statement, value for each parameter
             //is retrieved from respective class's property.
+            if (register.BirthDate == null)
+            {
+                cmd.Parameters.AddWithValue("@birthdate", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@birthdate", register.BirthDate);
+            }
+            if (register.TelNo == null)
+            {
+                cmd.Parameters.AddWithValue("@telno", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@telno", register.TelNo);
+            }
+            if (register.Nationality == null)
+            {
+                cmd.Parameters.AddWithValue("@nationality", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@nationality", register.Nationality);
+            }
             cmd.Parameters.AddWithValue("@customername", register.CustomerName);
-            cmd.Parameters.AddWithValue("@nationality", register.Nationality);
-            cmd.Parameters.AddWithValue("@birthdate", register.BirthDate);
-            cmd.Parameters.AddWithValue("@telno", register.TelNo);
-            cmd.Parameters.AddWithValue("@emailaddr", register.TelNo);
+            cmd.Parameters.AddWithValue("@emailaddr", register.EmailAddr);
             cmd.Parameters.AddWithValue("@password", register.Password);
 
             //A connection to database must be opened before any operations made.
@@ -243,14 +264,28 @@ namespace WEB2020Apr_P01_T4.DAL
                                 VALUES(@CustomerID, @ScheduleID, @PassengerName, @PassportNumber, @Nationality, @SeatClass, @AmtPayable, @Remarks, @DateTimeCreated)";
             //Define the parameters used in SQL statement, value for each parameter
             //is retrieved from respective class's property.
+            if (booking.Remarks == null)
+            {
+                cmd.Parameters.AddWithValue("@Remarks", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Remarks", booking.Remarks);
+            }
+            if (booking.SeatClass == "Economy")
+            {
+                cmd.Parameters.AddWithValue("@AmtPayable", booking.EconomyClassPrice);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@AmtPayable", booking.BusinessClassPrice);
+            }
             cmd.Parameters.AddWithValue("@CustomerID", booking.CustomerID);
             cmd.Parameters.AddWithValue("@ScheduleID", booking.ScheduleID);
             cmd.Parameters.AddWithValue("@PassengerName", booking.PassengerName);
             cmd.Parameters.AddWithValue("@PassportNumber", booking.PassportNumber);
             cmd.Parameters.AddWithValue("@Nationality", booking.Nationality);
             cmd.Parameters.AddWithValue("@SeatClass", booking.SeatClass);
-            cmd.Parameters.AddWithValue("@AmtPayable", booking.AmtPayable);
-            cmd.Parameters.AddWithValue("@Remarks", booking.Remarks);
             cmd.Parameters.AddWithValue("@DateTimeCreated", booking.DateTimeCreated);
 
             //A connection to database must be opened before any operations made.

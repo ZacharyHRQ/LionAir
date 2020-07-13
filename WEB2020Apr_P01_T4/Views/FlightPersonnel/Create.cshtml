@@ -5,12 +5,13 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/FlightPersonnelEdit.css">
+</head>
 
-<h4>FlightPersonnel</h4>
+<h4> Create FlightPersonnel</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="registration-form">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -18,18 +19,22 @@
                 <input asp-for="StaffName" class="form-control" />
                 <span asp-validation-for="StaffName" class="text-danger"></span>
             </div>
-            <div class="form-group row">     
+            <div class="form-group">     
                 <label asp-for="Gender" class="col-sm-3 col-form-label"></label>      
                 <div class="col-sm-9 col-md-5">      
-                    <div class="form-group form-check-inline">          
-                        <label class="col-form-label">        
-                            <input asp-for="Gender" type="radio" value="M" checked class="form-check-input" />              
-                            <span>Male</span>           
-                        </label>            
-                        <label class="col-form-label">        
-                            <input asp-for="Gender" type="radio" value="F" class="form-check-input" />         
-                            <span>Female</span>           
-                        </label>             
+                    <div class="form-group form-check-inline">
+                        <label class="col-form-label">
+                            <input asp-for="Gender" type="radio" value="M" checked class="form-check-input" />
+                            <span>Male</span>
+                        </label>
+                        <label class="col-form-label">
+                            <input asp-for="Gender" type="radio" value="F" class="form-check-input" />
+                            <span>Female</span>
+                        </label>
+                        <label class="col-form-label">
+                            <input asp-for="Gender" type="radio" value="Other" class="form-check-input" />
+                            <span>Other</span>
+                        </label>
                     </div>         
                 </div>       
             </div>
@@ -53,11 +58,7 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

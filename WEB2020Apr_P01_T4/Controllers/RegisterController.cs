@@ -15,37 +15,16 @@ namespace WEB2020Apr_P01_T4.Controllers
         // GET: Register/Index
         public ActionResult Index()
         {
-            ViewData["CountryList"] = GetCountries();
             Register register = new Register();
             register.Password = "p@55Cust";
             return View(register);
         }
-        private List<SelectListItem> GetCountries()
-        {
-            List<SelectListItem> countries = new List<SelectListItem>();
-            countries.Add(new SelectListItem{
-                Value = "Singapore", Text = "Singapore"});
-            countries.Add(new SelectListItem{
-                Value = "Malaysia", Text = "Malaysia"});
-            countries.Add(new SelectListItem{
-                Value = "Indonesia", Text = "Indonesia"});
-            countries.Add(new SelectListItem{
-                Value = "China", Text = "China"});
-            countries.Add(new SelectListItem{
-                Value = "United Kingdom", Text = "United Kingdom"});
-            countries.Add(new SelectListItem{
-                Value = "American", Text = "American"});
-            return countries;
-        }
+
         // POST: Register/Index
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Index(Register register)
         {
-            //Get country list for drop-down list
-            //in case of the need to return to index.cshtml view
-            ViewData["CountryList"] = GetCountries();
-
             if (ModelState.IsValid)
             {
                 //Add customer record to database

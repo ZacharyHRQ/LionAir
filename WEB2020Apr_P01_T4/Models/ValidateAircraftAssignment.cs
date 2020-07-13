@@ -20,7 +20,7 @@ namespace WEB2020Apr_P01_T4.Models
             {
                 return new ValidationResult("Aircraft selected is under maintenance ");
             }
-            else if (aircraftContext.CheckFlight(aircraft.AircraftID, Convert.ToInt32(aircraft.flightSchedule))) //checks for conflicts in timings when assignment flight schedules
+            if (aircraftContext.CheckFlight(aircraft.AircraftID, Convert.ToInt32(aircraft.flightSchedule))) //checks for conflicts in timings when assignment flight schedules
             {
                 return new ValidationResult("This aircraft a flight schedule that conflicts with selected flight schedule");
             }

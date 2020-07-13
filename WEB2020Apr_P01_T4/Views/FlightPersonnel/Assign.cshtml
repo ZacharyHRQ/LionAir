@@ -1,11 +1,12 @@
 ﻿@model WEB2020Apr_P01_T4.Models.FlightPersonnel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Assign";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <head>
-    <link rel="stylesheet" type="text/css" href="~/css/FlightPersonnelEdit.css">
+    <link rel="stylesheet" type="text/css" href="~/css/FlightPersonnel.css">
 </head>
 
 <h4 class="PageTitle">Edit Staff Record</h4>
@@ -26,9 +27,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="Status" class="col-sm-3 col-form-label"></label>
+                <label asp-for="ScheduleID" class="col-sm-3 col-form-label"></label>
                 <div class="col-sm-9 col-md-5">
-                    <select asp-for="Status" asp-items="@ViewData["StatusList"]as List<SelectListItem>" class="form-control"></select>
+                    <select asp-for="ScheduleID" asp-items="@ViewData["ScheduleList"]as List<SelectListItem>" class="form-control"></select>
                 </div>
             </div>
             <div class="form-group">

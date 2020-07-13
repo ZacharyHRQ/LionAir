@@ -71,9 +71,9 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return View(aircraft);
             }
-        
+
         }
-        
+
         // GET: /<controller>/Assign
         public IActionResult AssignAircraft(int? id)
         {
@@ -83,7 +83,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             if (id != null)
             {
-
                 ViewData["flightList"] = GetFlights();
                 Aircraft aircraft = aircraftContext.FindAircraft(id.Value);
                 AircraftAssignViewModel aircraftAssignViewModel = new AircraftAssignViewModel
@@ -106,7 +105,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         public IActionResult AssignAircraft(AircraftAssignViewModel aircraft)
         {
             ViewData["flightList"] = GetFlights();
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && aircraft.status != "Under Maintenance")
             {
                 aircraftContext.Assign(aircraft.AircraftID, Convert.ToInt32(aircraft.flightSchedule));
                 return RedirectToAction("DisplayAircraft");
@@ -115,9 +114,9 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return View(aircraft);
             }
-            
+
         }
-      
+
         public IActionResult UpdateAircraft(int? id)
         {
             if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
@@ -150,7 +149,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return View(aircraft);
             }
-            
+
 
         }
 
@@ -188,12 +187,12 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 Value = "--Select--",
                 Text = "--Select--"
-   
+
             });
             return models;
         }
 
-        
+        //fix
         private List<SelectListItem> GetFlights()
         {
             List<SelectListItem> flights = new List<SelectListItem>();
@@ -206,7 +205,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                     Text = schedule.FlightNumber
                 });
             }
-            
+
             return flights;
         }
 
@@ -227,6 +226,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             return status;
 
         }
-        
+
     }
 }

@@ -8,14 +8,22 @@
 <br />
 <form asp-controller="Customer" asp-action="BookAirTicket">
     <fieldset class="FormContent">
-        <!--Hidden CustomerID and Schedule ID-->
+        <!--Hidden CustomerID, Schedule ID, EconomyClassPrice, BusinessClassPrice-->
         <div>
-            <input asp-for="CustomerID" class="form-control" type="hidden"/>
+            <input asp-for="CustomerID" class="form-control" type="hidden" />
             <span asp-validation-for="CustomerID" class="text-danger"></span>
         </div>
         <div>
-            <input asp-for="ScheduleID" class="form-control" type="hidden"/>
+            <input asp-for="ScheduleID" class="form-control" type="hidden" />
             <span asp-validation-for="ScheduleID" class="text-danger"></span>
+        </div>
+        <div>
+            <input asp-for="EconomyClassPrice" class="form-control" type="hidden" />
+            <span asp-validation-for="EconomyClassPrice" class="text-danger"></span>
+        </div>
+        <div>
+            <input asp-for="BusinessClassPrice" class="form-control" type="hidden" />
+            <span asp-validation-for="BusinessClassPrice" class="text-danger"></span>
         </div>
         <div class="form-group row">
             <label asp-for="PassengerName" class="col-sm-3 col-form-label"></label>
@@ -37,7 +45,7 @@
                 <select asp-for="Nationality"
                         asp-items="@ViewData["CountryList"]
                             as List<SelectListItem>"
-                        class="form-control">
+                        class="form-control" onmousedown="this.size = 5" onfocusout="this.size = 1" style="overflow-y: scroll">
                 </select>
             </div>
         </div>
@@ -46,7 +54,7 @@
             <div class="col-sm-9 col-md-5">
                 <div class="form-group form-check-inline">
                     <label class="col-form-label">
-                        <input asp-for="SeatClass" type="radio" value="Economy" Checked class="form-check-input"  />
+                        <input asp-for="SeatClass" type="radio" value="Economy" Checked class="form-check-input" />
                         <span>Economy</span>
                     </label>
                     <label class="col-form-label">
