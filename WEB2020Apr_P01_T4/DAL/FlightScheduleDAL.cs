@@ -44,8 +44,8 @@ namespace WEB2020Apr_P01_T4.DAL
                         FlightNumber = sqlDataReader.GetString(FlightNumber),
                         RouteID = sqlDataReader.GetInt32(RouteID),
                         AircraftID = sqlDataReader.IsDBNull(AircraftID) ? 0 : sqlDataReader.GetInt32(AircraftID),
-                        DepartureDateTime = sqlDataReader.GetDateTime(DepartureDateTime),
-                        ArrivalDateTime = sqlDataReader.GetDateTime(ArrivalDateTime),
+                        DepartureDateTime = sqlDataReader.IsDBNull(DepartureDateTime) ? (DateTime?)null : sqlDataReader.GetDateTime(DepartureDateTime),
+                        ArrivalDateTime = sqlDataReader.IsDBNull(ArrivalDateTime) ? (DateTime?)null : sqlDataReader.GetDateTime(ArrivalDateTime),
                         EconomyClassPrice = sqlDataReader.GetDecimal(EconomyClassPrice),
                         BusinessClassPrice = sqlDataReader.GetDecimal(BusinessClassPrice),
                         Status = sqlDataReader.GetString(Status),
@@ -172,13 +172,11 @@ namespace WEB2020Apr_P01_T4.DAL
             }
         }
 
+
         public void InsertData(FlightSchedule flightSchedule)
         {
-            try
-            {
 
-                // writing sql query  
-                SqlCommand cm = new SqlCommand(String.Format("INSERT INTO FlightSchedule " +
+            String query = String.Format("INSERT INTO FlightSchedule " +
                     "(FlightNumber, DepartureDateTime,ArrivalDateTime,  EconomyClassPrice, BusinessClassPrice, RouteID, Status)values('{0}', '{1}', '{2}',  {3}, {4}, {5}, '{6}')"
                     , flightSchedule.FlightNumber,
                     flightSchedule.DepartureDateTime,
@@ -187,7 +185,28 @@ namespace WEB2020Apr_P01_T4.DAL
                     flightSchedule.BusinessClassPrice,
                     flightSchedule.RouteID,
                     flightSchedule.Status
-                    ), con);
+                    );
+            if (flightSchedule.DepartureDateTime == null)
+            {
+               
+
+                    query = String.Format("INSERT INTO FlightSchedule " +
+                    "(FlightNumber, EconomyClassPrice, BusinessClassPrice, RouteID, Status)values('{0}', '{1}', '{2}',  {3}, '{4}')"
+                    , flightSchedule.FlightNumber,
+                    flightSchedule.EconomyClassPrice,
+                    flightSchedule.BusinessClassPrice,
+                    flightSchedule.RouteID,
+                    flightSchedule.Status
+                    );
+            }
+
+
+
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(query, con);
 
 
 

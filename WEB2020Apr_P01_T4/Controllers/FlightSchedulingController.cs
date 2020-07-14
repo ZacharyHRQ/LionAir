@@ -26,7 +26,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             
             
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            if (false)//((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
             {
 
                 return RedirectToAction("Index", "Home");
@@ -228,14 +228,22 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             int RouteID = id;
 
+            DateTime? ArrivalDateTime = null;
+
 
             if (ModelState.IsValid)
             {
 
                 Route route = routeDAL.getAllRoutes().First(r => r.RouteID == id);
 
+                if (flightSchedule.DepartureDateTime != null)
+                {
+                    ArrivalDateTime = ((DateTime)flightSchedule.DepartureDateTime).AddHours((double)route.FlightDuration);
+                }
+               
+
                 flightSchedule.RouteID = id;
-                flightSchedule.ArrivalDateTime = ((DateTime)flightSchedule.DepartureDateTime).AddHours((double)route.FlightDuration);
+                flightSchedule.ArrivalDateTime = ArrivalDateTime;
 
 
                 //Insert the data

@@ -21,7 +21,7 @@ namespace WEB2020Apr_P01_T4.Models
             }
             catch(InvalidOperationException i)
             {
-                return new ValidationResult("The Departure Date Time field is required.");
+                return ValidationResult.Success;
             }            
                 
           

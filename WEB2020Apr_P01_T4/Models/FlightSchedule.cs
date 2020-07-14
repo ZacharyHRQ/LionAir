@@ -31,7 +31,7 @@ namespace WEB2020Apr_P01_T4.Models
         [DataType(DataType.DateTime)]
         [Display(Name = "Arrival Date Time")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
-        public DateTime? ArrivalDateTime { get; set; }
+        public Nullable<DateTime> ArrivalDateTime { get; set; }
 
         [Display(Name = "Economy Class Price")]
         [DataType(DataType.Currency)]
