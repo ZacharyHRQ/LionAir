@@ -35,6 +35,8 @@ namespace WEB2020Apr_P01_T4.Controllers
                     string data = await response.Content.ReadAsStringAsync();
 
                     Airport a = JsonConvert.DeserializeObject<Airport>(data);
+                    a.maps = String.Format("https://www.google.com/maps/search/?api=1&query={0},{1}", a.Latitude, a.Longitude);
+
                     return View(a);
                 }
                 else

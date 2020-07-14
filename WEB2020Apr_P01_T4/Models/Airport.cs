@@ -58,5 +58,8 @@ namespace WEB2020Apr_P01_T4.Models
 
         [Display(Name = "website")]
         public Uri Website { get; set; }
+
+        [Display(Name = "Google Map")]
+        public String maps { get; set; }
     }
 }
