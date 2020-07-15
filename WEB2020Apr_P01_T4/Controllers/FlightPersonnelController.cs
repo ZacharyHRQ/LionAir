@@ -100,13 +100,15 @@ namespace WEB2020Apr_P01_T4.Controllers
             {             
                 return RedirectToAction("Index", "Home");   
             }           
-            ViewData["VocationList"] = GetVocation();     
+            ViewData["VocationList"] = GetVocation();
+            ViewData["GenderList"] = GetGender();
             return View();
         }
 
         private List<SelectListItem> GetVocation()
         { 
-            List<SelectListItem> vocation = new List<SelectListItem>(); 
+            List<SelectListItem> vocation = new List<SelectListItem>();
+            vocation.Add(new SelectListItem { Value = "null", Text = "--Please Select--" });
             vocation.Add(new SelectListItem { Value = "Administrator", Text = "Administrator" }); 
             vocation.Add(new SelectListItem { Value = "Pilot", Text = "Pilot" }); 
             vocation.Add(new SelectListItem { Value = "Flight Attendance", Text = "Flight Attendance" });
@@ -133,6 +135,15 @@ namespace WEB2020Apr_P01_T4.Controllers
             return schedule;
         }
 
+        private List<SelectListItem> GetGender()
+        {
+            List<SelectListItem> gender = new List<SelectListItem>();
+            gender.Add(new SelectListItem { Value = "null", Text = "--Please Select--" });
+            gender.Add(new SelectListItem { Value = "M", Text = "Male" });
+            gender.Add(new SelectListItem { Value = "F", Text = "Female" });
+            return gender;
+        }
+
         
 
         // POST: Staff/Create     
@@ -142,7 +153,8 @@ namespace WEB2020Apr_P01_T4.Controllers
         {       
             //Get country list for drop-down list       
             //in case of the need to return to Create.cshtml view        
-            ViewData["VocationList"] = GetVocation();       
+            ViewData["VocationList"] = GetVocation();
+            ViewData["GenderList"] = GetGender();
             if (ModelState.IsValid)        
             {                 
                 //Add staff record to database     
