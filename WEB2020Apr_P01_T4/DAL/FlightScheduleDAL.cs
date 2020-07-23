@@ -296,6 +296,32 @@ namespace WEB2020Apr_P01_T4.DAL
             return 0;
         }
 
+        public void Delete(int id)
+        {
+            try {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("DELETE FROM FlightSchedule WHERE ScheduleID = {0}"
+                    , id), con);
+
+
+                // Opening Connection  
+                con.Open();
+
+                //Excuting the query
+                cm.ExecuteNonQuery();
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+        }
 
         public int CountBusinessSeat(int sID)
         {

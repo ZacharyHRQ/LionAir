@@ -77,6 +77,8 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             }
 
+            ViewBag.Flitered = false;
+
 
 
             return CheckAdmin(View("Schedule", scheduleViewModel));
@@ -97,13 +99,17 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             };
 
-            foreach (FlightSchedule flightSchedule in scheduleViewModel.FlightScheduleList)
+            if (scheduleViewModel.FlightScheduleList != null)
             {
-                flightSchedule.EconomySeats = flightScheduleDAL.CountEconomySeat(flightSchedule.ScheduleID);
-                flightSchedule.BusinessSeats = flightScheduleDAL.CountBusinessSeat(flightSchedule.ScheduleID);
+                foreach (FlightSchedule flightSchedule in scheduleViewModel.FlightScheduleList)
+                {
+                    flightSchedule.EconomySeats = flightScheduleDAL.CountEconomySeat(flightSchedule.ScheduleID);
+                    flightSchedule.BusinessSeats = flightScheduleDAL.CountBusinessSeat(flightSchedule.ScheduleID);
 
+                }
             }
 
+            ViewBag.Flitered = true;
 
 
             return CheckAdmin(View("Schedule", scheduleViewModel));
@@ -286,5 +292,24 @@ namespace WEB2020Apr_P01_T4.Controllers
             return RedirectToAction("Schedule");
         }
 
+
+       
+        [Route("FlightScheduling/DeleteSchedule/{id}/{routeID}")]
+        public IActionResult DeleteSchedule(int id, int routeID)
+        {
+
+            //Delete the schdule
+            flightScheduleDAL.Delete(id);
+
+            if (routeID == 0)
+            {
+                return RedirectToAction("Schedule");
+            }
+            else
+            {
+                return RedirectToAction("Schedule", new { id = routeID});
+            }
+
+        }
     }
 }
