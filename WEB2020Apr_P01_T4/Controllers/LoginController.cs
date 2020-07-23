@@ -45,10 +45,10 @@ namespace WEB2020Apr_P01_T4.Controllers
                 HttpContext.Session.SetInt32("id", id);
 
                 //Store the user role "Staff" as a string in session with the key "Role"
-                HttpContext.Session.SetString("Role", "Staff");
+                HttpContext.Session.SetString("Role", "Admin");
 
                 //Redirect use to the Staff Main 
-                return RedirectToAction("StaffMain");
+                return RedirectToAction("Index", "Home");
             }
             else if (customerDAL.VaildCustomer(email: loginID, password: password, customerID: out id))
             {
@@ -62,6 +62,17 @@ namespace WEB2020Apr_P01_T4.Controllers
                 HttpContext.Session.SetString("Datetime", @DateTime.Now.ToString());
                 //Redirect use to the Staff Main 
                 return RedirectToAction("CustomerMain");
+            }
+            else if (flightPersonnelDAL.VaildStaff(email: loginID, password: password, staffID: out id))
+            {
+                //Store Login ID in session with the key "LoginID"
+                HttpContext.Session.SetInt32("id", id);
+
+                //Store the user role "Staff" as a string in session with the key "Role"
+                HttpContext.Session.SetString("Role", "Staff");
+
+                //Redirect use to the Staff Main 
+                return RedirectToAction("StaffMain");
             }
             else
             {
@@ -79,9 +90,12 @@ namespace WEB2020Apr_P01_T4.Controllers
             //or account not in the  "Staff" Role
             if ((HttpContext.Session.GetString("Role") != null) || (HttpContext.Session.GetString("Role") == "Staff"))
             {
-                return RedirectToAction("Index", "Home");
+                int id = (int)HttpContext.Session.GetInt32("id");
+                List<FlightPersonnel> flightPersonnels = new FlightPersonnelDAL().GetAllFlightPersonal(id);
+                return View(flightPersonnels);
             }
-            return View();
+            
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Logout()

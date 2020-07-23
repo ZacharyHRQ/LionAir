@@ -1,7 +1,55 @@
-﻿@page
+﻿@model IEnumerable<WEB2020Apr_P01_T4.Models.FlightPersonnel>
+
 @{
-    Layout = "/Views/Shared/_LayoutForStaffMain.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<h1>StaffMain</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="~/css/staffMain.css"> 
+</head>
+
+
+
+<div class="limiter">
+    <div class="container-table100">
+        <div class="wrap-table100">
+
+            <div class="table100 ver1 m-b-110">
+                <div class="table100-head">
+                    <table>
+                        <thead>
+                            <tr class="row100 head">
+                                <th class="cell100 column1">Staff Name</th>
+                                <th class="cell100 column3">Role</th>
+                                <th class="cell100 column2">Schedule ID</th>
+                                <th class="cell100 column4">Aircraft ID</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="table100-body js-pscroll">
+                    <table>
+                        <tbody>
+                            @foreach (var personal in Model)
+                            {
+                                <tr class="row100 body">
+                                    <td class="cell100 column1">@personal.StaffName</td>
+                                    <td class="cell100 column3">@personal.Vocation</td>
+                                    <td class="cell100 column2">@personal.ScheduleID</td>
+                                    <td class="cell100 column4">@personal.Role</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+    </div>
 

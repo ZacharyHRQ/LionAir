@@ -289,6 +289,49 @@ namespace WEB2020Apr_P01_T4.DAL
 
         }
 
+        public List<FlightPersonnel> GetAllFlightPersonal(int id)
+        {
+            List<FlightPersonnel> flightPersonal = new List<FlightPersonnel>();
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand("SELECT s.StaffName, s.Vocation, c.ScheduleID, c.Role FROM Staff s INNER JOIN FlightCrew c ON s.StaffID = c.StaffID WHERE s.StaffID = " + id, conn);
+
+                //Open the connection
+                conn.Open();
+
+                //Excuting the query
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+                while (sqlDataReader.Read())
+                {
+                    flightPersonal.Add(new FlightPersonnel
+                    {
+                        StaffName = sqlDataReader.GetString(0),
+                        Vocation = sqlDataReader.GetString(1),
+                        ScheduleID = sqlDataReader.GetInt32(2),
+                        Role = sqlDataReader.GetString(3),
+
+
+                    });
+                }
+
+
+                return flightPersonal;
+
+
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
     }
     
 }

@@ -26,12 +26,14 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             
             
-            if (false)//((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            if (false)//((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Admin"))
             {
 
                 return RedirectToAction("Index", "Home");
 
             }
+
+
 
             return view;
         }

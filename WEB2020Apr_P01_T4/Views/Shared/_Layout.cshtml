@@ -29,9 +29,13 @@
             @await Html.PartialAsync("_CustomerNav.cshtml")
 
         }
-        else if (role == "Staff")
+        else if (role == "Admin")
         {
             @await Html.PartialAsync("_StaffNav.cshtml")
+        }
+        else if(role == "Staff")
+        {
+            @await Html.PartialAsync("_StaffPageNav.cshtml")
         }
         else
         {

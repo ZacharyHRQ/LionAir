@@ -40,5 +40,8 @@ namespace WEB2020Apr_P01_T4.Models
 
         [Display(Name = "ScheduleID")]
         public int ScheduleID { get; set; }
+
+        [Display(Name = "Role")]
+        public String? Role { get; set; }
     }
 }
