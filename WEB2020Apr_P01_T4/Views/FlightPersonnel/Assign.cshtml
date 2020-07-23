@@ -6,13 +6,13 @@
 }
 
 <head>
-    <link rel="stylesheet" type="text/css" href="~/css/FlightPersonnel.css">
+    <link rel="stylesheet" type="text/css" href="~/css/FlightPersonnelEdit.css">
 </head>
 
 <h4 class="PageTitle">Edit Staff Record</h4>
 <hr />
 <div class="registration-form">
-    <form asp-action="Edit">
+    <form asp-action="Assign">
         <fieldset class="FormContent">
             <div class="form-group">
                 <label asp-for="StaffID" class="col-sm-3 col-form-label"></label>
@@ -38,5 +38,7 @@
                 </div>
             </div>
         </fieldset>
+        @Html.HiddenFor(m => m.EmailAddr)
+        @Html.HiddenFor(m => m.Status)
     </form>
 </div>
