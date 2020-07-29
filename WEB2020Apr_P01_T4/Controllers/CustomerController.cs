@@ -39,7 +39,9 @@ namespace WEB2020Apr_P01_T4.Controllers
                 int customerid = (int)HttpContext.Session.GetInt32("id");
                 CustomerContext.Update(changePassword, customerid);
 
-                return RedirectToAction("CustomerMain", "Login");
+                TempData["Message"] = "Password have been successfully changed!";
+
+                return View(changePassword);
             }
             else
             {
@@ -124,8 +126,8 @@ namespace WEB2020Apr_P01_T4.Controllers
                 //Add customer record to database
                 int customerid = (int)HttpContext.Session.GetInt32("id");
                 CustomerContext.Add(booking);
-                //Redirect user to Login/Index view
-                return RedirectToAction("CustomerMain", "Login");
+                TempData["Message"] = "New Booking have been successfully created!";
+                return RedirectToAction("ViewAirTicket");
             }
             else
             {
