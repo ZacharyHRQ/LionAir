@@ -14,7 +14,6 @@ namespace WEB2020Apr_P01_T4.Models
         [Display(Name = "Staff Name")]
         [Required(ErrorMessage = "Please enter a name!")]
         [StringLength(50, ErrorMessage = "Name cannot exceed 50 character!")]
-        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "Only Alphabets and Numbers allowed.")]
         public string StaffName { get; set; }
 
         [Display(Name = "Gender")]

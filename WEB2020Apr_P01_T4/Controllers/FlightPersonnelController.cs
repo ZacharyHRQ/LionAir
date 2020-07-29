@@ -218,7 +218,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             //Get status list for drop-down list       
             //in case of the need to return to Edit.cshtml view        
-            ViewData["ScheduleList"] = GetStatus();
+            
             if (ModelState.IsValid)
             {
                 if (check == true)
@@ -229,6 +229,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 }
                 else
                 {
+                    ViewData["ScheduleList"] = GetStatus();
                     return View();
                 }
 
@@ -275,7 +276,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             //Get status list for drop-down list       
             //in case of the need to return to Edit.cshtml view        
-            ViewData["ScheduleList"] = GetSchedule();
+           
             if (ModelState.IsValid)
             {
                 //Update staff record to database    
@@ -285,6 +286,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             else
             {
+                ViewData["ScheduleList"] = GetSchedule();
                 //Input validation fails, return to the view   
                 //to display error message     
                 return View(flightPersonnel);
