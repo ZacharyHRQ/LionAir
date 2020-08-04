@@ -119,9 +119,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             else
             {
-                //Store an error message in TempData for display at the index view
-                TempData["Message"] = "Login to make booking";
-
                 //Redirect user back to the index view through an action
                 return RedirectToAction("ViewFlightSchedule", "Customer");
             }

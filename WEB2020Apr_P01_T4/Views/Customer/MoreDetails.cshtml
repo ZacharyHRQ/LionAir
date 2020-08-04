@@ -8,6 +8,34 @@
 <br />
 <fieldset class="FormContent">
     <div class="form-group row">
+        <div class="table-responsive">
+            <table id="viewStaff" class="table table=striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>FlightNumber</th>
+                        <th>Departure City</th>
+                        <th>Departure Country</th>
+                        <th>Departure Date & Time </th>
+                        <th>Arrival City</th>
+                        <th>Arrival Country</th>
+                        <th>Arrival Date & Time </th>
+                        <th>Flight Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Html.Display("FlightNumber")</td>
+                        <td>@Html.Display("DepartureCity")</td>
+                        <td>@Html.Display("DepartureCountry")</td>
+                        <td>@Html.Display("DepartureDateTime")</td>
+                        <td>@Html.Display("ArrivalCity")</td>
+                        <td>@Html.Display("ArrivalCountry")</td>
+                        <td>@Html.Display("ArrivalDateTime")</td>
+                        <td>@Html.Display("FlightDuration")</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <label asp-for="BookingID" class="col-sm-3 col-form-label"></label>
         <div class="col-sm-9 form-control-plaintext">
             @Html.Display("BookingID")
@@ -30,34 +58,6 @@
         <div class="col-sm-9 form-control-plaintext">
             @Html.Display("Nationality")
         </div>
-    </div>
-    <div class="table-responsive">
-        <table id="viewStaff" class="table table=striped table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th>FlightNumber</th>
-                    <th>Departure City</th>
-                    <th>Departure Country</th>
-                    <th>Departure Date & Time </th>
-                    <th>Arrival City</th>
-                    <th>Arrival Country</th>
-                    <th>Arrival Date & Time </th>
-                    <th>Flight Duration</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@Html.Display("FlightNumber")</td>
-                    <td>@Html.Display("DepartureCity")</td>
-                    <td>@Html.Display("DepartureCountry")</td>
-                    <td>@Html.Display("DepartureDateTime")</td>
-                    <td>@Html.Display("ArrivalCity")</td>
-                    <td>@Html.Display("ArrivalCountry")</td>
-                    <td>@Html.Display("ArrivalDateTime")</td>
-                    <td>@Html.Display("FlightDuration")</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
     <div class="form-group row">
         <label asp-for="SeatClass" class="col-sm-3 col-form-label"></label>
