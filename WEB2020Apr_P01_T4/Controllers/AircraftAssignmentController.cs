@@ -153,6 +153,42 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         }
 
+        public IActionResult DeleteAircraft(int? id)
+        {
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            ViewData["statusList"] = GetStatus();
+            if (id != null)
+            {
+                Aircraft aircraft = aircraftContext.FindAircraft(id.Value);
+                ViewData["status"] = aircraft.Status;
+                return View(aircraft);
+            }
+            else
+            {
+                return RedirectToAction("DisplayAircraft");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAircraft(Aircraft aircraft)
+        {
+            ViewData["statusList"] = GetStatus();
+            if (ModelState.IsValid)
+            {
+                aircraftContext.Update(aircraft);
+                return RedirectToAction("DisplayAircraft");
+            }
+            else
+            {
+                return View(aircraft);
+            }
+
+
+        }
+
         // Aircraft Models 
         private List<SelectListItem> GetModel()
         {

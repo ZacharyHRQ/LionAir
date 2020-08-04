@@ -58,9 +58,17 @@
                         <td>@item.DateLastMaintenance</td>
                         <td>@item.Status</td>
                         <td>
-                            <a asp-action="DisplayAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">View Schedule</a> |
-                            <a asp-action="AssignAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">Assign</a> |
-                            <a asp-action="UpdateAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">Update</a>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-action="DisplayAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">View Schedule</a> 
+                                    <a class="dropdown-item" asp-action="AssignAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">Assign</a> 
+                                    <a class="dropdown-item" asp-action="UpdateAircraft" asp-controller="AircraftAssignment" asp-route-id="@item.AircraftID">Update</a>
+                                </div>
+                            </div>
+                            
                         </td>
                     </tr>
                  }
