@@ -109,14 +109,13 @@ namespace WEB2020Apr_P01_T4.Controllers
             return status;
         }
 
-        private List<SelectListItem> GetSchedule()
+        private List<SelectListItem> GetStaffId()
         {
-            List<FlightSchedule> fslist = scheduleContext.GetAllFlightSchedule();
+            List<FlightPersonnel> idList = staffContext.GetID();
             List<SelectListItem> schedule = new List<SelectListItem>();
-
-            foreach (FlightSchedule fs in fslist)
+            foreach (FlightPersonnel fp in idList)
             {
-                schedule.Add(new SelectListItem { Value = fs.ScheduleID.ToString(), Text = fs.ScheduleID.ToString() });
+                schedule.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
             }
             return schedule;
         }
@@ -262,7 +261,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 //Return to listing page, not allowed to edit      
                 return RedirectToAction("Index");
             }
-            ViewData["ScheduleList"] = GetSchedule();
+            ViewData["ScheduleList"] = GetStaffId();
             return View(flightPersonnel);
         }
 
@@ -284,15 +283,13 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             else
             {
-                ViewData["ScheduleList"] = GetSchedule();
+                ViewData["ScheduleList"] = GetStaffId();
                 //Input validation fails, return to the view   
                 //to display error message     
                 return View(flightPersonnel);
             }
 
         }
-
-        //GET:
 
     }
 }
