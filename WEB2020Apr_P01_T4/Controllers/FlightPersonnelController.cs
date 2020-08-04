@@ -91,20 +91,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             return staffvmList;
         }
 
-        // GET: FlightPersonnel/Create
-        public ActionResult Create()
-        {
-            // Stop accessing the action if not logged in       
-            // or account not in the "Staff" role         
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))     
-            {             
-                return RedirectToAction("Index", "Home");   
-            }           
-            ViewData["VocationList"] = GetVocation();
-            ViewData["GenderList"] = GetGender();
-            return View();
-        }
-
         private List<SelectListItem> GetVocation()
         { 
             List<SelectListItem> vocation = new List<SelectListItem>();
@@ -144,7 +130,19 @@ namespace WEB2020Apr_P01_T4.Controllers
             return gender;
         }
 
-        
+        // GET: FlightPersonnel/Create
+        public ActionResult Create()
+        {
+            // Stop accessing the action if not logged in       
+            // or account not in the "Staff" role         
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewData["VocationList"] = GetVocation();
+            ViewData["GenderList"] = GetGender();
+            return View();
+        }
 
         // POST: Staff/Create     
         [HttpPost]    
@@ -294,27 +292,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         }
 
-        // GET: FlightPersonnel/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //GET:
 
-        // POST: FlightPersonnel/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

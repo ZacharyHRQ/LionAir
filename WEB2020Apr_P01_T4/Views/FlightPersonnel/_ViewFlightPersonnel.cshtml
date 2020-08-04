@@ -20,9 +20,8 @@
                             <a href="~/FlightPersonnel/Create">
                                 Add Staff <img src="~/icons/icons8-employee-32.png" width="20" height="20" style="vertical-align:middle;" />
                             </a>
-                            <a asp-action="FSDetails" asp-controller="FlightPersonnel">View Schedule</a>
-                            <a href="~/FlightScheduling/FlightBooking">
-                                Test
+                            <a href="~/FlightScheduling/FSDetails">
+                                View Schedule
                             </a>
                         </div>
                     </div>
@@ -54,7 +53,8 @@
                             <td>@item.Status</td>
                             <td>
                                 <a asp-action="Details" asp-controller="FlightPersonnel" asp-route-id="@item.StaffID">Details</a> |
-                                <a asp-action="Edit" asp-controller="FlightPersonnel" asp-route-id="@item.StaffID">Update</a>
+                                <a asp-action="Edit" asp-controller="FlightPersonnel" asp-route-id="@item.StaffID">Update</a> |
+                                <a asp-action="Assign" asp-controller="FlightPersonnel" asp-route-id="@item.StaffID">Assign</a>
                             </td>
                         </tr>
                     }

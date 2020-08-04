@@ -18,10 +18,4 @@
     <Folder Include="ViewModel\" />
     <Folder Include="Views\Customer\" />
   </ItemGroup>
-  <ItemGroup>
-    <!-- <Content Remove="wwwroot\images\stafftestimonial.jpg" />
-    <Content Remove="Views\FlightScheduling\_addRoute.cshtml" />
-    <Content Remove="wwwroot\css\FlightSchedule.css" />
-    <Content Remove="Views\FlightScheduling\_addRoute.cshtml" /> -->
-  </ItemGroup>
 </Project>

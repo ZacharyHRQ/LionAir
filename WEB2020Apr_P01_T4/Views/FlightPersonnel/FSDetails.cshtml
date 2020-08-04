@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <table id="viewStaff" class="table table-striped table-hover table-bordered">
+            <table id="viewSchedule" class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>Flight Number</th>
@@ -69,11 +69,11 @@ else
         var input, filter, ul, tr, td, i, txtValue;
         input = document.getElementById('search');
         filter = input.value.toUpperCase();
-        ul = document.getElementById("viewStaff");
+        ul = document.getElementById("viewSchedule");
         tr = ul.getElementsByTagName('tr');
 
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
+            td = tr[i].getElementsByTagName("td")[1];
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
