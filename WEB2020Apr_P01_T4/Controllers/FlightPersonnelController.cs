@@ -109,15 +109,26 @@ namespace WEB2020Apr_P01_T4.Controllers
             return status;
         }
 
-        private List<SelectListItem> GetStaffId()
+        private List<SelectListItem> GetPilotId()
         {
-            List<FlightPersonnel> idList = staffContext.GetID();
-            List<SelectListItem> schedule = new List<SelectListItem>();
+            List<FlightPersonnel> idList = staffContext.GetPilotID();
+            List<SelectListItem> pilot = new List<SelectListItem>();
             foreach (FlightPersonnel fp in idList)
             {
-                schedule.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
+                pilot.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
             }
-            return schedule;
+            return pilot;
+        }
+
+        private List<SelectListItem> GetAttendantId()
+        {
+            List<FlightPersonnel> idList = staffContext.GetFAID();
+            List<SelectListItem> flightattendant = new List<SelectListItem>();
+            foreach (FlightPersonnel fp in idList)
+            {
+                flightattendant.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
+            }
+            return flightattendant;
         }
 
         private List<SelectListItem> GetGender()
@@ -261,7 +272,8 @@ namespace WEB2020Apr_P01_T4.Controllers
                 //Return to listing page, not allowed to edit      
                 return RedirectToAction("Index");
             }
-            ViewData["ScheduleList"] = GetStaffId();
+            ViewData["pilotList"] = GetPilotId();
+            ViewData["attendantList"] = GetAttendantId();
             return View(flightPersonnel);
         }
 
@@ -283,7 +295,8 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             else
             {
-                ViewData["ScheduleList"] = GetStaffId();
+                ViewData["pilotList"] = GetPilotId();
+                ViewData["attendantList"] = GetAttendantId();
                 //Input validation fails, return to the view   
                 //to display error message     
                 return View(flightPersonnel);
