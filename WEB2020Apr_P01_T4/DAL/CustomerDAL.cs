@@ -392,5 +392,45 @@ namespace WEB2020Apr_P01_T4.DAL
 
             return passenger;
         }
+
+        public bool VaildDestination(string DepartureCountry, string ArrivalCountry, out int scheduleID)
+        {
+
+            scheduleID = 0;
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format(@"SELECT ScheduleID FROM FlightRoute
+                                INNER JOIN FlightSchedule
+                                ON FlightRoute.RouteID = FlightSchedule.RouteID
+                                WHERE DepartureCountry = '{0}' AND ArrivalCountry = '{1}'", DepartureCountry, ArrivalCountry),conn);
+                // Opening Connection  
+                conn.Open();
+                // Executing the SQL query  
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+                if (sqlDataReader.Read())
+                {
+                    scheduleID = sqlDataReader.GetInt32(0);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            // Closing the connection  
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }

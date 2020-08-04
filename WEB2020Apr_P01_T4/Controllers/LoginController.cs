@@ -102,5 +102,29 @@ namespace WEB2020Apr_P01_T4.Controllers
             return View();
         }
 
+        //About Us Destination
+        [HttpPost]
+        public ActionResult Destination(IFormCollection formData)
+        {
+            string from = formData["from"].ToString();
+            string to = formData["to"].ToString();
+            int scheduleID = 0;
+
+            CustomerDAL customerDAL = new CustomerDAL();
+
+            if (customerDAL.VaildDestination(DepartureCountry: from, ArrivalCountry: to, scheduleID: out scheduleID))
+            {
+                //Redirect use to the BookAirTicket
+                return RedirectToAction("BookAirTicket", "Customer");
+            }
+            else
+            {
+                //Store an error message in TempData for display at the index view
+                TempData["Message"] = "Login to make booking";
+
+                //Redirect user back to the index view through an action
+                return RedirectToAction("ViewFlightSchedule", "Customer");
+            }
+        }
     }
 }
