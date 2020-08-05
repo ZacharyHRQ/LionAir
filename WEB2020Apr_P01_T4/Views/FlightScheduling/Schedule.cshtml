@@ -112,7 +112,7 @@
                                     @Html.ActionLink("", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-edit" })
                                 }
                                 @Html.ActionLink("", "DeleteSchedule", "FlightScheduling", new { @id = schedule.ScheduleID, @routeID = ViewBag.Flitered ? schedule.RouteID : 0 }, new { @class = "fa fa-trash" })
-                                @Html.ActionLink("", "Assign", "FlightPersonnel", new { @id = schedule.ScheduleID}, new { @class = "fa fa-trash" })
+                                @Html.ActionLink("Assign", "Assign", "FlightPersonnel", new { @id = schedule.ScheduleID})
                             </td>
                         </tr>
                             
