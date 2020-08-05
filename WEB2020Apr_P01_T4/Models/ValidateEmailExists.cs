@@ -32,10 +32,34 @@ namespace WEB2020Apr_P01_T4.Models
                 return ValidationResult.Success;
         }
     }
+
+    public class ValidatePersonnelEmailExist : ValidationAttribute
+    {
+        private FlightPersonnelDAL personnelContext = new FlightPersonnelDAL();
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            // Get the email value to validate      
+            string email = Convert.ToString(value);
+
+            // Casting the validation context to the "Staff" model class        
+            FlightPersonnel personnel = (FlightPersonnel)validationContext.ObjectInstance;
+
+            // Get the Staff Id from the staff instance     
+            int staffId = personnel.StaffID;
+
+            if (personnelContext.IsEmailExist(email, staffId))
+            {
+                // validation failed          
+                return new ValidationResult
+                    ("Email address already exists!");
+            }
+            else
+            {
+                // validation passed      
+                return ValidationResult.Success;
+            }
+
+        }
+    }
 }
-
-//private FlightPersonnelDAL staffContext = new FlightPersonnelDAL();
-////Get Staff Id from the Flight Personnel instance
-//int staffId = flightPersonnel.StaffID;
-
-//&& (staffContext.IsEmailExist(email, staffId)

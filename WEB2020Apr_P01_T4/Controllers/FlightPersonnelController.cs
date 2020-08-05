@@ -91,22 +91,10 @@ namespace WEB2020Apr_P01_T4.Controllers
             return staffvmList;
         }
 
-        // GET: FlightPersonnel/Create
-        public ActionResult Create()
-        {
-            // Stop accessing the action if not logged in       
-            // or account not in the "Staff" role         
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))     
-            {             
-                return RedirectToAction("Index", "Home");   
-            }           
-            ViewData["VocationList"] = GetVocation();     
-            return View();
-        }
-
         private List<SelectListItem> GetVocation()
         { 
-            List<SelectListItem> vocation = new List<SelectListItem>(); 
+            List<SelectListItem> vocation = new List<SelectListItem>();
+            vocation.Add(new SelectListItem { Value = "null", Text = "--Please Select--" });
             vocation.Add(new SelectListItem { Value = "Administrator", Text = "Administrator" }); 
             vocation.Add(new SelectListItem { Value = "Pilot", Text = "Pilot" }); 
             vocation.Add(new SelectListItem { Value = "Flight Attendance", Text = "Flight Attendance" });
@@ -121,19 +109,50 @@ namespace WEB2020Apr_P01_T4.Controllers
             return status;
         }
 
-        private List<SelectListItem> GetSchedule()
+        private List<SelectListItem> GetPilotId()
         {
-            List<FlightSchedule> fslist = scheduleContext.GetAllFlightSchedule();
-            List<SelectListItem> schedule = new List<SelectListItem>();
-
-            foreach (FlightSchedule fs in fslist)
+            List<FlightPersonnel> idList = staffContext.GetPilotID();
+            List<SelectListItem> pilot = new List<SelectListItem>();
+            foreach (FlightPersonnel fp in idList)
             {
-                schedule.Add(new SelectListItem { Value = fs.ScheduleID.ToString(), Text = fs.ScheduleID.ToString() });
+                pilot.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
             }
-            return schedule;
+            return pilot;
         }
 
-        
+        private List<SelectListItem> GetAttendantId()
+        {
+            List<FlightPersonnel> idList = staffContext.GetFAID();
+            List<SelectListItem> flightattendant = new List<SelectListItem>();
+            foreach (FlightPersonnel fp in idList)
+            {
+                flightattendant.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
+            }
+            return flightattendant;
+        }
+
+        private List<SelectListItem> GetGender()
+        {
+            List<SelectListItem> gender = new List<SelectListItem>();
+            gender.Add(new SelectListItem { Value = "null", Text = "--Please Select--" });
+            gender.Add(new SelectListItem { Value = "M", Text = "Male" });
+            gender.Add(new SelectListItem { Value = "F", Text = "Female" });
+            return gender;
+        }
+
+        // GET: FlightPersonnel/Create
+        public ActionResult Create()
+        {
+            // Stop accessing the action if not logged in       
+            // or account not in the "Staff" role         
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ViewData["VocationList"] = GetVocation();
+            ViewData["GenderList"] = GetGender();
+            return View();
+        }
 
         // POST: Staff/Create     
         [HttpPost]    
@@ -142,7 +161,8 @@ namespace WEB2020Apr_P01_T4.Controllers
         {       
             //Get country list for drop-down list       
             //in case of the need to return to Create.cshtml view        
-            ViewData["VocationList"] = GetVocation();       
+            ViewData["VocationList"] = GetVocation();
+            ViewData["GenderList"] = GetGender();
             if (ModelState.IsValid)        
             {                 
                 //Add staff record to database     
@@ -206,7 +226,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             //Get status list for drop-down list       
             //in case of the need to return to Edit.cshtml view        
-            ViewData["ScheduleList"] = GetStatus();
+            
             if (ModelState.IsValid)
             {
                 if (check == true)
@@ -217,6 +237,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 }
                 else
                 {
+                    ViewData["ScheduleList"] = GetStatus();
                     return View();
                 }
 
@@ -251,7 +272,8 @@ namespace WEB2020Apr_P01_T4.Controllers
                 //Return to listing page, not allowed to edit      
                 return RedirectToAction("Index");
             }
-            ViewData["ScheduleList"] = GetSchedule();
+            ViewData["pilotList"] = GetPilotId();
+            ViewData["attendantList"] = GetAttendantId();
             return View(flightPersonnel);
         }
 
@@ -263,7 +285,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             //Get status list for drop-down list       
             //in case of the need to return to Edit.cshtml view        
-            ViewData["ScheduleList"] = GetSchedule();
+           
             if (ModelState.IsValid)
             {
                 //Update staff record to database    
@@ -273,6 +295,8 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             else
             {
+                ViewData["pilotList"] = GetPilotId();
+                ViewData["attendantList"] = GetAttendantId();
                 //Input validation fails, return to the view   
                 //to display error message     
                 return View(flightPersonnel);
@@ -280,27 +304,5 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         }
 
-        // GET: FlightPersonnel/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: FlightPersonnel/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

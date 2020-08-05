@@ -17,19 +17,23 @@ namespace WEB2020Apr_P01_T4.Models
         public string StaffName { get; set; }
 
         [Display(Name = "Gender")]
-        public char Gender { get; set; }
+        public char? Gender { get; set; }
 
         [Display(Name = "Date Employed")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MMM-dd-yyyy}")]
-        public DateTime DateEmployed { get; set; }
+        [ValidateFlightPersonnel(ErrorMessage = "Sorry, the date cannot be later than today's date!")]
+        public DateTime? DateEmployed { get; set; }
 
         [Display(Name = "Vocation")]
-        public string Vocation { get; set; }
+        public string? Vocation { get; set; }
 
+        [Required(ErrorMessage = "Required")]
         [Display(Name = "Email Address")]
-        [StringLength(50, ErrorMessage = "Email cannot exceed 50 character!")]
+        [StringLength(50, ErrorMessage = "Max 50 characters")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}")]
         // Custom Validation Attribute for checking email address exists
+        [ValidatePersonnelEmailExist]
         public string EmailAddr { get; set; }
 
         [Display(Name = "Password")]

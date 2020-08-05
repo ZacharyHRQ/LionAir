@@ -25,37 +25,39 @@
         <h1>Lion Air is here to make your destination dreams reachable</h1>
 
 
-        <form>
+        <form method="post" action="~/Login/Destination">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col form-group">
-                        <label for="destination">Destination</label>
-                        <input type="text" class="form-control" id="destination" aria-describedby="destinationHelp">
+                        <label for="destination">From</label>
+                        <input type="text" class="form-control" id="from" aria-describedby="destinationHelp" required="required">
                     </div>
 
                     <div class="col form-group">
-                        <label for="fromDate">From</label>
-                        <input type="date" class="form-control" id="fromDate" aria-describedby="fromHelp">
+                        <label for="arrival">To</label>
+                        <input type="text" class="form-control" id="to" aria-describedby="arrivalHelp" required="required">
                     </div>
 
                     <div class="col form-group">
-                        <label for="toDate">To</label>
-                        <input type="date" class="form-control" id="toDate" aria-describedby="toHelp">
+                        <label for="fromDate">Date</label>
+                        <input type="date" class="form-control" id="fromDate" aria-describedby="fromHelp" required="required">
                     </div>
-
-                    <div class="col form-group">
-                        <label for="arrival">Arrival</label>
-                        <input type="text" class="form-control" id="arrival" aria-describedby="arrivalHelp">
-                    </div>
-
                 </div>
+
                 <div class="row">
                     <div class="col">
-                        <button type="button" class="btn btn-primary btn-lg btn-block">Book Now</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Book Now</button>
                     </div>
                 </div>
+                <br />
+                <span style="color:red;">@TempData["Message"]</span>
             </div>
         </form>
+        <script>
+            //Maximum Date is today
+            fromDateId = document.getElementById("fromDate")
+            fromDateId.min = new Date().toISOString().split("T")[0];
+        </script>
     </div>
     <div>
         <div class="red container-fluid">
@@ -104,8 +106,4 @@
         </div>
 
     </div>
-    </div>
-
-
-
 </body>

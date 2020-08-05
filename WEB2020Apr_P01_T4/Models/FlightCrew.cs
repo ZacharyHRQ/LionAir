@@ -15,6 +15,6 @@ namespace WEB2020Apr_P01_T4.Models
         public int StaffID { get; set; }
 
         [Display(Name = "Role")]
-        public string Role { get; set; }
+        public string? Role { get; set; }
     }
 }

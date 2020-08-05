@@ -29,8 +29,8 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 //Add customer record to database
                 register.CustomerID = CustomerContext.Add(register);
-                //Redirect user to Login/Index view
-                return RedirectToAction("Index", "Login");
+                TempData["Message"] = "Your Account have been successfully created!";
+                return RedirectToAction("Index");
             }
             else
             {
