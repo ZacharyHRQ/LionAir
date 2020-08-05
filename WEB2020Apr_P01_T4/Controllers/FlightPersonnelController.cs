@@ -35,7 +35,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             // Stop accessing the action if not logged in   
             // or account not in the "Staff" role
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))    
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Admin"))    
             {     
                 return RedirectToAction("Index", "Home");   
             }  
@@ -145,7 +145,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             // Stop accessing the action if not logged in       
             // or account not in the "Staff" role         
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Admin"))
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -183,7 +183,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             // Stop accessing the action if not logged in         
             // or account not in the "Staff" role      
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Admin"))
             {
                 return RedirectToAction("Index", "Home");
             }
