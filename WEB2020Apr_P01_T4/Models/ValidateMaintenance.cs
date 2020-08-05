@@ -32,9 +32,11 @@ namespace WEB2020Apr_P01_T4.Models
                 return new ValidationResult("This aircraft has flight schedules");
             }
             else return ValidationResult.Success;
-            
+          
         }
-
+        /// <summary>
+        // maintenance -> pop up 
+        /// </summary>
         public ValidateMaintenance()
         {
         }

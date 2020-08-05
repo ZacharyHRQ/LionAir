@@ -208,7 +208,7 @@ namespace WEB2020Apr_P01_T4.DAL
             return flightSchedules;
 
         }
-
+        
         public bool CheckFlight(int aircraftid , int scheduleid )
         {
             SqlCommand cmd = conn.CreateCommand();
@@ -302,7 +302,19 @@ namespace WEB2020Apr_P01_T4.DAL
 
         }
 
-        //ask 
+        public int UpdateMaintenanceDate(int aircraftid , DateTime dateOfMaintenance)
+        {
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"UPDATE Aircraft SET DateLastMaintenance = @maintenanceDate WHERE AircraftID = @aircraftid";
+            cmd.Parameters.AddWithValue("@aircraftid", aircraftid);
+            cmd.Parameters.AddWithValue("@maintenanceDate", dateOfMaintenance);
+            int rowAffected = 0;
+            conn.Open();
+            rowAffected += cmd.ExecuteNonQuery();
+            conn.Close();
+            return rowAffected;
+        }
+
         public int Delete(int staffId)
         {
             
@@ -347,15 +359,15 @@ namespace WEB2020Apr_P01_T4.DAL
 
 
         //update aircraft status 
-        public int Update(Aircraft aircraft)
+        public int UpdateStatus (int aircraftid , string status)
         {
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
             //Specify an UPDATE SQL statement
             cmd.CommandText = @"UPDATE Aircraft SET Status = @status WHERE AircraftID = @aircraftid";
             
-            cmd.Parameters.AddWithValue("@aircraftid", aircraft.AircraftID);
-            cmd.Parameters.AddWithValue("@status", aircraft.Status);
+            cmd.Parameters.AddWithValue("@aircraftid", aircraftid);
+            cmd.Parameters.AddWithValue("@status", status);
             
             
             conn.Open();

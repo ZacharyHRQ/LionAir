@@ -114,7 +114,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return View(aircraft);
             }
-
         }
 
         public IActionResult UpdateAircraft(int? id)
@@ -127,8 +126,15 @@ namespace WEB2020Apr_P01_T4.Controllers
             if (id != null)
             {
                 Aircraft aircraft = aircraftContext.FindAircraft(id.Value);
+                AircraftUpdateViewModel aircraftUpdateViewModel = new AircraftUpdateViewModel
+                {
+                    AircraftID = aircraft.AircraftID,
+                    AircraftModel = aircraft.AircraftModel,
+                    DateLastMaintenance = (DateTime)aircraft.DateLastMaintenance,
+                    Status = aircraft.Status
+                };
                 ViewData["status"] = aircraft.Status;
-                return View(aircraft);
+                return View(aircraftUpdateViewModel);
             }
             else
             {
@@ -137,57 +143,22 @@ namespace WEB2020Apr_P01_T4.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateAircraft(Aircraft aircraft)
+        public IActionResult UpdateAircraft(AircraftUpdateViewModel aircraftUpdateViewModel)
         {
             ViewData["statusList"] = GetStatus();
             if (ModelState.IsValid)
             {
-                aircraftContext.Update(aircraft);
+               
+                aircraftContext.UpdateStatus(aircraftUpdateViewModel.AircraftID,aircraftUpdateViewModel.Status);
                 return RedirectToAction("DisplayAircraft");
             }
             else
             {
-                return View(aircraft);
-            }
-
-
-        }
-
-        public IActionResult DeleteAircraft(int? id)
-        {
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            ViewData["statusList"] = GetStatus();
-            if (id != null)
-            {
-                Aircraft aircraft = aircraftContext.FindAircraft(id.Value);
-                ViewData["status"] = aircraft.Status;
-                return View(aircraft);
-            }
-            else
-            {
-                return RedirectToAction("DisplayAircraft");
+                return View(aircraftUpdateViewModel);
             }
         }
 
-        [HttpPost]
-        public IActionResult DeleteAircraft(Aircraft aircraft)
-        {
-            ViewData["statusList"] = GetStatus();
-            if (ModelState.IsValid)
-            {
-                aircraftContext.Update(aircraft);
-                return RedirectToAction("DisplayAircraft");
-            }
-            else
-            {
-                return View(aircraft);
-            }
-
-
-        }
+        
 
         // Aircraft Models 
         private List<SelectListItem> GetModel()
@@ -228,7 +199,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             return models;
         }
 
-
         private List<SelectListItem> GetFlights(int aircraftid)
         {
             List<SelectListItem> flights = new List<SelectListItem>();
@@ -251,7 +221,6 @@ namespace WEB2020Apr_P01_T4.Controllers
                     Text = schedule.FlightNumber
                 });
             }
-
             return flights;
         }
 

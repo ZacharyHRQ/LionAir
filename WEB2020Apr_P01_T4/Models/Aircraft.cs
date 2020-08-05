@@ -10,7 +10,7 @@ namespace WEB2020Apr_P01_T4.Models
         public int AircraftID { get; set; }
 
         [Required]
-        public String AircraftModel { get; set; }
+        public string AircraftModel { get; set; }
         [Required]
         public int NumEconomySeat { get; set; }
         [Required]
@@ -20,7 +20,7 @@ namespace WEB2020Apr_P01_T4.Models
         public DateTime? DateLastMaintenance { get; set; }
 
         [ValidateMaintenance]
-        public String Status { get; set; }
+        public string Status { get; set; }
 
         public Aircraft()
         {
