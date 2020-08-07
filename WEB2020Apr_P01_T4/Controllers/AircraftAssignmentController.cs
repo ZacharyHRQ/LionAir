@@ -21,7 +21,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         // GET: /<controller>/Display
         public IActionResult DisplayAircraft(int? id, bool maintain)
         {
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Admin"))
             {
                 return RedirectToAction("Index", "Login");
             }
@@ -47,7 +47,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         public IActionResult CreateAircraft()
         {
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Admin"))
             {
                 return RedirectToAction("Index", "Login");
             }
@@ -77,7 +77,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         // GET: /<controller>/Assign
         public IActionResult AssignAircraft(int? id)
         {
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Admin"))
             {
                 return RedirectToAction("Index", "Login");
             }
@@ -119,7 +119,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         public IActionResult UpdateAircraft(int? id)
         {
-            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
+            if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Admin"))
             {
                 return RedirectToAction("Index", "Login");
             }
