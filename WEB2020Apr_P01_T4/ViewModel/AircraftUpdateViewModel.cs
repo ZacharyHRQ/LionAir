@@ -8,7 +8,7 @@ namespace WEB2020Apr_P01_T4.ViewModel
 
         public string AircraftModel { get; set; }
 
-        public DateTime DateLastMaintenance { get; set; }
+        public DateTime? DateLastMaintenance { get; set; }
 
         public string Status { get; set; }
         

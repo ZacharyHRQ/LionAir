@@ -28,7 +28,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             AircraftScheduleViewModel aircraftScheduleView = new AircraftScheduleViewModel();
 
-            //find aircraft that has a maintainance date 30 days or more 
+            //if user request to see all aircrafts that has a maintainance date 30 days or more , else fetch all aircrafts
             aircraftScheduleView.aircraftList = maintain ? aircraftContext.GetMaintenanceAircraft() : aircraftContext.GetAllAircraft();
             ViewData["maintain"] = !maintain;
 
@@ -74,7 +74,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         }
 
-        // GET: /<controller>/Assign
+    
         public IActionResult AssignAircraft(int? id)
         {
             if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Staff"))
@@ -148,10 +148,14 @@ namespace WEB2020Apr_P01_T4.Controllers
             ViewData["statusList"] = GetStatus();
             if (ModelState.IsValid)
             {
-               
+                if (aircraftUpdateViewModel.DateLastMaintenance != null)
+                {
+                    aircraftContext.UpdateMaintenanceDate(aircraftUpdateViewModel.AircraftID, aircraftUpdateViewModel.DateLastMaintenance);
+                }
                 aircraftContext.UpdateStatus(aircraftUpdateViewModel.AircraftID,aircraftUpdateViewModel.Status);
                 return RedirectToAction("DisplayAircraft");
             }
+
             else
             {
                 return View(aircraftUpdateViewModel);

@@ -7,7 +7,7 @@
 <div class="container">
     <h1 style="color:#3066BE;">Update Aircraft Status</h1>
     <div class="aircraft-details mx-auto text-center">
-
+   
         <form asp-action="UpdateAircraft">
             <div class="form-group row">
                 <label asp-for="AircraftID"
@@ -46,7 +46,7 @@
                 </div>
 
             }
-
+          
             <div class="form-group row">
                 <label asp-for="Status">Set Status : </label>
                 <select class="form-control" asp-for="Status" asp-items="@ViewData["statusList"] as List<SelectListItem>">
@@ -61,8 +61,11 @@
 </div>
 
 <script type='text/javascript'>
-    var lastWeekDisplay = $.datepicker.formatDate('yy/mm/dd', getLastWeek());
-    datePickerId = document.getElementById("maintenanceDate")
+    const today = new Date();
+    const week = new Date(today);
+    week.setDate(week.getDate() - 7);
+    datePickerId = document.getElementById("maintenanceDate");
     datePickerId.max = new Date().toISOString().split("T")[0];
-    datePickerId.min = lastWeekDisplay;
+    datePickerId.min = week.toISOString().split("T")[0];
+    datePickerId.value = today.toISOString().split("T")[0];
 </script>

@@ -302,7 +302,7 @@ namespace WEB2020Apr_P01_T4.DAL
 
         }
 
-        public int UpdateMaintenanceDate(int aircraftid , DateTime dateOfMaintenance)
+        public int UpdateMaintenanceDate(int aircraftid , DateTime? dateOfMaintenance)
         {
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"UPDATE Aircraft SET DateLastMaintenance = @maintenanceDate WHERE AircraftID = @aircraftid";
@@ -385,7 +385,7 @@ namespace WEB2020Apr_P01_T4.DAL
 
             SqlCommand cmd = conn.CreateCommand();
 
-            cmd.CommandText = @"SELECT * FROM Aircraft WHERE DateLastMaintenance < DATEADD(DAY, -30, GETDATE());";
+            cmd.CommandText = @"SELECT * FROM Aircraft WHERE DateLastMaintenance < DATEADD(DAY, -30, GETDATE()) AND Status ='Operational';";
 
             conn.Open();
 
