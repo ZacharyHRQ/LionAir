@@ -92,9 +92,11 @@
                                     <td>Null</td>
                                 }
                             <td>
-                                @Html.ActionLink("", "AddSchedule", "FlightScheduling", new { @id = route.RouteID }, new { @class = "fa fa-plus-square" })
                                 @Html.ActionLink("", "Schedule", "FlightScheduling", new { @id = route.RouteID }, new { @class = "fa fa-eye" })
-
+                                @if (route.FlightDuration != 0)
+                                {
+                                    @Html.ActionLink("", "AddSchedule", "FlightScheduling", new { @id = route.RouteID }, new { @class = "fa fa-plus-square" })
+                                }
                             </td>
 
                             </tr>

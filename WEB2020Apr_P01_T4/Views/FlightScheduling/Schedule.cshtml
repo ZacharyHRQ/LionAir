@@ -57,7 +57,8 @@
 <p class="dash-info green"><span class="dash-header"> @Model.FlightScheduleList[0].RouteID</span> <br>RouteID</p> }
             else
             {
-<p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Total Tickets Brought</p>            }
+                <p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Total Tickets Brought</p>
+            }
 
         </div>
         <div class="col-sm">
@@ -81,9 +82,9 @@
             <th scope="col">Arrival Date and Time</th>
             <th scope="col">Economy Price</th>
             <th scope="col">Business Price</th>
+            <th scope="col">Aircraft</th>
             <th scope="col">Economy Seats</th>
             <th scope="col">Business Seat</th>
-            <th scope="col">Aircraft</th>
             <th scope="col">Status</th>
             <th scope="col"></th>
         </tr>
@@ -98,14 +99,14 @@
     <td>@schedule.AircraftID</td>
     @if (@schedule.DepartureDateTime.HasValue)
     {
-<td>@Html.DisplayFor(modelItem => schedule.DepartureDateTime)</td>
-                        <td>@Html.DisplayFor(modelItem => schedule.ArrivalDateTime)</td>
- }
-                    else
-                    {
-<td>Null</td>
-                        <td>Null</td>
-}
+        <td>@Html.DisplayFor(modelItem => schedule.DepartureDateTime)</td>
+        <td>@Html.DisplayFor(modelItem => schedule.ArrivalDateTime)</td>
+    }
+    else
+    {
+        <td>Null</td>
+        <td>Null</td>
+    }
 
     <td>@Html.DisplayFor(modelItem => schedule.EconomyClassPrice)</td>
     <td>@Html.DisplayFor(modelItem => schedule.BusinessClassPrice)</td>
@@ -118,7 +119,7 @@
         @Html.ActionLink("", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-eye" })
         @if (schedule.Status == "Opened")
         {
-         <button class="fa fa-edit Edit" data-schedule="@schedule.ScheduleID"></button>
+         <i class="fa fa-edit Edit" data-schedule="@schedule.ScheduleID"></i>
         }
         @Html.ActionLink("", "DeleteSchedule", "FlightScheduling", new { @id = schedule.ScheduleID, @routeID = ViewBag.Flitered ? schedule.RouteID : 0 }, new { @class = "fa fa-trash" })
         @Html.ActionLink("", "Assign", "FlightPersonnel", new { @id = schedule.ScheduleID }, new { @class = "fa fa-users" })
