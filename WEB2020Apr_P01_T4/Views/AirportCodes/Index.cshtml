@@ -3,40 +3,75 @@
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
- 
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/airportcodes.css">
+</head>
+
 <div class="container">
-  <div class="row">
-      <div class="col-8">
-          <h1>Airport Information</h1>
-          @using (@Html.BeginForm("Index", "AirportCodes", new { @code = Model.Iata }, FormMethod.Post))
-          {
-              <div class="form-group">
-                  @Html.LabelFor(m => m.Iata)
-                  @Html.TextBoxFor(m => m.Iata, new { @class = "form-control", placeholder = "Search..." })
-              </div>
+    <div class="row">
+        <div class="col-8">
 
-              <button type="submit" class="btn btn-primary">Submit</button>
-          }
+            <div id="myNav" class="overlay">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeSearch()">&times;</a>
+                <div class="overlay-content">
+                    <form>
+                        <input type="text" class="form-control" id="airport_input" placeholder="Enter Airport" size="12000">
+                    </form>
+                </div>
 
-          <p> <strong>Name: @Model.Name</strong>  </p>
-          <p> <strong>Phone: @Model.Phone</strong></p>
-          <p><strong>Website:</strong> <a href="@Model.Website" target="_blank"> @Model.Website  </a></p>
-          <p><strong>Google Maps:</strong> <a href="@Model.maps" target="_blank"> [Click here to enter google maps]  </a></p>
+            </div>
 
-          <br />
-          <h1>Location</h1>
-          <p> <strong>Latitude: @Model.Latitude</strong>  </p>
-          <p> <strong>longitude: @Model.Longitude</strong></p>
-          <p><strong>Location: @Model.Location</strong> <a href="#"></a></p>
-          <p> <strong>Street_number: @Model.StreetNumber</strong>  </p>
-          <p> <strong>City: @Model.City</strong>  </p>
-          <p> <strong>State: @Model.State</strong>  </p>
-          <p> <strong>Country: @Model.Country</strong>  </p>
-          <p> <strong>Postal_code: @Model.PostalCode</strong>  </p>
-      </div>
-    <div class="col-4">
-        <img src="~/images/ApiFlight.jpg"  class="img-rounded" alt="Cinque Terre">
+            <h1>Airport Information</h1>
+            <button type="button" class="btn btn-primary" id="search" onclick="openSearch()">
+                Search <img src="search-white-18dp.svg" />
+            </button>
+            @using (@Html.BeginForm("Index", "AirportCodes", new { @code = Model.Iata }, FormMethod.Post))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Iata)
+                    @Html.TextBoxFor(m => m.Iata, new { @class = "form-control", placeholder = "Search..." })
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>}
+
+            <p> <strong>Name: @Model.Name</strong>  </p>
+            <p> <strong>Phone: @Model.Phone</strong></p>
+            <p><strong>Website:</strong> <a href="@Model.Website" target="_blank"> @Model.Website  </a></p>
+            <p><strong>Google Maps:</strong> <a href="@Model.maps" target="_blank"> [Click here to enter google maps]  </a></p>
+
+            <br />
+            <h1>Location</h1>
+            <p> <strong>Latitude: @Model.Latitude</strong>  </p>
+            <p> <strong>longitude: @Model.Longitude</strong></p>
+            <p><strong>Location: @Model.Location</strong> <a href="#"></a></p>
+            <p> <strong>Street_number: @Model.StreetNumber</strong>  </p>
+            <p> <strong>City: @Model.City</strong>  </p>
+            <p> <strong>State: @Model.State</strong>  </p>
+            <p> <strong>Country: @Model.Country</strong>  </p>
+            <p> <strong>Postal_code: @Model.PostalCode</strong>  </p>
+        </div>
+        <div class="col-4">
+            <img src="~/images/ApiFlight.jpg" class="img-rounded" alt="Cinque Terre">
+        </div>
     </div>
-  </div>
-  </div>
 </div>
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+<script>function openSearch() {
+        document.getElementById("myNav").style.width = "100%";
+    }
+
+    function closeSearch() {
+        document.getElementById("myNav").style.width = "0%";
+    }</script>
