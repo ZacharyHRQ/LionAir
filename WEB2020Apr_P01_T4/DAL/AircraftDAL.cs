@@ -69,7 +69,7 @@ namespace WEB2020Apr_P01_T4.DAL
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
             //Specify the SELECT SQL statement
-            cmd.CommandText = @"SELECT * FROM FlightSchedule WHERE (AircraftID = @aircraftid AND DepartureDateTime >= (GETDATE()))";
+            cmd.CommandText = @"SELECT * FROM FlightSchedule WHERE AircraftID = @aircraftid";
             cmd.Parameters.AddWithValue("@aircraftid", aircraftID);
             //Open a database connection
             conn.Open();
@@ -118,16 +118,12 @@ namespace WEB2020Apr_P01_T4.DAL
             cmd.Parameters.AddWithValue("@model", aircraft.AircraftModel);
             cmd.Parameters.AddWithValue("@econSeat", aircraft.NumEconomySeat);
             cmd.Parameters.AddWithValue("@businessSeat", aircraft.NumBusinessSeat);
-            cmd.Parameters.AddWithValue("@DOM", DBNull.Value);
+            cmd.Parameters.AddWithValue("@DOM", aircraft.DateLastMaintenance);
             cmd.Parameters.AddWithValue("@status", "Operational");
             //A connection to database must be opened before any operations made.
             conn.Open();
-            //ExecuteScalar is used to retrieve the auto-generated
-            //StaffID after executing the INSERT SQL statement
             aircraft.AircraftID = (int)cmd.ExecuteScalar();
-            //A connection should be closed after operations.
             conn.Close();
-            //Return id when no error occurs.
             return aircraft.AircraftID;
         }
 
@@ -153,18 +149,15 @@ namespace WEB2020Apr_P01_T4.DAL
                 //Read the record from database
                 while (reader.Read())
                 {
-                    // Fill staff object with values from the data reader
                     aircraft.AircraftID = aircraftid;
-                    aircraft.AircraftModel = !reader.IsDBNull(1) ? reader.GetString(1) : null;
-                    // (char) 0 - ASCII Code 0 - null value
+                    aircraft.AircraftModel = reader.GetString(1);                 
                     aircraft.NumEconomySeat = !reader.IsDBNull(2) ?
                     reader.GetInt32(2) : 0;
                     aircraft.NumBusinessSeat = !reader.IsDBNull(3) ?
                     reader.GetInt32(3) : 0;
                     aircraft.DateLastMaintenance = !reader.IsDBNull(4) ?
                     reader.GetDateTime(4) : (DateTime?)null;
-                    aircraft.Status = !reader.IsDBNull(5) ?
-                    reader.GetString(5) : null;
+                    aircraft.Status = reader.GetString(5);
                 }
             }
             //Close data reader
@@ -194,7 +187,6 @@ namespace WEB2020Apr_P01_T4.DAL
                     ScheduleID = reader.GetInt32(0),
                     FlightNumber = reader.GetString(1),
                     RouteID = reader.GetInt32(2),
-                    //AircraftID = (int)(!reader.IsDBNull(7) ? reader.GetInt32(7) : 0),
                     DepartureDateTime = reader.GetDateTime(4),
                     ArrivalDateTime = reader.GetDateTime(5),
                     EconomyClassPrice = reader.GetDecimal(6),
@@ -271,11 +263,8 @@ namespace WEB2020Apr_P01_T4.DAL
             SqlCommand cmd = conn.CreateCommand();
             //Specify an UPDATE SQL statement
             cmd.CommandText = @"UPDATE FlightSchedule SET AircraftID=@aircraftid WHERE ScheduleID = @scheduleid";
-            //Define the parameters used in SQL statement, value for each parameter
-            //is retrieved from respective class's property.
             cmd.Parameters.AddWithValue("@aircraftid", aircraftid);
             cmd.Parameters.AddWithValue("@scheduleid", scheduleid);
-            //Open a database connection
             conn.Open();
             //ExecuteNonQuery is used for UPDATE and DELETE
             int count = cmd.ExecuteNonQuery();

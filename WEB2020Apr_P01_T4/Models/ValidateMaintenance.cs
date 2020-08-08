@@ -29,14 +29,12 @@ namespace WEB2020Apr_P01_T4.Models
             }
             else if (aircraftContext.CheckMaintenance(newaircraft.AircraftID))
             {
-                return new ValidationResult("This aircraft has flight schedules");
+                return new ValidationResult("This aircraft is currently assigned to incomming flights");
             }
             else return ValidationResult.Success;
           
         }
-        /// <summary>
-        // maintenance -> pop up 
-        /// </summary>
+      
         public ValidateMaintenance()
         {
         }

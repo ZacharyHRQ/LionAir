@@ -11,10 +11,10 @@ namespace WEB2020Apr_P01_T4.Models
 
         [Required]
         public string AircraftModel { get; set; }
-        [Required]
-        public int NumEconomySeat { get; set; }
-        [Required]
-        public int NumBusinessSeat { get; set; }
+       
+        public int? NumEconomySeat { get; set; }
+
+        public int? NumBusinessSeat { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? DateLastMaintenance { get; set; }

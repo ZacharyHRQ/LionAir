@@ -63,6 +63,8 @@ namespace WEB2020Apr_P01_T4.Controllers
             ViewData["statusList"] = GetStatus();
             if (ModelState.IsValid)
             {
+                aircraft.NumBusinessSeat = aircraft.NumBusinessSeat == null ? 0 : aircraft.NumBusinessSeat;
+                aircraft.NumEconomySeat = aircraft.NumEconomySeat == null ? 0 : aircraft.NumEconomySeat;
                 aircraft.AircraftID = aircraftContext.Add(aircraft);
 
                 return RedirectToAction("DisplayAircraft");
