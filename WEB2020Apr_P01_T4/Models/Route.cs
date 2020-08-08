@@ -14,22 +14,25 @@ namespace WEB2020Apr_P01_T4.Models
         [Required]
         [StringLength(50)]
         [Display(Name = "Departure City")]
-        [RegularExpression("[a-zA-Z]", ErrorMessage = "Only letters are allowed")]
+        [RegularExpression("[a-zA-Z\\s]{2,}", ErrorMessage = "Only letters are allowed")]
         public String DepartureCity { get; set; }
 
         [Required]
         [StringLength(50)]
         [Display(Name = "Departure Country")]
+        [RegularExpression("[a-zA-Z\\s]{2,}", ErrorMessage = "Only letters are allowed")]
         public String DepartureCountry { get; set; }
 
         [Required]
         [StringLength(50)]
         [Display(Name = "Arrival City")]
+        [RegularExpression("[a-zA-Z\\s]{2,}", ErrorMessage = "Only letters are allowed")]
         public String ArrivalCity { get; set; }
 
         [Required]
         [StringLength(50)]
         [Display(Name = "Arrival Country")]
+        [RegularExpression("[a-zA-Z\\s]{2,}", ErrorMessage = "Only letters are allowed")]
         public String ArrivalCountry { get; set; }
 
         [Display(Name = "Flight Duration")]
