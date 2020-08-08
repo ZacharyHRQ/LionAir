@@ -11,22 +11,26 @@ namespace WEB2020Apr_P01_T4.Models
 
         [Required]
         [StringLength(50)]
+        [DataType(DataType.Text)]
         [Display(Name = "Departure City")]
         public String DepartureCity { get; set; }
 
         [Required]
         [StringLength(50)]
         [Display(Name = "Departure Country")]
+        [DataType(DataType.Text)]
         public String DepartureCountry { get; set; }
 
         [Required]
         [StringLength(50)]
         [Display(Name = "Arrival City")]
+        [DataType(DataType.Text)]
         public String ArrivalCity { get; set; }
 
         [Required]
         [StringLength(50)]
         [Display(Name = "Arrival Country")]
+        [DataType(DataType.Text)]
         public String ArrivalCountry { get; set; }
 
         [Display(Name = "Flight Duration")]
