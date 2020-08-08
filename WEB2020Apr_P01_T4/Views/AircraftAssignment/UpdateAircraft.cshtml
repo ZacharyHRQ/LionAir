@@ -1,4 +1,4 @@
-﻿@model WEB2020Apr_P01_T4.ViewModel.AircraftUpdateViewModel
+﻿@model WEB2020Apr_P01_T4.Models.Aircraft
 
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
@@ -29,8 +29,8 @@
             {
 
                 <div class="form-group row">
-                    <label asp-for="DateLastMaintenance">Date of last maintenance</label>
-                    <input class="form-control selector" type="date" id="maintenanceDate" name="maintenanceDate" asp-for="DateLastMaintenance">
+                    <label asp-for="DateLastMaintenance.Value">Date of last maintenance</label>
+                    <input class="form-control selector" type="date" id="maintenanceDate" name="maintenanceDate" asp-for="DateLastMaintenance.Value">
                 </div>
 
             }
@@ -46,7 +46,7 @@
                 </div>
 
             }
-          
+
             <div class="form-group row">
                 <label asp-for="Status">Set Status : </label>
                 <select class="form-control" asp-for="Status" asp-items="@ViewData["statusList"] as List<SelectListItem>">
@@ -56,16 +56,25 @@
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
 
+            <!--hidden values-->
+
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="NumBusinessSeat" readonly type="hidden"
+                       class="form-control-plaintext" />
+            </div>
+            <div class="col-sm-9 col-md-5">
+                <input asp-for="NumEconomySeat" readonly type="hidden"
+                       class="form-control-plaintext" />
+            </div>
         </form>
     </div>
 </div>
 
 <script type='text/javascript'>
-    const today = new Date();
+    @*const today = new Date();
     const week = new Date(today);
     week.setDate(week.getDate() - 7);
     datePickerId = document.getElementById("maintenanceDate");
     datePickerId.max = new Date().toISOString().split("T")[0];
-    datePickerId.min = week.toISOString().split("T")[0];
-    datePickerId.value = today.toISOString().split("T")[0];
+    datePickerId.min = week.toISOString().split("T")[0];*@
 </script>

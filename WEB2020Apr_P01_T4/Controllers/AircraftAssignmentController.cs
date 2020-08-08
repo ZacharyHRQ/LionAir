@@ -51,7 +51,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            ViewData["statusList"] = GetStatus();
             ViewData["ModelList"] = GetModel();
             return View();
         }
@@ -60,11 +59,12 @@ namespace WEB2020Apr_P01_T4.Controllers
         public IActionResult CreateAircraft(Aircraft aircraft)
         {
             ViewData["ModelList"] = GetModel();
-            ViewData["statusList"] = GetStatus();
             if (ModelState.IsValid)
             {
+                //checking and setting null values 
                 aircraft.NumBusinessSeat = aircraft.NumBusinessSeat == null ? 0 : aircraft.NumBusinessSeat;
                 aircraft.NumEconomySeat = aircraft.NumEconomySeat == null ? 0 : aircraft.NumEconomySeat;
+
                 aircraft.AircraftID = aircraftContext.Add(aircraft);
 
                 return RedirectToAction("DisplayAircraft");
@@ -128,15 +128,8 @@ namespace WEB2020Apr_P01_T4.Controllers
             if (id != null)
             {
                 Aircraft aircraft = aircraftContext.FindAircraft(id.Value);
-                AircraftUpdateViewModel aircraftUpdateViewModel = new AircraftUpdateViewModel
-                {
-                    AircraftID = aircraft.AircraftID,
-                    AircraftModel = aircraft.AircraftModel,
-                    DateLastMaintenance = (DateTime)aircraft.DateLastMaintenance,
-                    Status = aircraft.Status
-                };
                 ViewData["status"] = aircraft.Status;
-                return View(aircraftUpdateViewModel);
+                return View(aircraft);
             }
             else
             {
@@ -145,22 +138,27 @@ namespace WEB2020Apr_P01_T4.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateAircraft(AircraftUpdateViewModel aircraftUpdateViewModel)
+        public IActionResult UpdateAircraft(Aircraft aircraft)
         {
+            // reference aircraft from database before changes are made
+            Aircraft refaircraft = aircraftContext.FindAircraft(aircraft.AircraftID);
+
             ViewData["statusList"] = GetStatus();
             if (ModelState.IsValid)
             {
-                if (aircraftUpdateViewModel.DateLastMaintenance != null)
+                if (aircraft.DateLastMaintenance.Value != null || refaircraft.DateLastMaintenance != aircraft.DateLastMaintenance.Value)
                 {
-                    aircraftContext.UpdateMaintenanceDate(aircraftUpdateViewModel.AircraftID, aircraftUpdateViewModel.DateLastMaintenance);
+                    aircraftContext.UpdateMaintenanceDate(aircraft.AircraftID, aircraft.DateLastMaintenance.Value);
                 }
-                aircraftContext.UpdateStatus(aircraftUpdateViewModel.AircraftID,aircraftUpdateViewModel.Status);
+                aircraftContext.UpdateStatus(aircraft.AircraftID, aircraft.Status);
                 return RedirectToAction("DisplayAircraft");
             }
-
             else
             {
-                return View(aircraftUpdateViewModel);
+                //this is to prevent 
+               
+                ViewData["status"] = refaircraft.Status;
+                return View(aircraft);
             }
         }
 

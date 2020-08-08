@@ -33,10 +33,6 @@
                         <label asp-for="DateLastMaintenance">Date of last maintenance</label>
                         <input class="form-control selector" type="date" id="maintenanceDate" name="maintenanceDate" asp-for="DateLastMaintenance">
                     </div>
-                    <div class="form-group row">
-                        <label asp-for="Status">Status</label>
-                        <select class="form-control" asp-for="Status" asp-items="@ViewData["statusList"] as List<SelectListItem>"></select>
-                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>

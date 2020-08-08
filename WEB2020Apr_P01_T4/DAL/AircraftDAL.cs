@@ -118,7 +118,15 @@ namespace WEB2020Apr_P01_T4.DAL
             cmd.Parameters.AddWithValue("@model", aircraft.AircraftModel);
             cmd.Parameters.AddWithValue("@econSeat", aircraft.NumEconomySeat);
             cmd.Parameters.AddWithValue("@businessSeat", aircraft.NumBusinessSeat);
-            cmd.Parameters.AddWithValue("@DOM", aircraft.DateLastMaintenance);
+            // to pass null value as Date of last mauintenance
+            if (aircraft.DateLastMaintenance != null)
+            {
+                cmd.Parameters.AddWithValue("@DOM", aircraft.DateLastMaintenance);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@DOM", DBNull.Value);
+            }
             cmd.Parameters.AddWithValue("@status", "Operational");
             //A connection to database must be opened before any operations made.
             conn.Open();
@@ -135,8 +143,7 @@ namespace WEB2020Apr_P01_T4.DAL
             SqlCommand cmd = conn.CreateCommand();
             //Specify the SELECT SQL statement that
             //retrieves all attributes of a staff record.
-            cmd.CommandText = @"SELECT * FROM Aircraft
- WHERE AircraftID = @selectedAircraftID";
+            cmd.CommandText = @"SELECT * FROM Aircraft WHERE AircraftID = @selectedAircraftID";
             //Define the parameter used in SQL statement, value for the
             //parameter is retrieved from the method parameter “staffId”.
             cmd.Parameters.AddWithValue("@selectedAircraftID", aircraftid);
@@ -291,7 +298,7 @@ namespace WEB2020Apr_P01_T4.DAL
 
         }
 
-        public int UpdateMaintenanceDate(int aircraftid , DateTime? dateOfMaintenance)
+        public int UpdateMaintenanceDate(int aircraftid , DateTime dateOfMaintenance)
         {
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"UPDATE Aircraft SET DateLastMaintenance = @maintenanceDate WHERE AircraftID = @aircraftid";
