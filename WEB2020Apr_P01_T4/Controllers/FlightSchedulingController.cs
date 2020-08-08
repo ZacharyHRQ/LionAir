@@ -74,8 +74,9 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             foreach (FlightSchedule flightSchedule  in scheduleViewModel.FlightScheduleList)
             {
-                flightSchedule.EconomySeats = flightScheduleDAL.CountEconomySeat(flightSchedule.ScheduleID);
-                flightSchedule.BusinessSeats = flightScheduleDAL.CountBusinessSeat(flightSchedule.ScheduleID);
+                List<int> values = flightScheduleDAL.GetSeats(flightSchedule.AircraftID);
+                flightSchedule.EconomySeats = values[0];
+                flightSchedule.BusinessSeats = values[1];
 
             }
 
@@ -101,12 +102,14 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             };
 
+            
             if (scheduleViewModel.FlightScheduleList != null)
             {
+                List<int> values = flightScheduleDAL.GetSeats(scheduleViewModel.FlightScheduleList[0].AircraftID);
                 foreach (FlightSchedule flightSchedule in scheduleViewModel.FlightScheduleList)
                 {
-                    flightSchedule.EconomySeats = flightScheduleDAL.CountEconomySeat(flightSchedule.ScheduleID);
-                    flightSchedule.BusinessSeats = flightScheduleDAL.CountBusinessSeat(flightSchedule.ScheduleID);
+                    flightSchedule.EconomySeats = values[0];
+                    flightSchedule.BusinessSeats = values[1];
 
                 }
             }

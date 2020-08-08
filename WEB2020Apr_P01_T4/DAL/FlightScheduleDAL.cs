@@ -362,6 +362,45 @@ namespace WEB2020Apr_P01_T4.DAL
             return 0;
         }
 
+        public List<int> GetSeats(int aircraftID)
+        {
+            List<int> values = new List<int>();
+            values.Add(0);
+            values.Add(0);
+
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand("SELECT NumEconomySeat, NumBusinessSeat FROM Aircraft WHERE AircraftID = " + aircraftID, con);
+
+
+                // Opening Connection  
+                con.Open();
+
+                //Excuting the query
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+                if (sqlDataReader.Read())
+                {
+                    values[0] = sqlDataReader.GetInt32(0);
+                    values[1] = sqlDataReader.GetInt32(1);
+
+                }
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+
+            return values;
+        }
 
     }
 }
