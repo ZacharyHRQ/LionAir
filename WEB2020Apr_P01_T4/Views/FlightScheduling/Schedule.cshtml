@@ -1,14 +1,12 @@
 ﻿@model WEB2020Apr_P01_T4.ViewModel.ScheduleViewModel
-@{
-    Layout = "/Views/Shared/_Layout.cshtml";
+@{ Layout = "/Views/Shared/_Layout.cshtml";
 
-    int count = Model.FlightScheduleList == null ? 0 : @Model.FlightScheduleList.Count();
+                int count = Model.FlightScheduleList == null ? 0 : @Model.FlightScheduleList.Count();
 
-    if (ViewBag.Flitered == null)
-    {
-        ViewBag.Flitered = false;
-    }
-}
+                if (ViewBag.Flitered == null)
+                {
+                    ViewBag.Flitered = false;
+                } }
 
 <head>
     <link rel="stylesheet" type="text/css" href="~/css/FlightSchedule.css">
@@ -21,10 +19,12 @@
             <p class="title">Flight Scheduling</p>
         </div>
         <div class="col col-sm">
-            
+
         </div>
     </div>
 </div>
+
+
 
 <div class="container-fluid dash">
 
@@ -37,8 +37,7 @@
             <select id="options" name="searchOption">
                 @for (int i = 0; i < Model.SearchOption.Count(); i++)
                 {
-                    <option value="@i">@Model.SearchOption[i]</option>
-                }
+    <option value="@i">@Model.SearchOption[i]</option>}
 
             </select>
 
@@ -55,12 +54,10 @@
         <div class="col col-sm">
             @if (ViewBag.Flitered)
             {
-                <p class="dash-info green"><span class="dash-header"> @Model.FlightScheduleList[0].RouteID</span> <br>RouteID</p>
-            }
+<p class="dash-info green"><span class="dash-header"> @Model.FlightScheduleList[0].RouteID</span> <br>RouteID</p> }
             else
             {
-                <p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Total Tickets Brought</p>
-            }
+<p class="dash-info green"><span class="dash-header"> @Model.TicketSize</span> <br>Total Tickets Brought</p>            }
 
         </div>
         <div class="col-sm">
@@ -71,68 +68,67 @@
         <div class="col col-sm">
             @if (count == 0)
             {
-                <p class="noValueError">No Records Found!</p>
-            }
+<p class="noValueError">No Records Found!</p> }
             else
             {
-                <table id="myTable" class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Flight Number</th>
-                            <th scope="col">RouteID</th>
-                            <th scope="col">AircraftID</th>
-                            <th scope="col">Departure Date and Time</th>
-                            <th scope="col">Arrival Date and Time</th>
-                            <th scope="col">Economy Price</th>
-                            <th scope="col">Business Price</th>
-                            <th scope="col">Economy Seats</th>
-                            <th scope="col">Business Seat</th>
-                            <th scope="col">Aircraft</th>
-                            <th scope="col">Status</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (int pos = 0; pos < Model.FlightScheduleList.Count; pos++)
-                        { 
-                        FlightSchedule schedule = Model.FlightScheduleList[pos]; 
-                        <tr>
-                            <td>@schedule.FlightNumber</td>
-                            <td>@schedule.RouteID</td>
-                            <td>@schedule.AircraftID</td>
-                            @if (@schedule.DepartureDateTime.HasValue)
-                            {
-                        <td>@Html.DisplayFor(modelItem => schedule.DepartureDateTime)</td>
-                                                <td>@Html.DisplayFor(modelItem => schedule.ArrivalDateTime)</td> }
-                                                                    else
-                                                                    {
-                                                <td>Null</td>
-                                                                        <td>Null</td>}
+<table id="myTable" class="table">
+    <thead>
+        <tr>
+            <th scope="col">Flight Number</th>
+            <th scope="col">RouteID</th>
+            <th scope="col">AircraftID</th>
+            <th scope="col">Departure Date and Time</th>
+            <th scope="col">Arrival Date and Time</th>
+            <th scope="col">Economy Price</th>
+            <th scope="col">Business Price</th>
+            <th scope="col">Economy Seats</th>
+            <th scope="col">Business Seat</th>
+            <th scope="col">Aircraft</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int pos = 0; pos < Model.FlightScheduleList.Count; pos++)
+        {
+            FlightSchedule schedule = Model.FlightScheduleList[pos];
+<tr>
+    <td>@schedule.FlightNumber</td>
+    <td>@schedule.RouteID</td>
+    <td>@schedule.AircraftID</td>
+    @if (@schedule.DepartureDateTime.HasValue)
+    {
+<td>@Html.DisplayFor(modelItem => schedule.DepartureDateTime)</td>
+                        <td>@Html.DisplayFor(modelItem => schedule.ArrivalDateTime)</td>
+ }
+                    else
+                    {
+<td>Null</td>
+                        <td>Null</td>
+}
 
-                            <td>@Html.DisplayFor(modelItem => schedule.EconomyClassPrice)</td>
-                            <td>@Html.DisplayFor(modelItem => schedule.BusinessClassPrice)</td>
-                            <td>@schedule.AircraftID</td>
-                            <td>@ViewBag.ecoOccupied[pos]</td>
-                            <td>@ViewBag.bOccupied[pos]</td>
-                            <td>@schedule.Status</td>
+    <td>@Html.DisplayFor(modelItem => schedule.EconomyClassPrice)</td>
+    <td>@Html.DisplayFor(modelItem => schedule.BusinessClassPrice)</td>
+    <td>@schedule.AircraftID</td>
+    <td>@ViewBag.ecoOccupied[pos]</td>
+    <td>@ViewBag.bOccupied[pos]</td>
+    <td>@schedule.Status</td>
 
-                            <td>
-                                @Html.ActionLink("", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-eye" })
-                                @if (schedule.Status == "Opened")
-                                {
-                        @Html.ActionLink("", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-edit" })}
-                                @Html.ActionLink("", "DeleteSchedule", "FlightScheduling", new { @id = schedule.ScheduleID, @routeID = ViewBag.Flitered ? schedule.RouteID : 0 }, new { @class = "fa fa-trash" })
-                                @Html.ActionLink("", "Assign", "FlightPersonnel", new { @id = schedule.ScheduleID }, new { @class = "fa fa-users" })
-                            </td>
-                        </tr>
-                            
-                        }
+    <td>
+        @Html.ActionLink("", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-eye" })
+        @if (schedule.Status == "Opened")
+        {
+         <button class="fa fa-edit Edit" data-schedule="@schedule.ScheduleID"></button>
+        }
+        @Html.ActionLink("", "DeleteSchedule", "FlightScheduling", new { @id = schedule.ScheduleID, @routeID = ViewBag.Flitered ? schedule.RouteID : 0 }, new { @class = "fa fa-trash" })
+        @Html.ActionLink("", "Assign", "FlightPersonnel", new { @id = schedule.ScheduleID }, new { @class = "fa fa-users" })
+
+    </td>
+</tr>}
 
 
-                    </tbody>
-                </table>
-
-            }
+    </tbody>
+</table>            }
 
         </div>
     </div>
@@ -140,8 +136,26 @@
 
 @if (Model.ShowEditPop)
 {
-    @await Html.PartialAsync("_ScheduleForm.cshtml", Model.FlightSchedule)
+@await Html.PartialAsync("_ScheduleForm.cshtml", Model.FlightSchedule)
 }
 
+<div id="searchResults" >
+
+</div>
 
 <script src="~/js/FlightSchedule.js" asp-append-version="true"></script>
+<script src="//code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+        
+        $('.Edit').click(function (e) {
+            var id = $(this).data('schedule');      
+            console.log(e.target.schedule);
+            $.get('@Url.Action("EditSchedule", "FlightScheduling")', { id: id }, function (response) {
+                $("#searchResults").html(response);
+            });
+            
+        })
+    })
+</script>

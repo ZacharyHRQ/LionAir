@@ -153,22 +153,14 @@ namespace WEB2020Apr_P01_T4.Controllers
 
 
         
-        public IActionResult EditSchedule(int id)
+ 
+        
+        public ActionResult EditSchedule(int id)
         {
-            ScheduleViewModel scheduleViewModel = new ScheduleViewModel
-            {
-                CreateRoute = new Route(),
-                SearchOption = FlightSchedule.GetTableList(),
-                FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(),
-                ShowEditPop = true,
-                TicketSize = bookingDAL.GetAllBooking().Count(),
-                
-
-            };
-
-            scheduleViewModel.FlightSchedule = scheduleViewModel.FlightScheduleList.First(s => s.ScheduleID == id);
-
-            return CheckAdmin(View("Schedule", scheduleViewModel));
+            //stuff you need and then return the partial view 
+            //I recommend using "" quotes for a partial view
+            FlightSchedule fs = flightScheduleDAL.GetFlightSchedule(id);
+            return PartialView("_ScheduleForm", fs);
         }
 
         public IActionResult AddSchedule(int id)
