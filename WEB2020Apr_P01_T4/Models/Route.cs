@@ -6,6 +6,8 @@ namespace WEB2020Apr_P01_T4.Models
 {
     public class Route
     {
+        private double _FlightDuration;
+
         [Required]
         public int RouteID { get; set; }
 
@@ -34,8 +36,11 @@ namespace WEB2020Apr_P01_T4.Models
         public String ArrivalCountry { get; set; }
 
         [Display(Name = "Flight Duration")]
-        [Range(0, 36, ErrorMessage = "Please enter a flight time from 0 to 36")]
-        public int? FlightDuration { get; set; }
+        [Range(0.0, 36.0, ErrorMessage = "Please enter a flight time from 0 to 36")]
+        public double? FlightDuration {
+            get { return _FlightDuration; }
+            set {_FlightDuration = (double) Math.Round((decimal)value, 0); }
+        }
 
         public static List<String> GetTableList()
         {
