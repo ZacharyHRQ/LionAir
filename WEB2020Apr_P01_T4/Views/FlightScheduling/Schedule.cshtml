@@ -50,7 +50,7 @@
         <div class="col col-sm">
             @if (ViewBag.Flitered)
             {
-                <p class="dash-info green"><span class="dash-header"> @Model.CreateRoute.RouteID</span> <br>RouteID</p>
+                <p class="dash-info green"><span class="dash-header"> @Model.FlightScheduleList[0].RouteID</span> <br>RouteID</p>
             }
             else
             {
@@ -66,7 +66,7 @@
         <div class="col col-sm">
             @if (count == 0)
             {
-                <p class="noValueError">No Records found!</p>
+                <p class="noValueError">No Records Found!</p>
             }
             else
             {
@@ -87,7 +87,7 @@
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody>s
+                    <tbody>
                         @foreach (var schedule in Model.FlightScheduleList)
                         {
                         <tr>
