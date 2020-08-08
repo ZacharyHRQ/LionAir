@@ -3,6 +3,11 @@
     Layout = "/Views/Shared/_Layout.cshtml";
 
     int count = Model.FlightScheduleList == null ? 0 : @Model.FlightScheduleList.Count();
+
+    if (ViewBag.Flitered == null)
+    {
+        ViewBag.Flitered = false;
+    }
 }
 
 <head>
