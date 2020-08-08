@@ -72,13 +72,19 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             };
 
-            foreach (FlightSchedule flightSchedule  in scheduleViewModel.FlightScheduleList)
+            List<String> ecoOccupied = new List<string>();
+            List<String> bOccupied = new List<string>();
+            foreach (FlightSchedule flightSchedule in scheduleViewModel.FlightScheduleList)
             {
-                List<int> values = flightScheduleDAL.GetSeats(flightSchedule.AircraftID);
-                flightSchedule.EconomySeats = values[0];
-                flightSchedule.BusinessSeats = values[1];
+                List<int> values = flightScheduleDAL.GetSeats(scheduleViewModel.FlightScheduleList[0].AircraftID);
+                ecoOccupied.Add(flightScheduleDAL.CountEconomySeat(flightSchedule.ScheduleID).ToString() + "/" + values[0]);
+                bOccupied.Add(flightScheduleDAL.CountBusinessSeat(flightSchedule.ScheduleID).ToString() + "/" + values[1]);
 
             }
+
+            ViewBag.ecoOccupied = ecoOccupied;
+            ViewBag.bOccupied = bOccupied;
+
 
             ViewBag.Flitered = false;
 
@@ -102,16 +108,21 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             };
 
-            
+            List<String> ecoOccupied = new List<string>();
+            List<String> bOccupied = new List<string>();
+
             if (scheduleViewModel.FlightScheduleList != null)
             {
                 List<int> values = flightScheduleDAL.GetSeats(scheduleViewModel.FlightScheduleList[0].AircraftID);
                 foreach (FlightSchedule flightSchedule in scheduleViewModel.FlightScheduleList)
                 {
-                    flightSchedule.EconomySeats = values[0];
-                    flightSchedule.BusinessSeats = values[1];
+                    ecoOccupied.Add(flightScheduleDAL.CountEconomySeat(flightSchedule.ScheduleID).ToString() + "/" + values[0]);
+                    bOccupied.Add(flightScheduleDAL.CountBusinessSeat(flightSchedule.ScheduleID).ToString()+"/"+values[1]);
 
                 }
+
+                ViewBag.ecoOccupied = ecoOccupied;
+                ViewBag.bOccupied = bOccupied;
             }
 
             ViewBag.Flitered = true;

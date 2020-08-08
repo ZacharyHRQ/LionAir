@@ -93,39 +93,36 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var schedule in Model.FlightScheduleList)
-                        {
+                        @for (int pos = 0; pos < Model.FlightScheduleList.Count; pos++)
+                        { 
+                        FlightSchedule schedule = Model.FlightScheduleList[pos]; 
                         <tr>
                             <td>@schedule.FlightNumber</td>
                             <td>@schedule.RouteID</td>
                             <td>@schedule.AircraftID</td>
                             @if (@schedule.DepartureDateTime.HasValue)
                             {
-                                <td>@Html.DisplayFor(modelItem => schedule.DepartureDateTime)</td>
-                                <td>@Html.DisplayFor(modelItem => schedule.ArrivalDateTime)</td>
-                            }
-                            else
-                            {
-                                <td>Null</td>
-                                <td>Null</td>
-
-                            }
+                        <td>@Html.DisplayFor(modelItem => schedule.DepartureDateTime)</td>
+                                                <td>@Html.DisplayFor(modelItem => schedule.ArrivalDateTime)</td> }
+                                                                    else
+                                                                    {
+                                                <td>Null</td>
+                                                                        <td>Null</td>}
 
                             <td>@Html.DisplayFor(modelItem => schedule.EconomyClassPrice)</td>
                             <td>@Html.DisplayFor(modelItem => schedule.BusinessClassPrice)</td>
-                            <td>@schedule.EconomySeats</td>
-                            <td>@schedule.BusinessSeats</td>
                             <td>@schedule.AircraftID</td>
+                            <td>@ViewBag.ecoOccupied[pos]</td>
+                            <td>@ViewBag.bOccupied[pos]</td>
                             <td>@schedule.Status</td>
 
                             <td>
                                 @Html.ActionLink("", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-eye" })
                                 @if (schedule.Status == "Opened")
                                 {
-                                    @Html.ActionLink("", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-edit" })
-                                }
+                        @Html.ActionLink("", "EditSchedule", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-edit" })}
                                 @Html.ActionLink("", "DeleteSchedule", "FlightScheduling", new { @id = schedule.ScheduleID, @routeID = ViewBag.Flitered ? schedule.RouteID : 0 }, new { @class = "fa fa-trash" })
-                                @Html.ActionLink("", "Assign", "FlightPersonnel", new { @id = schedule.ScheduleID}, new { @class = "fa fa-users" })
+                                @Html.ActionLink("", "Assign", "FlightPersonnel", new { @id = schedule.ScheduleID }, new { @class = "fa fa-users" })
                             </td>
                         </tr>
                             
