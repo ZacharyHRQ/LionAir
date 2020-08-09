@@ -179,6 +179,26 @@ namespace WEB2020Apr_P01_T4.Controllers
             return PartialView("_ScheduleForm", fs);
         }
 
+
+        public IActionResult EditRoute(int id)
+        {
+
+            RouteViewModel routeViewModel = new RouteViewModel
+            {
+                RouteList = routeDAL.getAllRoutes(),
+                SearchOption = Route.GetTableList(),
+                TicketSize = bookingDAL.GetAllBooking().Count(),
+                FlightSchedule = new FlightSchedule(),
+                CreateRoute = routeDAL.getAllRoutes().First(r => r.RouteID == id),
+                ShowRoutePop = true
+            };
+
+            routeViewModel.FlightSchedule.RouteID = id;
+
+            return CheckAdmin(View("Index", routeViewModel));
+
+        }
+
         public IActionResult AddSchedule(int id)
         {
 
