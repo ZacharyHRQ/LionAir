@@ -117,12 +117,11 @@
 
     <td>
         @Html.ActionLink("", "FlightBooking", "FlightScheduling", new { @id = schedule.ScheduleID }, new { @class = "fa fa-eye" })
+        @Html.ActionLink("", "Assign", "FlightPersonnel", new { @id = schedule.ScheduleID }, new { @class = "fa fa-users" })
         @if (schedule.Status == "Opened")
         {
-         <i class="fa fa-edit Edit" data-schedule="@schedule.ScheduleID"></i>
+            <i class="fa fa-edit Edit" data-schedule="@schedule.ScheduleID"></i>
         }
-        @Html.ActionLink("", "DeleteSchedule", "FlightScheduling", new { @id = schedule.ScheduleID, @routeID = ViewBag.Flitered ? schedule.RouteID : 0 }, new { @class = "fa fa-trash" })
-        @Html.ActionLink("", "Assign", "FlightPersonnel", new { @id = schedule.ScheduleID }, new { @class = "fa fa-users" })
 
     </td>
 </tr>}
