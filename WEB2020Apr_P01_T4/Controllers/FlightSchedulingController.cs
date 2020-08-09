@@ -113,6 +113,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(id),
                 ShowEditPop = false,
                 TicketSize = bookingDAL.GetAllBooking().Count(),
+                RouteID = id
 
             };
 

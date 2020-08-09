@@ -12,6 +12,7 @@ namespace WEB2020Apr_P01_T4.ViewModel
         public List<FlightSchedule> FlightScheduleList { get; set; }
         public bool ShowEditPop { get; set; }
         public int TicketSize { get; set; }
+        public int RouteID { get; set; }
 
 
 
