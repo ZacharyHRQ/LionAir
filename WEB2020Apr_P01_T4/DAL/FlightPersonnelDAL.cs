@@ -107,12 +107,9 @@ namespace WEB2020Apr_P01_T4.DAL
                     {
                         StaffID = reader.GetInt32(0),
                         StaffName = reader.GetString(1),
-                        Gender = reader.GetString(2)[0],
-                        DateEmployed = reader.GetDateTime(3),
-                        //Gender = !reader.IsDBNull(2) ? reader.GetChar(2) : (char?) null,             
-                        //DateEmployed = !reader.IsDBNull(3) ? reader.GetDateTime(3) : (DateTime?)null,
-                        Vocation = reader.GetString(4),
-                        //Vocation = !reader.IsDBNull(4) ? reader.GetString(4) : (string?)null,                  
+                        Gender = !reader.IsDBNull(2) ? reader.GetString(2) : null,
+                        DateEmployed = !reader.IsDBNull(3) ? reader.GetDateTime(3) : (DateTime?)null,
+                        Vocation = !reader.IsDBNull(4) ? reader.GetString(4) : (string)null,
                         EmailAddr = reader.GetString(5),
                         Status = reader.GetString(7),
                     }
@@ -133,26 +130,55 @@ namespace WEB2020Apr_P01_T4.DAL
 
             //Specify an INSERT SQL statement which will    
             //return the auto-generated StaffID after insertion   
-            cmd.CommandText = @"INSERT INTO Staff (StaffName, Gender, DateEmployed, Vocation, EmailAddr) 
-                                OUTPUT INSERTED.StaffID VALUES(@StaffName, @Gender, @DateEmployed, @Vocation, @EmailAddr)";  
+            cmd.CommandText = @"INSERT INTO Staff (StaffName, Gender, DateEmployed, Vocation, EmailAddr, Status) 
+                                OUTPUT INSERTED.StaffID VALUES(@StaffName, @Gender, @DateEmployed, @Vocation, @EmailAddr, @Status)";  
             
             //Define the parameters used in SQL statement, value for each parameter  
             //is retrieved from respective class's property.    
             cmd.Parameters.AddWithValue("@StaffName", flightPersonnel.StaffName);  
-            cmd.Parameters.AddWithValue("@Gender", flightPersonnel.Gender);  
-            cmd.Parameters.AddWithValue("@DateEmployed", flightPersonnel.DateEmployed); 
-            cmd.Parameters.AddWithValue("@Vocation", flightPersonnel.Vocation); 
-            cmd.Parameters.AddWithValue("@EmailAddr", flightPersonnel.EmailAddr);     
+
+            if (flightPersonnel.Gender == null)
+            {
+                cmd.Parameters.AddWithValue("@Gender", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Gender", flightPersonnel.Gender);
+            }
+            
+            if (flightPersonnel.DateEmployed == null || flightPersonnel.DateEmployed.ToString() == "")
+            {
+                cmd.Parameters.AddWithValue("@DateEmployed", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@DateEmployed", flightPersonnel.DateEmployed);
+            }
+            
+            if (flightPersonnel.Vocation == null || flightPersonnel.Vocation.ToString() == "")
+            {
+                cmd.Parameters.AddWithValue("@Vocation", DBNull.Value);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Vocation", flightPersonnel.Vocation);
+            }
+
+            cmd.Parameters.AddWithValue("@EmailAddr", flightPersonnel.EmailAddr);
+
+            cmd.Parameters.AddWithValue("@Status", flightPersonnel.Status);
             
             //A connection to database must be opened before any operations made. 
-            conn.Open();      
-            
+            conn.Open();
+
             //ExecuteScalar is used to retrieve the auto-generated 
-            //StaffID after executing the INSERT SQL statement   
-            flightPersonnel.StaffID = (int)cmd.ExecuteScalar();  
-            
+            ////StaffID after executing the INSERT SQL statement   
+
+            //flightPersonnel.StaffID = (int)cmd.ExecuteScalar();  
+            flightPersonnel.StaffID = (int)cmd.ExecuteNonQuery();
+
             //A connection should be closed after operations. 
-            conn.Close();     
+            conn.Close();
 
             //Return id when no error occurs.
             return flightPersonnel.StaffID;
@@ -221,12 +247,12 @@ namespace WEB2020Apr_P01_T4.DAL
                 {
                     flightPersonnel.StaffID = reader.GetInt32(0); 
                     flightPersonnel.StaffName = reader.GetString(1);
-                    flightPersonnel.Gender = reader.GetString(2)[0];
-                    flightPersonnel.DateEmployed = reader.GetDateTime(3);
-                    //Gender = !reader.IsDBNull(2) ? reader.GetChar(2) : (char?) null,             
-                    //DateEmployed = !reader.IsDBNull(3) ? reader.GetDateTime(3) : (DateTime?)null,
-                    flightPersonnel.Vocation = reader.GetString(4);
-                    //Vocation = !reader.IsDBNull(4) ? reader.GetString(4) : (string?)null,                  
+                    //flightPersonnel.Gender = reader.GetString(2)[0];
+                    //flightPersonnel.DateEmployed = reader.GetDateTime(3);
+                    flightPersonnel.Gender = !reader.IsDBNull(2) ? reader.GetString(2) : null;
+                    flightPersonnel.DateEmployed = !reader.IsDBNull(3) ? reader.GetDateTime(3) : (DateTime?)null;
+                    //flightPersonnel.Vocation = reader.GetString(4);
+                    flightPersonnel.Vocation = !reader.IsDBNull(4) ? reader.GetString(4) : (string)null;                  
                     flightPersonnel.EmailAddr = reader.GetString(5);
                     flightPersonnel.Status = reader.GetString(7);
                 }

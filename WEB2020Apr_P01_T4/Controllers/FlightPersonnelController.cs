@@ -15,7 +15,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         private FlightPersonnelDAL staffContext = new FlightPersonnelDAL();
         private FlightCrewDAL crewContext = new FlightCrewDAL();
         private FlightScheduleDAL scheduleContext = new FlightScheduleDAL();
-        
+
         // GET: FlightPersonnel
         public ActionResult Index()
         {
@@ -91,55 +91,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             return staffvmList;
         }
 
-        private List<SelectListItem> GetVocation()
-        { 
-            List<SelectListItem> vocation = new List<SelectListItem>();
-            vocation.Add(new SelectListItem { Value = "null", Text = "--Please Select--" });
-            vocation.Add(new SelectListItem { Value = "Administrator", Text = "Administrator" }); 
-            vocation.Add(new SelectListItem { Value = "Pilot", Text = "Pilot" }); 
-            vocation.Add(new SelectListItem { Value = "Flight Attendance", Text = "Flight Attendance" });
-            return vocation;
-        }
-
-        private List<SelectListItem> GetStatus()
-        {
-            List<SelectListItem> status = new List<SelectListItem>();
-            status.Add(new SelectListItem { Value = "Active", Text = "Active" });
-            status.Add(new SelectListItem { Value = "Inactive", Text = "Inactive" });
-            return status;
-        }
-
-        private List<SelectListItem> GetPilotId()
-        {
-            List<FlightPersonnel> idList = staffContext.GetPilotID();
-            List<SelectListItem> pilot = new List<SelectListItem>();
-            foreach (FlightPersonnel fp in idList)
-            {
-                pilot.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
-            }
-            return pilot;
-        }
-
-        private List<SelectListItem> GetAttendantId()
-        {
-            List<FlightPersonnel> idList = staffContext.GetFAID();
-            List<SelectListItem> flightattendant = new List<SelectListItem>();
-            foreach (FlightPersonnel fp in idList)
-            {
-                flightattendant.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
-            }
-            return flightattendant;
-        }
-
-        private List<SelectListItem> GetGender()
-        {
-            List<SelectListItem> gender = new List<SelectListItem>();
-            gender.Add(new SelectListItem { Value = "null", Text = "--Please Select--" });
-            gender.Add(new SelectListItem { Value = "M", Text = "Male" });
-            gender.Add(new SelectListItem { Value = "F", Text = "Female" });
-            return gender;
-        }
-
         // GET: FlightPersonnel/Create
         public ActionResult Create()
         {
@@ -151,31 +102,33 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             ViewData["VocationList"] = GetVocation();
             ViewData["GenderList"] = GetGender();
+            ViewData["StatusList"] = GetStatus();
             return View();
         }
 
         // POST: Staff/Create     
-        [HttpPost]    
-        [ValidateAntiForgeryToken]   
-        public ActionResult Create(FlightPersonnel flightPersonnel)   
-        {       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(FlightPersonnel flightPersonnel)
+        {
             //Get country list for drop-down list       
             //in case of the need to return to Create.cshtml view        
             ViewData["VocationList"] = GetVocation();
             ViewData["GenderList"] = GetGender();
-            if (ModelState.IsValid)        
-            {                 
+            ViewData["StatusList"] = GetStatus();
+            if (ModelState.IsValid)
+            {
                 //Add staff record to database     
-                flightPersonnel.StaffID = staffContext.Add(flightPersonnel);   
+                flightPersonnel.StaffID = staffContext.Add(flightPersonnel);
                 //Redirect user to Staff/Index view    
-                return RedirectToAction("Index");      
-            }         
-            else     
-            {           
+                return RedirectToAction("Index");
+            }
+            else
+            {
                 //Input validation fails, return to the Create view    
                 //to display error message          
-                return View(flightPersonnel);     
-            }    
+                return View(flightPersonnel);
+            }
         }
 
         // GET: FlightPersonnel/Edit/5
@@ -214,7 +167,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             bool check = false;
             if (fs != null)
             {
-                if(fs.DepartureDateTime > currentDate)
+                if (fs.DepartureDateTime > currentDate)
                 {
                     check = true;
                 }
@@ -226,7 +179,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             //Get status list for drop-down list       
             //in case of the need to return to Edit.cshtml view        
-            
+
             if (ModelState.IsValid)
             {
                 if (check == true)
@@ -246,9 +199,8 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 //Input validation fails, return to the view   
                 //to display error message     
-                return View(flightPersonnel);
+                return View();
             }
-
         }
 
         // GET: FlightPersonnel/Assign/5
@@ -286,7 +238,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             //Get status list for drop-down list       
             //in case of the need to return to Edit.cshtml view        
-           
+
             if (ModelState.IsValid)
             {
                 //Update staff record to database    
@@ -303,6 +255,58 @@ namespace WEB2020Apr_P01_T4.Controllers
                 return View(flightPersonnel);
             }
 
+        }
+
+        private List<SelectListItem> GetVocation()
+        { 
+            List<SelectListItem> vocation = new List<SelectListItem>();
+            vocation.Add(new SelectListItem { Value = null, Text = "--Please Select--" });
+            vocation.Add(new SelectListItem { Value = "Administrator", Text = "Administrator" }); 
+            vocation.Add(new SelectListItem { Value = "Pilot", Text = "Pilot" }); 
+            vocation.Add(new SelectListItem { Value = "Flight Attendance", Text = "Flight Attendance" });
+            vocation.Add(new SelectListItem { Value = null, Text = "" });
+            return vocation;
+        }
+
+        private List<SelectListItem> GetStatus()
+        {
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem { Value = null, Text = "--Please Select--" });
+            status.Add(new SelectListItem { Value = "Active", Text = "Active" });
+            status.Add(new SelectListItem { Value = "Inactive", Text = "Inactive" });
+            return status;
+        }
+
+        private List<SelectListItem> GetPilotId()
+        {
+            List<FlightPersonnel> idList = staffContext.GetPilotID();
+            List<SelectListItem> pilot = new List<SelectListItem>();
+            foreach (FlightPersonnel fp in idList)
+            {
+                pilot.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
+            }
+            return pilot;
+        }
+
+        private List<SelectListItem> GetAttendantId()
+        {
+            List<FlightPersonnel> idList = staffContext.GetFAID();
+            List<SelectListItem> flightattendant = new List<SelectListItem>();
+            foreach (FlightPersonnel fp in idList)
+            {
+                flightattendant.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
+            }
+            return flightattendant;
+        }
+
+        private List<SelectListItem> GetGender()
+        {
+            List<SelectListItem> gender = new List<SelectListItem>();
+            gender.Add(new SelectListItem { Value = null, Text = "--Please Select--" });
+            gender.Add(new SelectListItem { Value = "M", Text = "Male" });
+            gender.Add(new SelectListItem { Value = "F", Text = "Female" });
+            gender.Add(new SelectListItem { Value = null, Text = "" });
+            return gender;
         }
 
     }

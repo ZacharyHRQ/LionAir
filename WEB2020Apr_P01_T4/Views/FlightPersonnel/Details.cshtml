@@ -11,42 +11,50 @@
 
 @if (Model.ToList().Count > 0)
 {
-    <h2>View Details</h2>
-    <div class="table-responsive">
-        <table id="viewStaff" class="fl-table">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Staff ID</th>
-                    <th>Staff Name</th>
-                    <th>Schedule ID</th>
-                    <th>Role</th>
-                    <th>Aircraft ID</th>
-                    <th>Route ID</th>
-                    <th>Flight Number</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.StaffID.ToString()</td>
-                        <td>@item.StaffName</td>
-                        <td>@item.ScheduleID.ToString()</td>
-                        <td>@item.Role</td>
-                        <td>@item.AircraftID</td>
-                        <td>@item.RouteID</td>
-                        <td>@item.FlightNumber</td>
-                        <td>@item.Status</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <div class="container-xl">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h2>View Details</h2> <br />
+                        </div>
+                    </div>
+                </div>
+                <table id="viewStaff" class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Staff ID</th>
+                            <th>Staff Name</th>
+                            <th>Schedule ID</th>
+                            <th>Role</th>
+                            <th>Aircraft ID</th>
+                            <th>Route ID</th>
+                            <th>Flight Number</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.StaffID.ToString()</td>
+                                <td>@item.StaffName</td>
+                                <td>@item.ScheduleID.ToString()</td>
+                                <td>@item.Role</td>
+                                <td>@item.AircraftID</td>
+                                <td>@item.RouteID</td>
+                                <td>@item.FlightNumber</td>
+                                <td>@item.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 }
 else
 {
     <span style="color:red">No record found!</span>
 }
-
-
