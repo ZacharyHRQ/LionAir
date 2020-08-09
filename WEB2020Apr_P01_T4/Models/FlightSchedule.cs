@@ -7,7 +7,7 @@ namespace WEB2020Apr_P01_T4.Models
     public class FlightSchedule
     {
 
-        private List<String> StatusOption = new List<String>() { "Opened", "Full", "Delayed", "Cancelled" };
+        private List<String> StatusOption = new List<String>() { "Full", "Delayed", "Cancelled" };
 
         [Required]
         public int ScheduleID { get; set; }
