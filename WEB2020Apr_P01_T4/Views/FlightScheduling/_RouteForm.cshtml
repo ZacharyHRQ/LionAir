@@ -26,10 +26,10 @@
 
 
 
-        @if ((ViewData["routeExist"] != null) && !(bool)ViewData["routeExist"])
+        @if ((TempData["errorMessage"] != null))
         { 
 
-          <span class="field-validation-error">The route already exist</span>
+          <span class="field-validation-error">@TempData["errorMessage"]</span>
         }
 
         @using (@Html.BeginForm(action, "FlightScheduling"))

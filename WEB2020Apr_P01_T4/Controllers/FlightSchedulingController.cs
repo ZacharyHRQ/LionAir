@@ -232,16 +232,23 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
 
                 //Insert the data
-                ViewData["routeExist"] = routeDAL.InsertData(route);
-                isValid = (bool)ViewData["routeExist"];
-                
+                isValid = routeDAL.InsertData(route);
+                if (!isValid)
+                {
+                    TempData["errorMessage"] = "The route already exist";
+                }
+                else if ((route.ArrivalCountry == route.DepartureCountry) && (route.ArrivalCity == route.DepartureCity))
+                {
+                    isValid = false;
+                    TempData["errorMessage"] = "The departure city and arrival city";
+                }
 
             }
             else
             {
                 isValid = false;
-                ViewData["routeExist"] = true;
             }
+
 
 
             if (isValid)
