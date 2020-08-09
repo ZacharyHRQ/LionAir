@@ -24,15 +24,23 @@
         @if (Model.DepartureDateTime != null)
         {
             @Html.ActionLink("+", "Schedule", "FlightScheduling", new { }, new { @class = "close close-Flight" })
-            isEdit = true;
+            
         }
         else
         {
             @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class = "close close-Flight" })
         }
 
+        @if (disable)
+        {
+            <h1>Edit Flight Schedule</h1>
+        }
+        else
+        {
+            <h1>Create New Flight Schedule</h1>
+        }
 
-        <h1>Create New Flight Schedule</h1>
+
 
         @using (@Html.BeginForm(action, "FlightScheduling", new { @id = Model.RouteID, @isEdit = isEdit }, FormMethod.Post))
         {
@@ -66,7 +74,7 @@
                 @Html.ValidationMessageFor(m => m.RouteID)
             </div>
 
-            if (isEdit)
+            if (disable)
             {
                 <div class="form-group">
                     @Html.LabelFor(m => m.Status)
