@@ -2,6 +2,7 @@
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Create Aircraft";
+    var type = "date";
 }
     <div class="container">
         <div class="row">
@@ -14,33 +15,35 @@
                         <label asp-for="AircraftModel">Model Name</label>
                         <select class="form-control" asp-for="AircraftModel" asp-items="@ViewData["ModelList"] as List<SelectListItem>">
                         </select>
-                        <span asp-validation-for="AircraftModel"
-                              class="text-danger"></span>
                     </div>
                     <div class="form-group row">
                         <label asp-for="NumBusinessSeat">Number of business seats  </label>
-                        <input class="form-control" asp-for="NumBusinessSeat">
-                        <span asp-validation-for="NumBusinessSeat"
-                              class="text-danger"></span>
+                        <input class="form-control" asp-for="NumBusinessSeat" />
                     </div>
                     <div class="form-group row">
                         <label asp-for="NumEconomySeat">Number of economy seats </label>
                         <input class="form-control" asp-for="NumEconomySeat">
-                        <span asp-validation-for="NumEconomySeat"
-                              class="text-danger"></span>
+
                     </div>
-                    <div class="form-group row" >
+                    <div class="form-group row">
                         <label asp-for="DateLastMaintenance">Date of last maintenance</label>
-                        <input class="form-control selector" type="date" id="maintenanceDate" name="maintenanceDate" asp-for="DateLastMaintenance">
+
+                        @Html.EditorFor(m => m.DateLastMaintenance, new { htmlAttributes = new { @class = "form-control maintenanceDate" , @type = type } })
+                        @*<input class="form-control selector" type="datetime-local" id="maintenanceDate" name="maintenanceDate" asp-for="DateLastMaintenance" value="@DateTime.Now">*@
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
+
+                    <!--hidden value , default is operational for status-->
+                    <div class="form-group row">
+                        <input class="form-control" asp-for="Status" value="Operational" type="hidden">
+                    </div>
+
                 </form>
             </div>
         </div>
     </div>
 <script>
     //ensures that date picker max date is today
-
-    datePickerId = document.getElementById("maintenanceDate")
+    datePickerId = document.getElementById("DateLastMaintenance")
     datePickerId.max = new Date().toISOString().split("T")[0];
 </script>

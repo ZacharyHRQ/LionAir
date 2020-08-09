@@ -16,7 +16,6 @@ namespace WEB2020Apr_P01_T4.Models
 
         public int? NumBusinessSeat { get; set; }
 
-        [DataType(DataType.Date)]
         public DateTime? DateLastMaintenance { get; set; }
 
         [ValidateMaintenance]

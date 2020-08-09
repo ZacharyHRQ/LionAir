@@ -64,9 +64,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 //checking and setting null values 
                 aircraft.NumBusinessSeat = aircraft.NumBusinessSeat == null ? 0 : aircraft.NumBusinessSeat;
                 aircraft.NumEconomySeat = aircraft.NumEconomySeat == null ? 0 : aircraft.NumEconomySeat;
-
                 aircraft.AircraftID = aircraftContext.Add(aircraft);
-
                 return RedirectToAction("DisplayAircraft");
             }
             else
@@ -156,13 +154,10 @@ namespace WEB2020Apr_P01_T4.Controllers
             else
             {
                 //this is to prevent 
-               
                 ViewData["status"] = refaircraft.Status;
                 return View(aircraft);
             }
         }
-
-        
 
         // Aircraft Models 
         private List<SelectListItem> GetModel()

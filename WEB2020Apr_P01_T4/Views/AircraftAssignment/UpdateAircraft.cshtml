@@ -3,6 +3,7 @@
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Update Aircraft";
+    var type = "date";
 }
 <div class="container">
     <h1 style="color:#3066BE;">Update Aircraft Status</h1>
@@ -30,7 +31,7 @@
 
                 <div class="form-group row">
                     <label asp-for="DateLastMaintenance.Value">Date of last maintenance</label>
-                    <input class="form-control selector" type="date" id="maintenanceDate" name="maintenanceDate" asp-for="DateLastMaintenance.Value">
+                    @Html.EditorFor(m => m.DateLastMaintenance, new { htmlAttributes = new { @class = "form-control maintenanceDate", @type = type } })
                 </div>
 
             }
@@ -71,10 +72,10 @@
 </div>
 
 <script type='text/javascript'>
-    @*const today = new Date();
+    const today = new Date();
     const week = new Date(today);
     week.setDate(week.getDate() - 7);
-    datePickerId = document.getElementById("maintenanceDate");
+    datePickerId = document.getElementById("DateLastMaintenance");
     datePickerId.max = new Date().toISOString().split("T")[0];
-    datePickerId.min = week.toISOString().split("T")[0];*@
+    datePickerId.min = week.toISOString().split("T")[0];
 </script>
