@@ -73,7 +73,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
 
         }
-
     
         public IActionResult AssignAircraft(int? id)
         {
@@ -203,7 +202,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             List<SelectListItem> flights = new List<SelectListItem>();
             List<FlightSchedule> flightSchedules = new List<FlightSchedule>();
 
-            //GetUnconflictedFlightSchedules
+            //Get all UnconflictedFlightSchedules
             foreach (FlightSchedule schedule in aircraftContext.GetAvailableFlights())
             {
                 if (!aircraftContext.CheckFlight(aircraftid , schedule.ScheduleID))

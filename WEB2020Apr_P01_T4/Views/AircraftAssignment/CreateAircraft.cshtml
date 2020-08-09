@@ -19,11 +19,12 @@
                     <div class="form-group row">
                         <label asp-for="NumBusinessSeat">Number of business seats  </label>
                         <input class="form-control" asp-for="NumBusinessSeat" />
+                        <span asp-validation-for="NumBusinessSeat" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
                         <label asp-for="NumEconomySeat">Number of economy seats </label>
                         <input class="form-control" asp-for="NumEconomySeat">
-
+                        <span asp-validation-for="NumEconomySeat" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
                         <label asp-for="DateLastMaintenance">Date of last maintenance</label>
@@ -43,7 +44,7 @@
         </div>
     </div>
 <script>
-    //ensures that date picker max date is today
+    @*ensures that date picker max date is today*@
     datePickerId = document.getElementById("DateLastMaintenance")
     datePickerId.max = new Date().toISOString().split("T")[0];
 </script>

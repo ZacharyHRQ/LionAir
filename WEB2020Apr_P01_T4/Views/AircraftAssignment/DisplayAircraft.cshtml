@@ -87,7 +87,7 @@
                 <table id="viewAircraft" class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Flight Number</th>
+                            <th scope="col">Flight Number(ScheduleID)</th>
                             <th scope="col">RouteID</th>
                             <th scope="col">Arrival DateTimee</th>
                             <th scope="col">Departure Date</th>
@@ -98,7 +98,7 @@
                         @foreach (var item in Model.scheduleList)
                         {
                             <tr>
-                                <td>@item.FlightNumber</td>
+                                <td>@item.FlightNumber (@item.ScheduleID)</td>
                                 <td>@item.RouteID</td>
                                 <td>@item.ArrivalDateTime</td>
                                 <td>@item.DepartureDateTime</td>
