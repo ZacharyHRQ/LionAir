@@ -1,10 +1,29 @@
 ﻿@model WEB2020Apr_P01_T4.Models.Route
+
+@{
+
+    bool disable = Model.RouteID != 0;
+    bool isEdit = disable;
+
+    var cssClass = "";
+    var type = "datetime-local";
+    String action = "SaveRoute";
+    if (disable)
+    {
+        cssClass = " disabled";
+        action = "UpdateRoute";
+        type = "";
+
+    }
+}
+
 <div class="bg-modal">
     <div class="modal-contents">
 
-        @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class = "close" })
+        @Html.ActionLink("+", "Index", "FlightScheduling", new {  }, new { @class = "close" })
 
         <h1>Create Flight Route</h1>
+
 
 
         @if ((ViewData["routeExist"] != null) && !(bool)ViewData["routeExist"])
@@ -13,29 +32,35 @@
           <span class="field-validation-error">The route already exist</span>
         }
 
-        @using (@Html.BeginForm("SaveRoute", "FlightScheduling"))
-    {
+        @using (@Html.BeginForm(action, "FlightScheduling"))
+        {
+
+          @if (isEdit)
+        {
+            @Html.HiddenFor(m => m.RouteID)
+        }
+
         <div class="form-group">
             @Html.LabelFor(m => m.DepartureCountry)
-            @Html.TextBoxFor(m => m.DepartureCountry, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.DepartureCountry, new { @class = "form-control" + cssClass })
             @Html.ValidationMessageFor(m => m.DepartureCountry)
         </div>
 
         <div class="form-group">
             @Html.LabelFor(m => m.DepartureCity)
-            @Html.TextBoxFor(m => m.DepartureCity, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.DepartureCity, new { @class = "form-control" + cssClass })
             @Html.ValidationMessageFor(m => m.DepartureCity)
         </div>
 
         <div class="form-group">
             @Html.LabelFor(m => m.ArrivalCountry)
-            @Html.TextBoxFor(m => m.ArrivalCountry, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.ArrivalCountry, new { @class = "form-control" + cssClass })
             @Html.ValidationMessageFor(m => m.ArrivalCountry)
         </div>
 
         <div class="form-group">
             @Html.LabelFor(m => m.ArrivalCity)
-            @Html.TextBoxFor(m => m.ArrivalCity, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.ArrivalCity, new { @class = "form-control" + cssClass })
             @Html.ValidationMessageFor(m => m.ArrivalCity)
         </div>
 

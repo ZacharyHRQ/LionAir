@@ -270,6 +270,40 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         }
 
+        [HttpPost]
+        public IActionResult UpdateRoute(Route route)
+        {
+
+
+            if (ModelState.IsValid)
+            {
+                if ((route.FlightDuration != null) && route.FlightDuration != 0) {
+                    routeDAL.UpdateData(route.RouteID, (double)route.FlightDuration);
+                }
+                return RedirectToAction("Index");
+
+            }
+            else
+            {
+                RouteViewModel routeViewModel = new RouteViewModel
+                {
+                    RouteList = routeDAL.getAllRoutes(),
+                    SearchOption = Route.GetTableList(),
+                    TicketSize = bookingDAL.GetAllBooking().Count(),
+                    FlightSchedule = new FlightSchedule(),
+                    CreateRoute = route,
+                    ShowAddPop = false,
+                    ShowRoutePop = true
+                };
+
+
+
+                return View("Index", routeViewModel);
+            }
+
+
+        }
+
 
 
         [HttpPost]
