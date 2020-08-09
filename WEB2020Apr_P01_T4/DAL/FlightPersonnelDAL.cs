@@ -32,7 +32,7 @@ namespace WEB2020Apr_P01_T4.DAL
             //Create a SqlCommand object from connection object      
             SqlCommand cmd = conn.CreateCommand();
             //Specify the SELECT SQL statement          
-            cmd.CommandText = @"SELECT * FROM Staff WHERE Vocation = 'Pilot'";
+            cmd.CommandText = @"SELECT * FROM Staff WHERE Vocation = 'Pilot' AND Status = 'Active'";
             //Open a database connection         
             conn.Open();
             //Execute the SELECT SQL through a DataReader       
@@ -62,7 +62,7 @@ namespace WEB2020Apr_P01_T4.DAL
             //Create a SqlCommand object from connection object      
             SqlCommand cmd = conn.CreateCommand();
             //Specify the SELECT SQL statement          
-            cmd.CommandText = @"SELECT * FROM Staff WHERE Vocation = 'Flight Attendant'";
+            cmd.CommandText = @"SELECT * FROM Staff WHERE Vocation = 'Flight Attendant' AND Status = 'Active'";
             //Open a database connection         
             conn.Open();
             //Execute the SELECT SQL through a DataReader       
@@ -349,6 +349,7 @@ namespace WEB2020Apr_P01_T4.DAL
                 conn.Close();
             }
         }
+
         public int Update(FlightPersonnel flightPersonnel)
         {
             //Create a SqlCommand object from connection object  
@@ -373,6 +374,32 @@ namespace WEB2020Apr_P01_T4.DAL
 
             return count;
 
+        }
+
+        public int Assign(FlightCrew flightCrew)
+        {
+            SqlCommand cmd = conn.CreateCommand();
+
+            cmd.CommandText = @"INSERT INTO FlightCrew (ScheduleID, StaffID, Role) VALUES (@ScheduleID, @StaffID, @Role)";
+
+            cmd.Parameters.AddWithValue("@ScheduleID", flightCrew.ScheduleID);
+            cmd.Parameters.AddWithValue("@StaffID", flightCrew.StaffID);
+            cmd.Parameters.AddWithValue("@Role", flightCrew.Role);
+
+
+            //A connection to database must be opened before any operations made. 
+            conn.Open();
+
+            //ExecuteScalar is used to retrieve the auto-generated 
+            ////StaffID after executing the INSERT SQL statement   
+ 
+            flightCrew.StaffID = (int)cmd.ExecuteNonQuery();
+
+            //A connection should be closed after operations. 
+            conn.Close();
+
+            //Return id when no error occurs.
+            return flightCrew.StaffID;
         }
 
         public List<FlightPersonnel> GetAllFlightPersonal(int id)

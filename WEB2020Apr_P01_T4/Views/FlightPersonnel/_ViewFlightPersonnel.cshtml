@@ -43,9 +43,32 @@
                         <tr>
                             <td>@item.StaffID.ToString()</td>
                             <td>@item.StaffName</td>
-                            <td>@item.Gender</td>
-                            <td>@item.DateEmployed</td>
-                            <td>@item.Vocation</td>
+                            @if(item.Gender == null)
+                            {
+                                <td>Null</td>
+                            }
+                            else
+                            {
+                                <td>@item.Gender</td>
+                            }
+                            @if (item.DateEmployed.HasValue)
+                            {
+                                <td>@item.DateEmployed</td>
+                            }
+                            else
+                            {
+                                <td>Null</td>
+                            }
+
+                            @if(item.Vocation == null)
+                            {
+                                <td>Null</td>
+                            }
+                            else
+                            {
+                                <td>@item.Vocation</td>
+                            }
+                         
                             <td>@item.EmailAddr</td>
                             <td>@item.Status</td>
                             <td>

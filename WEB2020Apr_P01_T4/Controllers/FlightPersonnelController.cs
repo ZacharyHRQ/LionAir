@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using WEB2020Apr_P01_T4.DAL;
 using WEB2020Apr_P01_T4.Models;
+using WEB2020Apr_P01_T4.ViewModel;
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using System.Diagnostics;
 
 namespace WEB2020Apr_P01_T4.Controllers
 {
@@ -204,45 +207,47 @@ namespace WEB2020Apr_P01_T4.Controllers
         }
 
         // GET: FlightPersonnel/Assign/5
-        [Route("FlightPersonnel/Assign/{id}")]
-        public ActionResult Assign(int? id)
+        public ActionResult Assign(int id)
         {
+            TempData["scheduleid"] = id;
             // Stop accessing the action if not logged in         
             // or account not in the "Staff" role      
             if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Admin"))
             {
                 return RedirectToAction("Index", "Home");
-            }
-            if (id == null)
-            {
-                //Query string parameter not provided          
-                //Return to listing page, not allowed to edit     
-                return RedirectToAction("Index");
-            }
-            FlightPersonnel flightPersonnel = staffContext.GetDetails(id.Value);
-            if (flightPersonnel == null)
-            {
-                //Return to listing page, not allowed to edit      
-                return RedirectToAction("Index");
-            }
+            }        
             ViewData["pilotList"] = GetPilotId();
             ViewData["attendantList"] = GetAttendantId();
-            return View(flightPersonnel);
+            return View();
         }
 
 
         // POST: FlightPersonnel/Assign/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Assign(FlightPersonnel flightPersonnel)
+        public ActionResult Assign(FlightCrewID crewid)
         {
-            //Get status list for drop-down list       
-            //in case of the need to return to Edit.cshtml view        
-
             if (ModelState.IsValid)
             {
-                //Update staff record to database    
-                staffContext.Update(flightPersonnel);
+                List<int> idlist = crewid.fcID();
+                List<String> Roles = new List<String>() { "Flight Captain", "Second Pilot", "Flight Crew Leader", "Flight Attendant" };
+                for (int i = 0; i < crewid.fcID().Count(); i++)
+                {
+                    FlightCrew fc = new FlightCrew();
+                    int index = i;
+                    if (i > 2)
+                    {
+                        index = 3;
+                    }
+                    fc.Role = Roles[index];
+                    fc.StaffID = idlist[i];
+                    fc.ScheduleID = (int)TempData.Peek("scheduleid");
+                    staffContext.Assign(fc);
+                    Debug.WriteLine(Roles[index]);
+                    Debug.WriteLine(idlist[i]);
+                    Debug.WriteLine(TempData["scheduleid"]);
+                    Debug.WriteLine(fc.StaffID);
+                }
                 return RedirectToAction("Index");
 
             }
@@ -252,9 +257,29 @@ namespace WEB2020Apr_P01_T4.Controllers
                 ViewData["attendantList"] = GetAttendantId();
                 //Input validation fails, return to the view   
                 //to display error message     
-                return View(flightPersonnel);
+                return View();
             }
 
+
+
+            //Get status list for drop-down list       
+            //in case of the need to return to Edit.cshtml view        
+
+            //if (ModelState.IsValid)
+            //{
+            //    //Update staff record to database    
+            //    staffContext.Assign(crew);
+            //    return RedirectToAction("Index");
+
+            //}
+            //else
+            //{
+            //    ViewData["pilotList"] = GetPilotId();
+            //    ViewData["attendantList"] = GetAttendantId();
+            //    //Input validation fails, return to the view   
+            //    //to display error message     
+            //    return View(flightCrew);
+            //}
         }
 
         private List<SelectListItem> GetVocation()
@@ -264,7 +289,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             vocation.Add(new SelectListItem { Value = "Administrator", Text = "Administrator" }); 
             vocation.Add(new SelectListItem { Value = "Pilot", Text = "Pilot" }); 
             vocation.Add(new SelectListItem { Value = "Flight Attendance", Text = "Flight Attendance" });
-            vocation.Add(new SelectListItem { Value = null, Text = "" });
+            vocation.Add(new SelectListItem { Value = null, Text = "Not Applicable" });
             return vocation;
         }
 
@@ -305,7 +330,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             gender.Add(new SelectListItem { Value = null, Text = "--Please Select--" });
             gender.Add(new SelectListItem { Value = "M", Text = "Male" });
             gender.Add(new SelectListItem { Value = "F", Text = "Female" });
-            gender.Add(new SelectListItem { Value = null, Text = "" });
+            gender.Add(new SelectListItem { Value = null, Text = "Others" });
             return gender;
         }
 
