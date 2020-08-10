@@ -14,6 +14,7 @@ namespace WEB2020Apr_P01_T4.Models
 
         [Display(Name = "Flight Number")]
         [StringLength(20)]
+        [RegularExpression("[A-Za-z0-9\\s]+", ErrorMessage = "Only letters and digits")]
         [Required]
         public String FlightNumber { get; set; }
 
