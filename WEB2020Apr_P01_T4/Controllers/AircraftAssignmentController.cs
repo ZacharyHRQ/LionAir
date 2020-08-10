@@ -216,7 +216,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 flights.Add(new SelectListItem
                 {
                     Value = schedule.ScheduleID.ToString(),
-                    Text = schedule.FlightNumber
+                    Text = schedule.FlightNumber+"("+schedule.ScheduleID+")"
                 });
             }
             return flights;
