@@ -193,6 +193,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 }
                 else
                 {
+                    TempData["Message"] = "You cannot change the status of this staff!";
                     ViewData["ScheduleList"] = GetStatus();
                     return View();
                 }
@@ -232,7 +233,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 List<FlightCrew> fcList = new List<FlightCrew>();
                 List<int> idlist = crewid.fcID();
                 List<String> Roles = new List<String>() { "Flight Captain", "Second Pilot", "Flight Crew Leader", "Flight Attendant" };
-                for (int i = 0; i < crewid.fcID().Count(); i++)
+                for (int i = 0; i < idlist.Count(); i++)
                 {
                     FlightCrew fc = new FlightCrew();
                     int index = i;
@@ -255,16 +256,16 @@ namespace WEB2020Apr_P01_T4.Controllers
 
                 if (rows > 0)
                 {
-                    return View();
+                    return RedirectToAction("Index");
                 }
                 else if (rows == -1)
                 {
                    TempData["ErrorMessage"] = "You entered the same staff twice!";
-                    return RedirectToAction("Index");
+                   return RedirectToAction("Assign");
                 }
 
             }
-            return View();
+            return RedirectToAction("Assign");
         }
 
         private List<SelectListItem> GetVocation()
@@ -289,22 +290,22 @@ namespace WEB2020Apr_P01_T4.Controllers
 
         private List<SelectListItem> GetPilotId()
         {
-            List<FlightPersonnel> idList = staffContext.GetPilotID();
+            List<FlightCrew> idList = crewContext.GetPilotID();
             List<SelectListItem> pilot = new List<SelectListItem>();
-            foreach (FlightPersonnel fp in idList)
+            foreach (FlightCrew fc in idList)
             {
-                pilot.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
+                pilot.Add(new SelectListItem { Value = fc.StaffID.ToString(), Text = fc.StaffID.ToString() });
             }
             return pilot;
         }
 
         private List<SelectListItem> GetAttendantId()
         {
-            List<FlightPersonnel> idList = staffContext.GetFAID();
+            List<FlightCrew> idList = crewContext.GetFAID();
             List<SelectListItem> flightattendant = new List<SelectListItem>();
-            foreach (FlightPersonnel fp in idList)
+            foreach (FlightCrew fc in idList)
             {
-                flightattendant.Add(new SelectListItem { Value = fp.StaffID.ToString(), Text = fp.StaffID.ToString() });
+                flightattendant.Add(new SelectListItem { Value = fc.StaffID.ToString(), Text = fc.StaffID.ToString() });
             }
             return flightattendant;
         }

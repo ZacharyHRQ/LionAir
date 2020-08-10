@@ -36,6 +36,10 @@
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </div>
+            @if (TempData.ContainsKey("Message"))
+            {
+                <a class="text-danger">@TempData.Peek("Message")</a>
+            }
         </fieldset>
         @Html.HiddenFor(m=>m.EmailAddr)
        

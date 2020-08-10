@@ -27,65 +27,7 @@ namespace WEB2020Apr_P01_T4.DAL
             conn = new SqlConnection(strConn);
         }
 
-        public List<FlightPersonnel> GetPilotID()
-        {
-            //Create a SqlCommand object from connection object      
-            SqlCommand cmd = conn.CreateCommand();
-            //Specify the SELECT SQL statement          
-            cmd.CommandText = @"SELECT * FROM Staff WHERE Vocation = 'Pilot' AND Status = 'Active'";
-            //Open a database connection         
-            conn.Open();
-            //Execute the SELECT SQL through a DataReader       
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            //Read all records until the end, save data into a staff list     
-            List<FlightPersonnel> staffList = new List<FlightPersonnel>();
-            while (reader.Read())
-            {
-                staffList.Add(
-                    new FlightPersonnel
-                    {
-                        StaffID = reader.GetInt32(0),
-                    }
-                    );
-            }
-            //Close DataReader      
-            reader.Close();
-            //Close the database connection      
-            conn.Close();
-
-            return staffList;
-        }
-
-        public List<FlightPersonnel> GetFAID()
-        {
-            //Create a SqlCommand object from connection object      
-            SqlCommand cmd = conn.CreateCommand();
-            //Specify the SELECT SQL statement          
-            cmd.CommandText = @"SELECT * FROM Staff WHERE Vocation = 'Flight Attendant' AND Status = 'Active'";
-            //Open a database connection         
-            conn.Open();
-            //Execute the SELECT SQL through a DataReader       
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            //Read all records until the end, save data into a staff list     
-            List<FlightPersonnel> staffList = new List<FlightPersonnel>();
-            while (reader.Read())
-            {
-                staffList.Add(
-                    new FlightPersonnel
-                    {
-                        StaffID = reader.GetInt32(0),
-                    }
-                    );
-            }
-            //Close DataReader      
-            reader.Close();
-            //Close the database connection      
-            conn.Close();
-
-            return staffList;
-        }
+        
 
         public List<FlightPersonnel> GetAllStaff()
         {
