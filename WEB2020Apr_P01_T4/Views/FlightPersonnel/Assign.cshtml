@@ -1,4 +1,4 @@
-﻿@model WEB2020Apr_P01_T4.Models.FlightPersonnel
+﻿@model WEB2020Apr_P01_T4.Models.FlightCrewID
 
 @{
     ViewData["Title"] = "Assign";
@@ -15,40 +15,33 @@
     <form asp-action="Assign">
         <fieldset class="FormContent">
             <div class="form-group">
-                <label asp-for="StaffID" class="col-sm-3 col-form-label">Flight Captain</label>
-                <div class="col-sm-9 col-md-5">
-                    <select asp-for="StaffID" asp-items="@ViewData["pilotList"]as List<SelectListItem>" class="form-control"></select>
-                </div>
+                <label class="col-sm-3 col-form-label">Flight Captain</label>
+                @Html.DropDownListFor(id => id.id1, (IEnumerable<SelectListItem>)ViewData["pilotList"])
+
             </div>
             <div class="form-group">
-                <label asp-for="StaffID" class="col-sm-3 col-form-label">Pilot</label>
-                <div class="col-sm-9 col-md-5">
-                    <select asp-for="StaffID" asp-items="@ViewData["pilotList"]as List<SelectListItem>" class="form-control"></select>
-                </div>
+                <label class="col-sm-3 col-form-label">Pilot</label>
+                @Html.DropDownListFor(id => id.id2, (IEnumerable<SelectListItem>)ViewData["pilotList"])
+
             </div>
             <div class="form-group">
-                <label asp-for="StaffID" class="col-sm-3 col-form-label">Cabin Crew Leader</label>
-                <div class="col-sm-9 col-md-5">
-                    <select asp-for="StaffID" asp-items="@ViewData["attendantList"]as List<SelectListItem>" class="form-control"></select>
-                </div>
+                <label class="col-sm-3 col-form-label">Flight Crew Leader</label>
+                @Html.DropDownListFor(id => id.id3, (IEnumerable<SelectListItem>)ViewData["attendantList"])
+
+            <div class="form-group">
+                <label class="col-sm-3 col-form-label">Flight Attendant</label>
+                @Html.DropDownListFor(id => id.id4, (IEnumerable<SelectListItem>)ViewData["attendantList"])
+
             </div>
             <div class="form-group">
-                <label asp-for="StaffID" class="col-sm-3 col-form-label">Flight Attendance</label>
-                <div class="col-sm-9 col-md-5">
-                    <select asp-for="StaffID" asp-items="@ViewData["attendantList"]as List<SelectListItem>" class="form-control"></select>
-                </div>
+                <label class="col-sm-3 col-form-label">Flight Attendant</label>
+                @Html.DropDownListFor(id => id.id5, (IEnumerable<SelectListItem>)ViewData["attendantList"])
+
             </div>
             <div class="form-group">
-                <label asp-for="StaffID" class="col-sm-3 col-form-label">Flight Attendance</label>
-                <div class="col-sm-9 col-md-5">
-                    <select asp-for="StaffID" asp-items="@ViewData["attendantList"]as List<SelectListItem>" class="form-control"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="StaffID" class="col-sm-3 col-form-label">Flight Attendance</label>
-                <div class="col-sm-9 col-md-5">
-                    <select asp-for="StaffID" asp-items="@ViewData["attendantList"]as List<SelectListItem>" class="form-control"></select>
-                </div>
+                <label class="col-sm-3 col-form-label">Flight Attendant</label>
+                @Html.DropDownListFor(id => id.id6, (IEnumerable<SelectListItem>)ViewData["attendantList"])
+
             </div>
             <div class="form-group">
                 <div class="col-sm-9 offset-sm-3">
@@ -56,7 +49,5 @@
                 </div>
             </div>
         </fieldset>
-        @Html.HiddenFor(m => m.EmailAddr)
-        @Html.HiddenFor(m => m.Status)
     </form>
 </div>
