@@ -224,8 +224,10 @@ namespace WEB2020Apr_P01_T4.DAL
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
             //Specify the SELECT SQL statement
-            cmd.CommandText = @"SELECT * FROM FlightSchedule
-                                WHERE ScheduleID = @selectedScheduleID";
+            cmd.CommandText = @"SELECT ScheduleID, DepartureCity, DepartureCountry, ArrivalCity, ArrivalCountry, DepartureDateTime, ArrivalDateTime, EconomyClassPrice, BusinessClassPrice, Status FROM FlightRoute
+                                INNER JOIN FlightSchedule
+                                ON FlightRoute.RouteID = FlightSchedule.RouteID
+                                WHERE DepartureDateTime > DATEADD(DAY, 1, GETDATE()) AND ScheduleID = @selectedScheduleID";
 
             //Define the parameter used in SQL statement, value for the
             //parameter is retrieved from the method parameter "bookingid"
@@ -242,8 +244,14 @@ namespace WEB2020Apr_P01_T4.DAL
                 {
                     // Fill passenger object with values from the data reader
                     passenger.ScheduleID = ScheduleId;
-                    passenger.EconomyClassPrice = reader.GetDecimal(6);
-                    passenger.BusinessClassPrice = reader.GetDecimal(7);
+                    passenger.DepartureCity = reader.GetString(1);
+                    passenger.DepartureCountry = reader.GetString(2);
+                    passenger.ArrivalCity = reader.GetString(3);
+                    passenger.ArrivalCountry = reader.GetString(4);
+                    passenger.DepartureDateTime = reader.GetDateTime(5);
+                    passenger.ArrivalDateTime = reader.GetDateTime(6);
+                    passenger.EconomyClassPrice = reader.GetDecimal(7);
+                    passenger.BusinessClassPrice = reader.GetDecimal(8);
                 }
             }
             //Close DataReader
@@ -392,45 +400,48 @@ namespace WEB2020Apr_P01_T4.DAL
 
             return passenger;
         }
-
-        public bool VaildDestination(string DepartureCountry, string ArrivalCountry, out int scheduleID)
+        public List<Aircraftschedule> AboutUSGetAllAircraftSchedule(string from, string to)
         {
+            //Create a SqlCommand object from connection object
+      
+            SqlCommand cmd = new SqlCommand(string.Format("SELECT ScheduleID, DepartureCity, DepartureCountry, ArrivalCity, ArrivalCountry, DepartureDateTime, ArrivalDateTime, EconomyClassPrice, BusinessClassPrice, Status FROM FlightRoute INNER JOIN FlightSchedule ON FlightRoute.RouteID = FlightSchedule.RouteID WHERE DepartureDateTime > DATEADD(DAY, 1, GETDATE()) AND DepartureCountry = '{0}' AND ArrivalCountry = '{1}'", from, to), conn);
 
-            scheduleID = 0;
-            try
+            //Define the parameter used in SQL statement, value for the
+            //parameter is retrieved from the method parameter "From" and "To"
+
+            //Open a database connection
+            conn.Open();
+            //Execute the SELECT SQL through a DataReader
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            //Read all records until the end, save data into a AircraftSchedule list
+            List<Aircraftschedule> aircraftscheduleList = new List<Aircraftschedule>();
+            while (reader.Read())
             {
-
-                // writing sql query  
-                SqlCommand cm = new SqlCommand(String.Format(@"SELECT ScheduleID FROM FlightRoute
-                                INNER JOIN FlightSchedule
-                                ON FlightRoute.RouteID = FlightSchedule.RouteID
-                                WHERE DepartureCountry = '{0}' AND ArrivalCountry = '{1}'", DepartureCountry, ArrivalCountry),conn);
-                // Opening Connection  
-                conn.Open();
-                // Executing the SQL query  
-                SqlDataReader sqlDataReader = cm.ExecuteReader();
-
-                if (sqlDataReader.Read())
-                {
-                    scheduleID = sqlDataReader.GetInt32(0);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-
-
+                aircraftscheduleList.Add(
+                    new Aircraftschedule
+                    {
+                        ScheduleID = reader.GetInt32(0),
+                        DepartureCity = reader.GetString(1),
+                        DepartureCountry = reader.GetString(2),
+                        ArrivalCity = reader.GetString(3),
+                        ArrivalCountry = reader.GetString(4),
+                        // if null value in db, assign datetime null value
+                        DepartureDateTime = !reader.IsDBNull(5) ?
+                                            reader.GetDateTime(5) : (DateTime?)null,
+                        ArrivalDateTime = !reader.IsDBNull(6) ?
+                                            reader.GetDateTime(6) : (DateTime?)null,
+                        EconomyClassPrice = reader.GetDecimal(7),
+                        BusinessClassPrice = reader.GetDecimal(8),
+                        Status = reader.GetString(9)
+                    });
             }
-            catch (Exception)
-            {
-                return false;
-            }
-            // Closing the connection  
-            finally
-            {
-                conn.Close();
-            }
+            //Close DataReader
+            reader.Close();
+            //Close the database connection
+            conn.Close();
+
+            return aircraftscheduleList;
         }
     }
 }

@@ -61,5 +61,8 @@ namespace WEB2020Apr_P01_T4.Models
         }
         public string FlightNumber { get; set; }
         public int FlightDuration { get; set; }
+
+        public string From { get; set; }
+        public string To { get; set; }
     }
 }

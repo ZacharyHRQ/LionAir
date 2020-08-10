@@ -16,6 +16,5 @@
     <Folder Include="DAL\" />
     <Folder Include="Views\FlightScheduling\" />
     <Folder Include="ViewModel\" />
-    <Folder Include="Views\Customer\" />
   </ItemGroup>
 </Project>
