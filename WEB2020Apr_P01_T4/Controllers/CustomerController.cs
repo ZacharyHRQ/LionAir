@@ -61,7 +61,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            List<Aircraftschedule> aircraftscheduleList = CustomerContext.GetAllAircraftSchedule();
+            List<Aircraftschedule> aircraftscheduleList = CustomerContext.GetAllAircraftSchedule().FindAll(a => a.DepartureDateTime != null);
             return View(aircraftscheduleList);
         }
 
