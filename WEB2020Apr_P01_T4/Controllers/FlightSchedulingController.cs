@@ -231,16 +231,21 @@ namespace WEB2020Apr_P01_T4.Controllers
             if (ModelState.IsValid)
             {
 
-                //Insert the data
-                isValid = routeDAL.InsertData(route);
-                if (!isValid)
-                {
-                    TempData["errorMessage"] = "The route already exist";
-                }
-                else if ((route.ArrivalCountry == route.DepartureCountry) && (route.ArrivalCity == route.DepartureCity))
+
+                if ((route.ArrivalCountry == route.DepartureCountry) && (route.ArrivalCity == route.DepartureCity))
                 {
                     isValid = false;
                     TempData["errorMessage"] = "The departure city and arrival city";
+                }
+                else
+                {
+
+                    //Insert the data
+                    isValid = routeDAL.InsertData(route);
+                    if (!isValid)
+                    {
+                        TempData["errorMessage"] = "The route already exist";
+                    }
                 }
 
             }
