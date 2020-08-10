@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -64,6 +65,22 @@ namespace WEB2020Apr_P01_T4.Controllers
             return View(aircraftscheduleList);
         }
 
+        [HttpGet]
+        // GET: AircraftSchedule
+        public ActionResult AboutUs_ViewFlightSchedule()
+        {
+            // Stop accessing the action if not logged in
+            // or account not in the "Customer" role
+            if ((HttpContext.Session.GetString("Role") == null) ||
+                (HttpContext.Session.GetString("Role") != "Customer"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            string from = HttpContext.Session.GetString("from");
+            string to = HttpContext.Session.GetString("to");
+            List<Aircraftschedule> aircraftscheduleList = CustomerContext.AboutUSGetAllAircraftSchedule(from, to);
+            return View(aircraftscheduleList);
+        }
         [HttpGet]
         // GET: BookAirTicket
         public IActionResult BookAirTicket(int id)
@@ -190,6 +207,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             };
             return passengerVM;
         }
+  
         private List<SelectListItem> GetCountries()
         {
             List<SelectListItem> countries = new List<SelectListItem>();
