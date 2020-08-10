@@ -82,7 +82,7 @@
             <th scope="col">Arrival Date and Time</th>
             <th scope="col">Economy Price</th>
             <th scope="col">Business Price</th>
-            <th scope="col">Aircraft</th>
+            
             <th scope="col">Economy Seats</th>
             <th scope="col">Business Seat</th>
             <th scope="col">Status</th>
@@ -110,7 +110,6 @@
 
     <td>@Html.DisplayFor(modelItem => schedule.EconomyClassPrice)</td>
     <td>@Html.DisplayFor(modelItem => schedule.BusinessClassPrice)</td>
-    <td>@schedule.AircraftID</td>
     <td>@ViewBag.ecoOccupied[pos]</td>
     <td>@ViewBag.bOccupied[pos]</td>
     <td>@schedule.Status</td>
