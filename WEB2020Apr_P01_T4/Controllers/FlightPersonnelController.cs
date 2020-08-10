@@ -148,7 +148,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 //Query string parameter not provided          
                 //Return to listing page, not allowed to edit     
                 return RedirectToAction("Index");
-            }
+            } 
             FlightPersonnel flightPersonnel = staffContext.GetDetails(id.Value);
             if (flightPersonnel == null)
             {

@@ -95,8 +95,8 @@ namespace WEB2020Apr_P01_T4.DAL
                             FlightNumber = sqlDataReader.GetString(FlightNumber),
                             RouteID = sqlDataReader.GetInt32(RouteID),
                             AircraftID = sqlDataReader.IsDBNull(AircraftID) ? 0 : sqlDataReader.GetInt32(AircraftID),
-                            DepartureDateTime = sqlDataReader.GetDateTime(DepartureDateTime),
-                            ArrivalDateTime = sqlDataReader.GetDateTime(ArrivalDateTime),
+                            DepartureDateTime = sqlDataReader.IsDBNull(DepartureDateTime) ? (DateTime?)null : sqlDataReader.GetDateTime(DepartureDateTime),
+                            ArrivalDateTime = sqlDataReader.IsDBNull(ArrivalDateTime) ? (DateTime?)null : sqlDataReader.GetDateTime(ArrivalDateTime),
                             EconomyClassPrice = sqlDataReader.GetDecimal(EconomyClassPrice),
                             BusinessClassPrice = sqlDataReader.GetDecimal(BusinessClassPrice),
                             Status = sqlDataReader.GetString(Status),
@@ -146,8 +146,8 @@ namespace WEB2020Apr_P01_T4.DAL
                         FlightNumber = sqlDataReader.GetString(FlightNumber),
                         RouteID = sqlDataReader.GetInt32(RouteID),
                         AircraftID = sqlDataReader.IsDBNull(AircraftID) ? 0 : sqlDataReader.GetInt32(AircraftID),
-                        DepartureDateTime = sqlDataReader.GetDateTime(DepartureDateTime),
-                        ArrivalDateTime = sqlDataReader.GetDateTime(ArrivalDateTime),
+                        DepartureDateTime = sqlDataReader.IsDBNull(DepartureDateTime) ? (DateTime?)null : sqlDataReader.GetDateTime(DepartureDateTime),
+                        ArrivalDateTime = sqlDataReader.IsDBNull(ArrivalDateTime) ? (DateTime?)null : sqlDataReader.GetDateTime(ArrivalDateTime),
                         EconomyClassPrice = sqlDataReader.GetDecimal(EconomyClassPrice),
                         BusinessClassPrice = sqlDataReader.GetDecimal(BusinessClassPrice),
                         Status = sqlDataReader.GetString(Status),
@@ -362,6 +362,45 @@ namespace WEB2020Apr_P01_T4.DAL
             return 0;
         }
 
+        public List<int> GetSeats(int aircraftID)
+        {
+            List<int> values = new List<int>();
+            values.Add(0);
+            values.Add(0);
+
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand("SELECT NumEconomySeat, NumBusinessSeat FROM Aircraft WHERE AircraftID = " + aircraftID, con);
+
+
+                // Opening Connection  
+                con.Open();
+
+                //Excuting the query
+                SqlDataReader sqlDataReader = cm.ExecuteReader();
+
+                if (sqlDataReader.Read())
+                {
+                    values[0] = sqlDataReader.GetInt32(0);
+                    values[1] = sqlDataReader.GetInt32(1);
+
+                }
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+
+            return values;
+        }
 
     }
 }

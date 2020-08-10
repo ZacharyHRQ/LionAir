@@ -119,6 +119,37 @@ namespace WEB2020Apr_P01_T4.DAL
             }
         }
 
+        public void UpdateData(int id, double flightDuration)
+        {
+
+            try
+            {
+
+                // writing sql query  
+                SqlCommand cm = new SqlCommand(String.Format("Update FlightRoute " +
+                    "SET FlightDuration={0} WHERE RouteID={1}",
+                        flightDuration,
+                        id
+                    ), con);
+
+
+                // Opening Connection  
+                con.Open();
+                // Executing the SQL query  
+                cm.ExecuteNonQuery();
+
+            }
+            catch (Exception e)
+            {
+
+            }
+            // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+        }
+
 
 
         private bool CheckExistingRoute(Route route)
@@ -128,12 +159,11 @@ namespace WEB2020Apr_P01_T4.DAL
 
                 // writing sql query  
                 SqlCommand cm = new SqlCommand(String.Format("SELECT * FROM FlightRoute WHERE " +
-                    "DepartureCity='{0}' AND DepartureCountry='{1}' AND ArrivalCity='{2}' AND ArrivalCountry='{3}' AND FlightDuration = {4} ;",
+                    "DepartureCity='{0}' AND DepartureCountry='{1}' AND ArrivalCity='{2}' AND ArrivalCountry='{3}';",
                     route.DepartureCity,
                     route.DepartureCountry,
                     route.ArrivalCity,
-                    route.ArrivalCountry,
-                    route.FlightDuration
+                    route.ArrivalCountry
                     ), con);
 
                 //Open the connection

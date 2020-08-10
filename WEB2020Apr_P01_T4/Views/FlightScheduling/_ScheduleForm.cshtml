@@ -24,52 +24,71 @@
         @if (Model.DepartureDateTime != null)
         {
             @Html.ActionLink("+", "Schedule", "FlightScheduling", new { }, new { @class = "close close-Flight" })
-            isEdit = true;
         }
         else
         {
             @Html.ActionLink("+", "Index", "FlightScheduling", new { }, new { @class = "close close-Flight" })
         }
 
+        @if (disable)
+        {
+            <h1>Edit Flight Schedule</h1>
+        }
+        else
+        {
+            <h1>Create New Flight Schedule</h1>
+        }
 
-        <h1>Create New Flight Schedule</h1>
+
 
         @using (@Html.BeginForm(action, "FlightScheduling", new { @id = Model.RouteID, @isEdit = isEdit }, FormMethod.Post))
         {
-            <div class="form-group">
-                @Html.LabelFor(m => m.FlightNumber)
-                @Html.TextBoxFor(m => m.FlightNumber, new { @class = "form-control " + cssClass })
-                @Html.ValidationMessageFor(m => m.FlightNumber)
-            </div>
+            @if (!disable) { 
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FlightNumber)
+                    @Html.TextBoxFor(m => m.FlightNumber, new { @class = "form-control " + cssClass })
+                    @Html.ValidationMessageFor(m => m.FlightNumber)
+                </div>
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.DepartureDateTime)
-                @Html.EditorFor(m => m.DepartureDateTime, new { htmlAttributes = new { @class = "form-control " + cssClass, @type = type } })
-                @Html.ValidationMessageFor(m => m.DepartureDateTime)
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.EconomyClassPrice)
-                @Html.TextBoxFor(m => m.EconomyClassPrice,  new { @class = "form-control " + cssClass } )
-                @Html.ValidationMessageFor(m => m.EconomyClassPrice)
-            </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DepartureDateTime)
+                    @Html.EditorFor(m => m.DepartureDateTime, new { htmlAttributes = new { @class = "form-control " + cssClass, @type = type } })
+                    @Html.ValidationMessageFor(m => m.DepartureDateTime)
+                </div>
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.BusinessClassPrice)
-                @Html.TextBoxFor(m => m.BusinessClassPrice, new  { @class = "form-control " + cssClass } )
-                @Html.ValidationMessageFor(m => m.BusinessClassPrice)
-            </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.EconomyClassPrice)
+                    @Html.TextBoxFor(m => m.EconomyClassPrice, new { @class = "form-control " + cssClass })
+                    @Html.ValidationMessageFor(m => m.EconomyClassPrice)
+                </div>
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.RouteID)
-                @Html.TextBoxFor(m => m.RouteID, new { @class = "form-control disabled" })
-                @Html.ValidationMessageFor(m => m.RouteID)
-            </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.BusinessClassPrice)
+                    @Html.TextBoxFor(m => m.BusinessClassPrice, new { @class = "form-control " + cssClass })
+                    @Html.ValidationMessageFor(m => m.BusinessClassPrice)
+                </div>
 
-            <div class="form-group">
-                @Html.LabelFor(m => m.Status)
-                @Html.DropDownListFor(m => m.Status, new SelectList(Model.GetStatusOption()), new { @class = "form-control" })
-            </div>
+              <div class="form-group">
+                    @Html.LabelFor(m => m.RouteID)
+                    @Html.TextBoxFor(m => m.RouteID, new { @class = "form-control disabled" })
+                    @Html.ValidationMessageFor(m => m.RouteID)
+                </div>
+            }
+
+
+
+            if (disable)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Status)
+                    @Html.DropDownListFor(m => m.Status, new SelectList(Model.GetStatusOption()), new { @class = "form-control" })
+                </div>
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.Status, new { @id = "HideStatus"})
+            }
 
 
             @Html.HiddenFor(m => m.ScheduleID)
@@ -89,3 +108,11 @@
 
 <script src="~/wwwroot/lib/jquery-validation/dist/jquery.validate.js"></script>
 <script src="~/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="//code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('#HideStatus').val("Opened"); 
+    })
+</script>

@@ -7,13 +7,14 @@ namespace WEB2020Apr_P01_T4.Models
     public class FlightSchedule
     {
 
-        private List<String> StatusOption = new List<String>() {"Full", "Delayed", "Cancelled" };
+        private List<String> StatusOption = new List<String>() { "Full", "Delayed", "Cancelled" };
 
         [Required]
         public int ScheduleID { get; set; }
 
         [Display(Name = "Flight Number")]
         [StringLength(20)]
+        [RegularExpression("[A-Za-z0-9\\s]+", ErrorMessage = "Only letters and digits")]
         [Required]
         public String FlightNumber { get; set; }
 
@@ -51,10 +52,6 @@ namespace WEB2020Apr_P01_T4.Models
         [StringLength(20)]
         [Required]
         public String Status { get; set; }
-
-        public int EconomySeats { get; set; }
-
-        public int BusinessSeats { get; set; }
 
 
         public List<String> GetStatusOption()

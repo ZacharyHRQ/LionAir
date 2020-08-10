@@ -9,9 +9,9 @@ namespace WEB2020Apr_P01_T4.ViewModel
 
         public string AircraftModel { get; set; }
 
-        public int NumEconomySeat { get; set; }
+        public int? NumEconomySeat { get; set; }
 
-        public int NumBusinessSeat { get; set; }
+        public int? NumBusinessSeat { get; set; }
 
         [ValidateAircraftAssignment]
         public string status { get; set; }
