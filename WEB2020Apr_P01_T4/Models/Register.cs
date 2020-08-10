@@ -23,7 +23,7 @@ namespace WEB2020Apr_P01_T4.Models
         public DateTime? BirthDate { get; set; }
 
         [Display(Name = "Telephone number")]
-        public int? TelNo { get; set; }
+        public string TelNo { get; set; }
 
         [Required]
         [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}")]

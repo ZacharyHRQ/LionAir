@@ -181,7 +181,7 @@ namespace WEB2020Apr_P01_T4.DAL
             cmd.CommandText = @"SELECT ScheduleID, DepartureCity, DepartureCountry, ArrivalCity, ArrivalCountry, DepartureDateTime, ArrivalDateTime, EconomyClassPrice, BusinessClassPrice, Status FROM FlightRoute
                                 INNER JOIN FlightSchedule
                                 ON FlightRoute.RouteID = FlightSchedule.RouteID
-                                WHERE DepartureDateTime > DATEADD(DAY, 1, GETDATE())";
+                                WHERE DepartureDateTime > DATEADD(DAY, 1, GETDATE()) AND Status ='Full' OR Status = 'Opened'";
             //Open a database connection
             conn.Open();
             //Execute the SELECT SQL through a DataReader

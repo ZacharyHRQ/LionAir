@@ -143,7 +143,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 //Add customer record to database
                 int customerid = (int)HttpContext.Session.GetInt32("id");
                 CustomerContext.Add(booking);
-                TempData["Message"] = "New Booking have been successfully created!";
+                TempData["Newbooking"] = "New Booking have been successfully created!";
                 return RedirectToAction("ViewAirTicket");
             }
             else

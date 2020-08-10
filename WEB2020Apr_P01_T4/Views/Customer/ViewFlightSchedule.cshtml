@@ -43,11 +43,7 @@
                                     <a asp-action="BookAirTicket" asp-controller="Customer"
                                        asp-route-id="@item.ScheduleID">Opened</a>
                                 }
-                                else if (item.Status == "Cancelled")
-                                {
-                                    <p>Cancelled</p>
-                                }
-                                else
+                                else if (item.Status == "Full")
                                 {
                                     <p>Full</p>
                                 }
