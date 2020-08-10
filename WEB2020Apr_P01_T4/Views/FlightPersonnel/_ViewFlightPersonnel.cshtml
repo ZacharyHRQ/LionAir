@@ -20,9 +20,6 @@
                             <a href="~/FlightPersonnel/Create">
                                 Add Staff <img src="~/icons/icons8-employee-32.png" width="20" height="20" style="vertical-align:middle;" />
                             </a>
-                            <a href="~/FlightScheduling/FSDetails">
-                                View Schedule
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -46,15 +43,37 @@
                         <tr>
                             <td>@item.StaffID.ToString()</td>
                             <td>@item.StaffName</td>
-                            <td>@item.Gender</td>
-                            <td>@item.DateEmployed</td>
-                            <td>@item.Vocation</td>
+                            @if(item.Gender == null)
+                            {
+                                <td>Null</td>
+                            }
+                            else
+                            {
+                                <td>@item.Gender</td>
+                            }
+                            @if (item.DateEmployed.HasValue)
+                            {
+                                <td>@item.DateEmployed</td>
+                            }
+                            else
+                            {
+                                <td>Null</td>
+                            }
+
+                            @if(item.Vocation == null)
+                            {
+                                <td>Null</td>
+                            }
+                            else
+                            {
+                                <td>@item.Vocation</td>
+                            }
+                         
                             <td>@item.EmailAddr</td>
                             <td>@item.Status</td>
                             <td>
                                 <a asp-action="Details" asp-controller="FlightPersonnel" asp-route-id="@item.StaffID">Details</a> |
-                                <a asp-action="Edit" asp-controller="FlightPersonnel" asp-route-id="@item.StaffID">Update</a> |
-                                <a asp-action="Assign" asp-controller="FlightPersonnel" asp-route-id="@item.StaffID">Assign</a>
+                                <a asp-action="Edit" asp-controller="FlightPersonnel" asp-route-id="@item.StaffID">Update</a>
                             </td>
                         </tr>
                     }

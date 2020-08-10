@@ -8,6 +8,7 @@ namespace WEB2020Apr_P01_T4.Models
 {
     public class FlightPersonnel
     {
+
         [Display(Name = "Staff ID")]
         public int StaffID { get; set; }
 
@@ -17,7 +18,7 @@ namespace WEB2020Apr_P01_T4.Models
         public string StaffName { get; set; }
 
         [Display(Name = "Gender")]
-        public char? Gender { get; set; }
+        public string Gender { get; set; }
 
         [Display(Name = "Date Employed")]
         [DataType(DataType.Date)]
@@ -26,7 +27,7 @@ namespace WEB2020Apr_P01_T4.Models
         public DateTime? DateEmployed { get; set; }
 
         [Display(Name = "Vocation")]
-        public string? Vocation { get; set; }
+        public string Vocation { get; set; }
 
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Email Address")]

@@ -96,7 +96,107 @@ namespace WEB2020Apr_P01_T4.DAL
 
             return crewList;
         }
-             
+
+        public bool Checkcrew (List<int> idList)
+        {
+            if (idList.Distinct().Count() == idList.Count())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public int Assign(List<FlightCrew> flightcrew, List<int> staffID)
+        {
+            int rowaffected = 0;
+            if (Checkcrew(staffID))
+            {
+                SqlCommand cmd = conn.CreateCommand();
+
+                cmd.CommandText = @"INSERT INTO FlightCrew (ScheduleID, StaffID, Role) VALUES (@ScheduleID, @StaffID, @Role)";
+
+                for (int i = 0; i< flightcrew.Count(); i++)
+                {
+                    cmd.Parameters.Clear();
+                    conn.Open();
+                    cmd.Parameters.AddWithValue("@ScheduleID", flightcrew[i].ScheduleID);
+                    cmd.Parameters.AddWithValue("@StaffID", flightcrew[i].StaffID);
+                    cmd.Parameters.AddWithValue("@Role", flightcrew[i].Role);
+                    rowaffected += cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            else
+            {
+                rowaffected = -1;
+            }
+            return rowaffected;
+            
+        }
+
+        public List<FlightCrew> GetPilotID()
+        {
+            //Create a SqlCommand object from connection object      
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify the SELECT SQL statement          
+            cmd.CommandText = @"SELECT * FROM Staff WHERE Vocation = 'Pilot' AND Status = 'Active'";
+            //Open a database connection         
+            conn.Open();
+            //Execute the SELECT SQL through a DataReader       
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            //Read all records until the end, save data into a staff list     
+            List<FlightCrew> staffList = new List<FlightCrew>();
+            while (reader.Read())
+            {
+                staffList.Add(
+                    new FlightCrew
+                    {
+                        StaffID = reader.GetInt32(0),
+                    }
+                    );
+            }
+            //Close DataReader      
+            reader.Close();
+            //Close the database connection      
+            conn.Close();
+
+            return staffList;
+        }
+
+        public List<FlightCrew> GetFAID()
+        {
+            //Create a SqlCommand object from connection object      
+            SqlCommand cmd = conn.CreateCommand();
+            //Specify the SELECT SQL statement          
+            cmd.CommandText = @"SELECT * FROM Staff WHERE Vocation = 'Flight Attendant' AND Status = 'Active'";
+            //Open a database connection         
+            conn.Open();
+            //Execute the SELECT SQL through a DataReader       
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            //Read all records until the end, save data into a staff list     
+            List<FlightCrew> staffList = new List<FlightCrew>();
+            while (reader.Read())
+            {
+                staffList.Add(
+                    new FlightCrew
+                    {
+                        StaffID = reader.GetInt32(0),
+                    }
+                    );
+            }
+            //Close DataReader      
+            reader.Close();
+            //Close the database connection      
+            conn.Close();
+
+            return staffList;
+        }
+
     }
      
 }

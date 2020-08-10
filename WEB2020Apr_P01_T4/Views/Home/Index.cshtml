@@ -1,4 +1,4 @@
-﻿@page
+﻿@model WEB2020Apr_P01_T4.Models.Aircraftschedule
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
@@ -25,39 +25,54 @@
         <h1>Lion Air is here to make your destination dreams reachable</h1>
 
 
-        <form method="post" action="~/Login/Destination">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col form-group">
-                        <label for="destination">From</label>
-                        <input type="text" class="form-control" id="from" aria-describedby="destinationHelp" required="required">
+        <form asp-controller="Home" asp-action="Index">
+            <fieldset class="FormContent">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="destination">From</label>
+                            <div class="col-sm-9 col-md-5">
+                                <select asp-for="From"
+                                        asp-items="@ViewData["DestinationList"]
+                                       as List<SelectListItem>"
+                                        id="From" class="form-control" onmousedown="this.size = 1" onfocusout="this.size = 1" style="overflow-y: scroll">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col form-group">
+                            <label for="arrival">To</label>
+                            <div class="col-sm-9 col-md-5">
+                                <select asp-for="To"
+                                        asp-items="@ViewData["DestinationList"]
+                                       as List<SelectListItem>"
+                                        id="To" class="form-control" onmousedown="this.size = 1" onfocusout="this.size = 1" style="overflow-y: scroll">
+                                </select>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="col form-group">
+                            <label for="fromDate">Date</label>
+                            <input type="date" class="form-control" id="fromDate" aria-describedby="fromHelp" required="required">
+                        </div>
+                        -->
                     </div>
-
-                    <div class="col form-group">
-                        <label for="arrival">To</label>
-                        <input type="text" class="form-control" id="to" aria-describedby="arrivalHelp" required="required">
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">Search Flights</button>
+                        </div>
                     </div>
-
-                    <div class="col form-group">
-                        <label for="fromDate">Date</label>
-                        <input type="date" class="form-control" id="fromDate" aria-describedby="fromHelp" required="required">
-                    </div>
+                    <br />
+                    <span style="color:red;">@TempData["Message"]</span>
                 </div>
-
-                <div class="row">
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Book Now</button>
-                    </div>
-                </div>
-                <br />
-                <span style="color:red;">@TempData["Message"]</span>
-            </div>
+            </fieldset>
         </form>
+        <!--
         <script>
             //Maximum Date is today
             fromDateId = document.getElementById("fromDate")
             fromDateId.min = new Date().toISOString().split("T")[0];
         </script>
+        -->
     </div>
     <div>
         <div class="red container-fluid">
