@@ -137,6 +137,8 @@ namespace WEB2020Apr_P01_T4.Controllers
         // GET: FlightPersonnel/Edit/5
         public ActionResult Edit(int? id)
         {
+
+            TempData["eMessage"] = null;
             // Stop accessing the action if not logged in         
             // or account not in the "Staff" role      
             if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Admin"))
@@ -165,6 +167,8 @@ namespace WEB2020Apr_P01_T4.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(FlightPersonnel flightPersonnel)
         {
+
+            TempData["eMessage"] = null;
             FlightSchedule fs = scheduleContext.GetFlightSchedule(flightPersonnel.StaffID);
             DateTime currentDate = DateTime.Today;
             bool check = false;
@@ -193,7 +197,7 @@ namespace WEB2020Apr_P01_T4.Controllers
                 }
                 else
                 {
-                    TempData["Message"] = "You cannot change the status of this staff!";
+                    TempData["eMessage"] = "You cannot change the status of this staff!";
                     ViewData["ScheduleList"] = GetStatus();
                     return View();
                 }
