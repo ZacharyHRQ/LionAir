@@ -57,65 +57,83 @@ namespace WEB2020Apr_P01_T4.Controllers
             
         }
 
-        [Route("FlightScheduling/Schedule")]
-        public IActionResult Schedule()
-        {
+        //[Route("FlightScheduling/Schedule")]
+        //public IActionResult Schedule()
+        //{
 
+        //    ScheduleViewModel scheduleViewModel = new ScheduleViewModel
+        //    {
+        //        FlightSchedule = new FlightSchedule(),
+        //        CreateRoute = new Route(),
+        //        SearchOption = FlightSchedule.GetTableList(),
+        //        FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(),
+        //        ShowEditPop = false,
+        //        TicketSize = bookingDAL.GetAllBooking().Count(), 
+
+        //    };
+
+        //    List<String> ecoOccupied = new List<string>();
+        //    List<String> bOccupied = new List<string>();
+        //    foreach (FlightSchedule flightSchedule in scheduleViewModel.FlightScheduleList)
+        //    {
+        //        if (flightSchedule.AircraftID != 0)
+        //        {
+        //            List<int> values = flightScheduleDAL.GetSeats(flightSchedule.AircraftID);
+        //            ecoOccupied.Add(flightScheduleDAL.CountEconomySeat(flightSchedule.ScheduleID).ToString() + "/" + values[0]);
+        //            bOccupied.Add(flightScheduleDAL.CountBusinessSeat(flightSchedule.ScheduleID).ToString() + "/" + values[1]);
+        //        }
+        //        else
+        //        {
+        //            ecoOccupied.Add("Currently No Aircarft ID");
+        //            bOccupied.Add("Currently No Aircarft ID");
+        //        }
+
+        //    }
+
+        //    ViewBag.ecoOccupied = ecoOccupied;
+        //    ViewBag.bOccupied = bOccupied;
+
+
+        //    ViewBag.Flitered = false;
+
+
+
+        //    return CheckAdmin(View("Schedule", scheduleViewModel));
+        //}
+
+        
+        public IActionResult Schedule(int? id)
+        {
             ScheduleViewModel scheduleViewModel = new ScheduleViewModel
             {
                 FlightSchedule = new FlightSchedule(),
                 CreateRoute = new Route(),
                 SearchOption = FlightSchedule.GetTableList(),
-                FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(),
                 ShowEditPop = false,
-                TicketSize = bookingDAL.GetAllBooking().Count(), 
+                TicketSize = bookingDAL.GetAllBooking().Count(),
 
             };
 
-            List<String> ecoOccupied = new List<string>();
-            List<String> bOccupied = new List<string>();
-            foreach (FlightSchedule flightSchedule in scheduleViewModel.FlightScheduleList)
+            if (id != null)
             {
-                if (flightSchedule.AircraftID != 0)
-                {
-                    List<int> values = flightScheduleDAL.GetSeats(flightSchedule.AircraftID);
-                    ecoOccupied.Add(flightScheduleDAL.CountEconomySeat(flightSchedule.ScheduleID).ToString() + "/" + values[0]);
-                    bOccupied.Add(flightScheduleDAL.CountBusinessSeat(flightSchedule.ScheduleID).ToString() + "/" + values[1]);
-                }
-                else
-                {
-                    ecoOccupied.Add("Currently No Aircarft ID");
-                    bOccupied.Add("Currently No Aircarft ID");
-                }
+                int routeId = id.Value;
+
+                scheduleViewModel.FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(routeId);
+                scheduleViewModel.RouteID = routeId;
+
+                ViewBag.Flitered = true;
+
+
+            }
+            else
+            {
+                scheduleViewModel.FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule();
+
+                ViewBag.Flitered = false;
 
             }
 
-            ViewBag.ecoOccupied = ecoOccupied;
-            ViewBag.bOccupied = bOccupied;
 
-
-            ViewBag.Flitered = false;
-
-
-
-            return CheckAdmin(View("Schedule", scheduleViewModel));
-        }
-
-        [Route("FlightScheduling/Schedule/{id}")]
-        public IActionResult Schedule(int id)
-        {
-
-            ScheduleViewModel scheduleViewModel = new ScheduleViewModel
-            {
-                FlightSchedule = new FlightSchedule(),
-                CreateRoute = new Route(),
-                SearchOption = FlightSchedule.GetTableList(),
-                FlightScheduleList = flightScheduleDAL.GetAllFlightSchedule(id),
-                ShowEditPop = false,
-                TicketSize = bookingDAL.GetAllBooking().Count(),
-                RouteID = id
-
-            };
 
             List<String> ecoOccupied = new List<string>();
             List<String> bOccupied = new List<string>();
@@ -142,7 +160,6 @@ namespace WEB2020Apr_P01_T4.Controllers
                 ViewBag.bOccupied = bOccupied;
             }
 
-            ViewBag.Flitered = true;
 
 
             return CheckAdmin(View("Schedule", scheduleViewModel));
