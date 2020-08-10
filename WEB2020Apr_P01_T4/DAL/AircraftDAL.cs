@@ -207,7 +207,8 @@ namespace WEB2020Apr_P01_T4.DAL
             return flightSchedules;
 
         }
-        
+
+        //checks if the selected flight schedule conflicts with the aircraft’s scheduling
         public bool CheckFlight(int aircraftid , int scheduleid )
         {
             SqlCommand cmd = conn.CreateCommand();
