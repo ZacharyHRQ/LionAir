@@ -207,7 +207,8 @@ namespace WEB2020Apr_P01_T4.DAL
             return flightSchedules;
 
         }
-        
+
+        //checks if the selected flight schedule conflicts with the aircraft’s scheduling
         public bool CheckFlight(int aircraftid , int scheduleid )
         {
             SqlCommand cmd = conn.CreateCommand();
@@ -310,49 +311,6 @@ namespace WEB2020Apr_P01_T4.DAL
             conn.Close();
             return rowAffected;
         }
-
-        public int Delete(int staffId)
-        {
-            
-            //Instantiate a SqlCommand object, supply it with a DELETE SQL statement
-            //to delete a staff record specified by a Staff ID
-            SqlCommand cmdUpdate1 = conn.CreateCommand();
-            SqlCommand cmdUpdate2 = conn.CreateCommand();
-            SqlCommand cmdDelete1 = conn.CreateCommand();
-            SqlCommand cmdDelete2 = conn.CreateCommand();
-
-            cmdUpdate1.CommandText = @"UPDATE Staff SET SupervisorID = null WHERE StaffID = @selectStaffID";
-            cmdUpdate1.Parameters.AddWithValue("@selectStaffID", staffId);
-
-
-            cmdUpdate2.CommandText = @"UPDATE Branch SET MgrID = null WHERE MgrID = @selectStaffID";
-            cmdUpdate2.Parameters.AddWithValue("@selectStaffID", staffId);
-
-
-            cmdDelete1.CommandText = @"DELETE FROM StaffContact WHERE StaffID = @selectStaffID";
-            cmdDelete1.Parameters.AddWithValue("@selectStaffID", staffId);
-
-
-            cmdDelete2.CommandText = @"DELETE FROM Staff WHERE StaffID = @selectStaffID";
-            cmdDelete2.Parameters.AddWithValue("@selectStaffID", staffId);
-
-
-            //Execute the DELETE SQL to remove the staff record
-            int rowAffected = 0;
-            //Open a database connection
-            conn.Open();
-
-            rowAffected += cmdUpdate1.ExecuteNonQuery();
-            rowAffected += cmdUpdate2.ExecuteNonQuery();
-            rowAffected += cmdDelete1.ExecuteNonQuery();
-            rowAffected += cmdDelete2.ExecuteNonQuery();
-
-            //Close database connection
-            conn.Close();
-            //Return number of row of staff record updated or deleted
-            return rowAffected;
-        }
-
 
         //update aircraft status 
         public int UpdateStatus (int aircraftid , string status)
