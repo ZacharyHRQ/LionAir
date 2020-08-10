@@ -1,6 +1,7 @@
 ﻿@model WEB2020Apr_P01_T4.Models.Airport
 
 @{
+    ViewData["Title"] = "AirportCodes";
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,9 +16,13 @@
             <div id="myNav" class="overlay">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeSearch()">&times;</a>
                 <div class="overlay-content">
-                    <form>
-                        <input type="text" class="form-control" id="airport_input" placeholder="Enter Airport" size="12000">
-                    </form>
+                    @using (@Html.BeginForm("Index", "AirportCodes", new { @code = Model.Iata }, FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.Iata, new { @class = "form-control", placeholder = "Search..." })
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>}
                 </div>
 
             </div>
@@ -26,14 +31,7 @@
             <button type="button" class="btn btn-primary" id="search" onclick="openSearch()">
                 Search <img src="search-white-18dp.svg" />
             </button>
-            @using (@Html.BeginForm("Index", "AirportCodes", new { @code = Model.Iata }, FormMethod.Post))
-            {
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Iata)
-                    @Html.TextBoxFor(m => m.Iata, new { @class = "form-control", placeholder = "Search..." })
-                </div>
-
-                <button type="submit" class="btn btn-primary">Submit</button>}
+            
 
             <p> <strong>Name: @Model.Name</strong>  </p>
             <p> <strong>Phone: @Model.Phone</strong></p>

@@ -61,3 +61,7 @@
     font-size: 3.5em;
     padding: 30px;
 }
+
+#Iata:focus{
+    outline: none;
+}

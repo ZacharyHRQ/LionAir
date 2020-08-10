@@ -28,7 +28,7 @@ namespace WEB2020Apr_P01_T4.Controllers
 
             AircraftScheduleViewModel aircraftScheduleView = new AircraftScheduleViewModel();
 
-            //find aircraft that has a maintainance date 30 days or more 
+            //if user request to see all aircrafts that has a maintainance date 30 days or more , else fetch all aircrafts
             aircraftScheduleView.aircraftList = maintain ? aircraftContext.GetMaintenanceAircraft() : aircraftContext.GetAllAircraft();
             ViewData["maintain"] = !maintain;
 
@@ -51,7 +51,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            ViewData["statusList"] = GetStatus();
             ViewData["ModelList"] = GetModel();
             return View();
         }
@@ -60,11 +59,12 @@ namespace WEB2020Apr_P01_T4.Controllers
         public IActionResult CreateAircraft(Aircraft aircraft)
         {
             ViewData["ModelList"] = GetModel();
-            ViewData["statusList"] = GetStatus();
             if (ModelState.IsValid)
             {
+                //checking and setting null values 
+                aircraft.NumBusinessSeat = aircraft.NumBusinessSeat == null ? 0 : aircraft.NumBusinessSeat;
+                aircraft.NumEconomySeat = aircraft.NumEconomySeat == null ? 0 : aircraft.NumEconomySeat;
                 aircraft.AircraftID = aircraftContext.Add(aircraft);
-
                 return RedirectToAction("DisplayAircraft");
             }
             else
@@ -73,8 +73,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
 
         }
-
-        // GET: /<controller>/Assign
+    
         public IActionResult AssignAircraft(int? id)
         {
             if ((HttpContext.Session.GetString("Role") == null) || (HttpContext.Session.GetString("Role") != "Admin"))
@@ -83,7 +82,7 @@ namespace WEB2020Apr_P01_T4.Controllers
             }
             if (id != null)
             {
-                ViewData["flightList"] = GetFlights();
+                ViewData["flightList"] = GetFlights(id.Value);
                 Aircraft aircraft = aircraftContext.FindAircraft(id.Value);
                 AircraftAssignViewModel aircraftAssignViewModel = new AircraftAssignViewModel
                 {
@@ -104,7 +103,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         [HttpPost]
         public IActionResult AssignAircraft(AircraftAssignViewModel aircraft)
         {
-            ViewData["flightList"] = GetFlights();
+            ViewData["flightList"] = GetFlights(aircraft.AircraftID);
             if (ModelState.IsValid && aircraft.status != "Under Maintenance")
             {
                 aircraftContext.Assign(aircraft.AircraftID, Convert.ToInt32(aircraft.flightSchedule));
@@ -114,7 +113,6 @@ namespace WEB2020Apr_P01_T4.Controllers
             {
                 return View(aircraft);
             }
-
         }
 
         public IActionResult UpdateAircraft(int? id)
@@ -139,18 +137,25 @@ namespace WEB2020Apr_P01_T4.Controllers
         [HttpPost]
         public IActionResult UpdateAircraft(Aircraft aircraft)
         {
+            // reference aircraft from database before changes are made
+            Aircraft refaircraft = aircraftContext.FindAircraft(aircraft.AircraftID);
+
             ViewData["statusList"] = GetStatus();
             if (ModelState.IsValid)
             {
-                aircraftContext.Update(aircraft);
+                if (aircraft.DateLastMaintenance.Value != null || refaircraft.DateLastMaintenance != aircraft.DateLastMaintenance.Value)
+                {
+                    aircraftContext.UpdateMaintenanceDate(aircraft.AircraftID, aircraft.DateLastMaintenance.Value);
+                }
+                aircraftContext.UpdateStatus(aircraft.AircraftID, aircraft.Status);
                 return RedirectToAction("DisplayAircraft");
             }
             else
             {
+                //this is to prevent 
+                ViewData["status"] = refaircraft.Status;
                 return View(aircraft);
             }
-
-
         }
 
         // Aircraft Models 
@@ -192,11 +197,20 @@ namespace WEB2020Apr_P01_T4.Controllers
             return models;
         }
 
-        //fix
-        private List<SelectListItem> GetFlights()
+        private List<SelectListItem> GetFlights(int aircraftid)
         {
             List<SelectListItem> flights = new List<SelectListItem>();
-            List<FlightSchedule> flightSchedules = aircraftContext.GetAvailableFlights();
+            List<FlightSchedule> flightSchedules = new List<FlightSchedule>();
+
+            //Get all UnconflictedFlightSchedules
+            foreach (FlightSchedule schedule in aircraftContext.GetAvailableFlights())
+            {
+                if (!aircraftContext.CheckFlight(aircraftid , schedule.ScheduleID))
+                {
+                    flightSchedules.Add(schedule);
+                }
+            }
+
             foreach (FlightSchedule schedule in flightSchedules)
             {
                 flights.Add(new SelectListItem
@@ -205,10 +219,8 @@ namespace WEB2020Apr_P01_T4.Controllers
                     Text = schedule.FlightNumber
                 });
             }
-
             return flights;
         }
-
 
         private List<SelectListItem> GetStatus()
         {

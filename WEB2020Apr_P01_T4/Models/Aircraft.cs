@@ -10,17 +10,18 @@ namespace WEB2020Apr_P01_T4.Models
         public int AircraftID { get; set; }
 
         [Required]
-        public String AircraftModel { get; set; }
-        [Required]
-        public int NumEconomySeat { get; set; }
-        [Required]
-        public int NumBusinessSeat { get; set; }
+        public string AircraftModel { get; set; }
 
-        [DataType(DataType.Date)]
+        [Range(0,int.MaxValue,ErrorMessage= "Invalid value! Please enter a positive value")]
+        public int? NumEconomySeat { get; set; }
+
+        [Range(0,int.MaxValue,ErrorMessage= "Invalid value! Please enter a positive value")]
+        public int? NumBusinessSeat { get; set; }
+
         public DateTime? DateLastMaintenance { get; set; }
 
         [ValidateMaintenance]
-        public String Status { get; set; }
+        public string Status { get; set; }
 
         public Aircraft()
         {

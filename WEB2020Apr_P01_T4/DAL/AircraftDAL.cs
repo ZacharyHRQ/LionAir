@@ -69,7 +69,7 @@ namespace WEB2020Apr_P01_T4.DAL
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
             //Specify the SELECT SQL statement
-            cmd.CommandText = @"SELECT * FROM FlightSchedule WHERE (AircraftID = @aircraftid AND DepartureDateTime >= (GETDATE()))";
+            cmd.CommandText = @"SELECT * FROM FlightSchedule WHERE AircraftID = @aircraftid";
             cmd.Parameters.AddWithValue("@aircraftid", aircraftID);
             //Open a database connection
             conn.Open();
@@ -118,16 +118,20 @@ namespace WEB2020Apr_P01_T4.DAL
             cmd.Parameters.AddWithValue("@model", aircraft.AircraftModel);
             cmd.Parameters.AddWithValue("@econSeat", aircraft.NumEconomySeat);
             cmd.Parameters.AddWithValue("@businessSeat", aircraft.NumBusinessSeat);
-            cmd.Parameters.AddWithValue("@DOM", DBNull.Value);
+            // to pass null value as Date of last mauintenance
+            if (aircraft.DateLastMaintenance != null)
+            {
+                cmd.Parameters.AddWithValue("@DOM", aircraft.DateLastMaintenance);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@DOM", DBNull.Value);
+            }
             cmd.Parameters.AddWithValue("@status", "Operational");
             //A connection to database must be opened before any operations made.
             conn.Open();
-            //ExecuteScalar is used to retrieve the auto-generated
-            //StaffID after executing the INSERT SQL statement
             aircraft.AircraftID = (int)cmd.ExecuteScalar();
-            //A connection should be closed after operations.
             conn.Close();
-            //Return id when no error occurs.
             return aircraft.AircraftID;
         }
 
@@ -139,8 +143,7 @@ namespace WEB2020Apr_P01_T4.DAL
             SqlCommand cmd = conn.CreateCommand();
             //Specify the SELECT SQL statement that
             //retrieves all attributes of a staff record.
-            cmd.CommandText = @"SELECT * FROM Aircraft
- WHERE AircraftID = @selectedAircraftID";
+            cmd.CommandText = @"SELECT * FROM Aircraft WHERE AircraftID = @selectedAircraftID";
             //Define the parameter used in SQL statement, value for the
             //parameter is retrieved from the method parameter “staffId”.
             cmd.Parameters.AddWithValue("@selectedAircraftID", aircraftid);
@@ -153,18 +156,15 @@ namespace WEB2020Apr_P01_T4.DAL
                 //Read the record from database
                 while (reader.Read())
                 {
-                    // Fill staff object with values from the data reader
                     aircraft.AircraftID = aircraftid;
-                    aircraft.AircraftModel = !reader.IsDBNull(1) ? reader.GetString(1) : null;
-                    // (char) 0 - ASCII Code 0 - null value
+                    aircraft.AircraftModel = reader.GetString(1);                 
                     aircraft.NumEconomySeat = !reader.IsDBNull(2) ?
                     reader.GetInt32(2) : 0;
                     aircraft.NumBusinessSeat = !reader.IsDBNull(3) ?
                     reader.GetInt32(3) : 0;
                     aircraft.DateLastMaintenance = !reader.IsDBNull(4) ?
                     reader.GetDateTime(4) : (DateTime?)null;
-                    aircraft.Status = !reader.IsDBNull(5) ?
-                    reader.GetString(5) : null;
+                    aircraft.Status = reader.GetString(5);
                 }
             }
             //Close data reader
@@ -194,7 +194,6 @@ namespace WEB2020Apr_P01_T4.DAL
                     ScheduleID = reader.GetInt32(0),
                     FlightNumber = reader.GetString(1),
                     RouteID = reader.GetInt32(2),
-                    //AircraftID = (int)(!reader.IsDBNull(7) ? reader.GetInt32(7) : 0),
                     DepartureDateTime = reader.GetDateTime(4),
                     ArrivalDateTime = reader.GetDateTime(5),
                     EconomyClassPrice = reader.GetDecimal(6),
@@ -208,7 +207,7 @@ namespace WEB2020Apr_P01_T4.DAL
             return flightSchedules;
 
         }
-
+        
         public bool CheckFlight(int aircraftid , int scheduleid )
         {
             SqlCommand cmd = conn.CreateCommand();
@@ -249,7 +248,6 @@ namespace WEB2020Apr_P01_T4.DAL
                     flightSchedule.ScheduleID = reader.GetInt32(0);
                     flightSchedule.FlightNumber = reader.GetString(1);
                     flightSchedule.RouteID = reader.GetInt32(2);
-                    //flightSchedule.AircraftID = (int)(!reader.IsDBNull(7) ? reader.GetInt32(7) : (int?)null);
                     flightSchedule.DepartureDateTime = reader.GetDateTime(4);
                     flightSchedule.ArrivalDateTime = reader.GetDateTime(5);
                     flightSchedule.EconomyClassPrice = reader.GetDecimal(6);
@@ -272,11 +270,8 @@ namespace WEB2020Apr_P01_T4.DAL
             SqlCommand cmd = conn.CreateCommand();
             //Specify an UPDATE SQL statement
             cmd.CommandText = @"UPDATE FlightSchedule SET AircraftID=@aircraftid WHERE ScheduleID = @scheduleid";
-            //Define the parameters used in SQL statement, value for each parameter
-            //is retrieved from respective class's property.
             cmd.Parameters.AddWithValue("@aircraftid", aircraftid);
             cmd.Parameters.AddWithValue("@scheduleid", scheduleid);
-            //Open a database connection
             conn.Open();
             //ExecuteNonQuery is used for UPDATE and DELETE
             int count = cmd.ExecuteNonQuery();
@@ -303,18 +298,72 @@ namespace WEB2020Apr_P01_T4.DAL
 
         }
 
+        public int UpdateMaintenanceDate(int aircraftid , DateTime dateOfMaintenance)
+        {
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"UPDATE Aircraft SET DateLastMaintenance = @maintenanceDate WHERE AircraftID = @aircraftid";
+            cmd.Parameters.AddWithValue("@aircraftid", aircraftid);
+            cmd.Parameters.AddWithValue("@maintenanceDate", dateOfMaintenance);
+            int rowAffected = 0;
+            conn.Open();
+            rowAffected += cmd.ExecuteNonQuery();
+            conn.Close();
+            return rowAffected;
+        }
+
+        public int Delete(int staffId)
+        {
+            
+            //Instantiate a SqlCommand object, supply it with a DELETE SQL statement
+            //to delete a staff record specified by a Staff ID
+            SqlCommand cmdUpdate1 = conn.CreateCommand();
+            SqlCommand cmdUpdate2 = conn.CreateCommand();
+            SqlCommand cmdDelete1 = conn.CreateCommand();
+            SqlCommand cmdDelete2 = conn.CreateCommand();
+
+            cmdUpdate1.CommandText = @"UPDATE Staff SET SupervisorID = null WHERE StaffID = @selectStaffID";
+            cmdUpdate1.Parameters.AddWithValue("@selectStaffID", staffId);
+
+
+            cmdUpdate2.CommandText = @"UPDATE Branch SET MgrID = null WHERE MgrID = @selectStaffID";
+            cmdUpdate2.Parameters.AddWithValue("@selectStaffID", staffId);
+
+
+            cmdDelete1.CommandText = @"DELETE FROM StaffContact WHERE StaffID = @selectStaffID";
+            cmdDelete1.Parameters.AddWithValue("@selectStaffID", staffId);
+
+
+            cmdDelete2.CommandText = @"DELETE FROM Staff WHERE StaffID = @selectStaffID";
+            cmdDelete2.Parameters.AddWithValue("@selectStaffID", staffId);
+
+
+            //Execute the DELETE SQL to remove the staff record
+            int rowAffected = 0;
+            //Open a database connection
+            conn.Open();
+
+            rowAffected += cmdUpdate1.ExecuteNonQuery();
+            rowAffected += cmdUpdate2.ExecuteNonQuery();
+            rowAffected += cmdDelete1.ExecuteNonQuery();
+            rowAffected += cmdDelete2.ExecuteNonQuery();
+
+            //Close database connection
+            conn.Close();
+            //Return number of row of staff record updated or deleted
+            return rowAffected;
+        }
 
 
         //update aircraft status 
-        public int Update(Aircraft aircraft)
+        public int UpdateStatus (int aircraftid , string status)
         {
             //Create a SqlCommand object from connection object
             SqlCommand cmd = conn.CreateCommand();
             //Specify an UPDATE SQL statement
             cmd.CommandText = @"UPDATE Aircraft SET Status = @status WHERE AircraftID = @aircraftid";
             
-            cmd.Parameters.AddWithValue("@aircraftid", aircraft.AircraftID);
-            cmd.Parameters.AddWithValue("@status", aircraft.Status);
+            cmd.Parameters.AddWithValue("@aircraftid", aircraftid);
+            cmd.Parameters.AddWithValue("@status", status);
             
             
             conn.Open();
@@ -332,7 +381,7 @@ namespace WEB2020Apr_P01_T4.DAL
 
             SqlCommand cmd = conn.CreateCommand();
 
-            cmd.CommandText = @"SELECT * FROM Aircraft WHERE DateLastMaintenance < DATEADD(DAY, -30, GETDATE());";
+            cmd.CommandText = @"SELECT * FROM Aircraft WHERE DateLastMaintenance < DATEADD(DAY, -30, GETDATE()) AND Status ='Operational';";
 
             conn.Open();
 
