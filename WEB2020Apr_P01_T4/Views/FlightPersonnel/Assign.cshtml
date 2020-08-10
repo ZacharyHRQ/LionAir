@@ -27,6 +27,7 @@
             <div class="form-group">
                 <label class="col-sm-3 col-form-label">Flight Crew Leader</label>
                 @Html.DropDownListFor(id => id.id3, (IEnumerable<SelectListItem>)ViewData["attendantList"])
+            </div>
 
             <div class="form-group">
                 <label class="col-sm-3 col-form-label">Flight Attendant</label>
@@ -48,6 +49,11 @@
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </div>
-        </fieldset>
-    </form>
+            @if (TempData.ContainsKey("ErrorMessage"))
+            {
+                <a class="text-danger">@TempData.Peek("ErrorMessage")</a>
+            }
+    </fieldset>
+</form>
 </div>
+

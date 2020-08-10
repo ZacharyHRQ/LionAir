@@ -96,7 +96,47 @@ namespace WEB2020Apr_P01_T4.DAL
 
             return crewList;
         }
-             
+
+        public bool Checkcrew (List<int> idList)
+        {
+            if (idList.Distinct().Count() == idList.Count())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public int Assign(List<FlightCrew> flightcrew, List<int> staffID)
+        {
+            int rowaffected = 0;
+            if (Checkcrew(staffID))
+            {
+                SqlCommand cmd = conn.CreateCommand();
+
+                cmd.CommandText = @"INSERT INTO FlightCrew (ScheduleID, StaffID, Role) VALUES (@ScheduleID, @StaffID, @Role)";
+
+                for (int i = 0; i< flightcrew.Count(); i++)
+                {
+                    cmd.Parameters.Clear();
+                    conn.Open();
+                    cmd.Parameters.AddWithValue("@ScheduleID", flightcrew[i].ScheduleID);
+                    cmd.Parameters.AddWithValue("@StaffID", flightcrew[i].StaffID);
+                    cmd.Parameters.AddWithValue("@Role", flightcrew[i].Role);
+                    rowaffected += cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+            else
+            {
+                rowaffected = -1;
+            }
+            return rowaffected;
+            
+        }
+
     }
      
 }

@@ -229,6 +229,7 @@ namespace WEB2020Apr_P01_T4.Controllers
         {
             if (ModelState.IsValid)
             {
+                List<FlightCrew> fcList = new List<FlightCrew>();
                 List<int> idlist = crewid.fcID();
                 List<String> Roles = new List<String>() { "Flight Captain", "Second Pilot", "Flight Crew Leader", "Flight Attendant" };
                 for (int i = 0; i < crewid.fcID().Count(); i++)
@@ -242,44 +243,28 @@ namespace WEB2020Apr_P01_T4.Controllers
                     fc.Role = Roles[index];
                     fc.StaffID = idlist[i];
                     fc.ScheduleID = (int)TempData.Peek("scheduleid");
-                    staffContext.Assign(fc);
+                    fcList.Add(fc);
+                    
                     Debug.WriteLine(Roles[index]);
                     Debug.WriteLine(idlist[i]);
                     Debug.WriteLine(TempData["scheduleid"]);
                     Debug.WriteLine(fc.StaffID);
                 }
-                return RedirectToAction("Index");
+                int rows = crewContext.Assign(fcList, idlist);
+                System.Diagnostics.Debug.WriteLine("Rows Affected:" + rows);
+
+                if (rows > 0)
+                {
+                    return View();
+                }
+                else if (rows == -1)
+                {
+                   TempData["ErrorMessage"] = "You entered the same staff twice!";
+                    return RedirectToAction("Index");
+                }
 
             }
-            else
-            {
-                ViewData["pilotList"] = GetPilotId();
-                ViewData["attendantList"] = GetAttendantId();
-                //Input validation fails, return to the view   
-                //to display error message     
-                return View();
-            }
-
-
-
-            //Get status list for drop-down list       
-            //in case of the need to return to Edit.cshtml view        
-
-            //if (ModelState.IsValid)
-            //{
-            //    //Update staff record to database    
-            //    staffContext.Assign(crew);
-            //    return RedirectToAction("Index");
-
-            //}
-            //else
-            //{
-            //    ViewData["pilotList"] = GetPilotId();
-            //    ViewData["attendantList"] = GetAttendantId();
-            //    //Input validation fails, return to the view   
-            //    //to display error message     
-            //    return View(flightCrew);
-            //}
+            return View();
         }
 
         private List<SelectListItem> GetVocation()

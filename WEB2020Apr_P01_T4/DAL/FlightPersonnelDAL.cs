@@ -376,32 +376,6 @@ namespace WEB2020Apr_P01_T4.DAL
 
         }
 
-        public int Assign(FlightCrew flightCrew)
-        {
-            SqlCommand cmd = conn.CreateCommand();
-
-            cmd.CommandText = @"INSERT INTO FlightCrew (ScheduleID, StaffID, Role) VALUES (@ScheduleID, @StaffID, @Role)";
-
-            cmd.Parameters.AddWithValue("@ScheduleID", flightCrew.ScheduleID);
-            cmd.Parameters.AddWithValue("@StaffID", flightCrew.StaffID);
-            cmd.Parameters.AddWithValue("@Role", flightCrew.Role);
-
-
-            //A connection to database must be opened before any operations made. 
-            conn.Open();
-
-            //ExecuteScalar is used to retrieve the auto-generated 
-            ////StaffID after executing the INSERT SQL statement   
- 
-            flightCrew.StaffID = (int)cmd.ExecuteNonQuery();
-
-            //A connection should be closed after operations. 
-            conn.Close();
-
-            //Return id when no error occurs.
-            return flightCrew.StaffID;
-        }
-
         public List<FlightPersonnel> GetAllFlightPersonal(int id)
         {
             List<FlightPersonnel> flightPersonal = new List<FlightPersonnel>();
